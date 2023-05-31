@@ -14,5 +14,6 @@ ip = str(os.getenv('ip'))
 POSTGRES_USER = str(os.getenv('POSTGRES_USER'))
 POSTGRES_PASSWORD = str(os.getenv('POSTGRES_PASSWORD'))
 DATABASE = str(os.getenv('DATABASE'))
+PROXY_URL = str(os.getenv('PROXY_URL'))
 
 POSTGRES_URL = f'postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{ip}/{DATABASE}'
