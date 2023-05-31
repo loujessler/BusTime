@@ -6,21 +6,19 @@ from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from utils.db_api.db_gino import db
 from data import config
 
-
 import logging
 
-logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
-                    # level=logging.INFO,
-                    level=logging.DEBUG,
-                    )
+debug = logging.DEBUG if config.DEBUG else logging.INFO
+logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s', level=debug)
 
-bot = Bot(token=config.API_TOKEN, parse_mode=types.ParseMode.HTML, proxy=config.PROXY_URL)
+bot = Bot(token=config.API_TOKEN, parse_mode=types.ParseMode.HTML)
 
 storage = MemoryStorage()
 
 dp = Dispatcher(bot, storage=storage)
 
 dp.middleware.setup(LoggingMiddleware())
+
 
 # edit_ls = EditLastMessage(bot)
 
