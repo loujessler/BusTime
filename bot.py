@@ -7,10 +7,10 @@ async def on_startup(dp):
     await on_startup(dp)
 
     # Получаем список таблиц в базе данных
-    result = await db.status(db.text(
-        "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname='public'"
-    ))
-    table_exists = bool(result)
+    table_name = 'users'
+    query = f"SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = '{table_name}')"
+    result = await db.bind.scalar(query)
+    table_exists = result
 
     if not table_exists:  # Проверяем, есть ли таблицы в базе данных
         # Создание и удаление базы данных
