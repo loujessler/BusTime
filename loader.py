@@ -14,7 +14,7 @@ logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(
                     level=logging.DEBUG,
                     )
 
-bot = Bot(token=config.API_TOKEN, parse_mode=types.ParseMode.HTML)
+bot = Bot(token=config.API_TOKEN, parse_mode=types.ParseMode.HTML, proxy=config.PROXY_URL)
 
 storage = MemoryStorage()
 
