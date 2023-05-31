@@ -5,9 +5,17 @@ async def on_startup(dp):
     from loader import db
     from utils.db_api.db_gino import on_startup
     await on_startup(dp)
-    # Создание и удаление базы данных
-    await db.gino.drop_all()
-    await db.gino.create_all()
+
+    # Получаем список таблиц в базе данных
+    result = await db.status(db.text(
+        "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname='public'"
+    ))
+    table_exists = bool(result)
+
+    if not table_exists:  # Проверяем, есть ли таблицы в базе данных
+        # Создание и удаление базы данных
+        await db.gino.drop_all()
+        await db.gino.create_all()
 
     from utils.notify_admins import on_startup_notify
     await on_startup_notify(dp)
