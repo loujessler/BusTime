@@ -9,7 +9,9 @@ from data import config
 import logging
 
 debug = logging.DEBUG if config.DEBUG else logging.INFO
-logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s', level=debug)
+logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
+                    filename="py_log.log",
+                    level=debug)
 
 bot = Bot(token=config.API_TOKEN, parse_mode=types.ParseMode.HTML)
 

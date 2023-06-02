@@ -1,11 +1,12 @@
 from aiogram import types
 from aiogram.dispatcher.filters import Command
 
-# from data.messages.messages import Messages
-from data.messages.start_messages import Messages
-from filters import HaveInDb
-from keyboards.inline import ikb_menu
 from loader import dp
+from filters import HaveInDb
+
+from data.messages.start_messages import Messages
+from keyboards.inline import ikb_menu
+
 from utils.db_api import quick_commands as commands
 from handlers.main.bot_start import edit_ls
 
@@ -14,12 +15,11 @@ from handlers.main.bot_start import edit_ls
 async def menu(message: types.Message):
     user = await commands.select_user(message.from_user.id)
     await message.delete()
-    # await message.answer(Messages(user).finish_registration(), reply_markup=ikb_menu(user))
-    await message.answer(Messages(user).finish_registration())
-    # await edit_ls.edit_last_message(
-    #     Messages(user).finish_registration(),
-    #     message
-    # )
+    await edit_ls.edit_last_message(
+        Messages(user).finish_registration(),
+        message,
+        ikb_menu(user)
+    )
 
 # @dp.callback_query_handler(text='back')
 # async def send_message(call: CallbackQuery):

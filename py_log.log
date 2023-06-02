@@ -1,0 +1,27 @@
+middlewares.py [LINE:41] #DEBUG    [2023-06-01 15:02:22,536]  Loaded middleware 'LoggingMiddleware'
+selector_events.py [LINE:53] #DEBUG    [2023-06-01 15:02:22,760]  Using selector: KqueueSelector
+api.py [LINE:133] #DEBUG    [2023-06-01 15:02:22,761]  Make request: "getMe" with data: "{}" and files "None"
+api.py [LINE:95] #DEBUG    [2023-06-01 15:02:23,236]  Response for getMe: [200] "'{"ok":true,"result":{"id":1400622643,"is_bot":true,"first_name":"Myhuk","username":"Myhuk_bot","can_join_groups":true,"can_read_all_group_messages":false,"supports_inline_queries":false}}'"
+executor.py [LINE:362] #INFO     [2023-06-01 15:02:23,236]  Bot: Myhuk [@Myhuk_bot]
+base.py [LINE:1234] #INFO     [2023-06-01 15:02:26,256]  SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'users')
+base.py [LINE:1239] #INFO     [2023-06-01 15:02:26,257]  ()
+result.py [LINE:810] #DEBUG    [2023-06-01 15:02:26,431]  Col ('exists',)
+result.py [LINE:1260] #DEBUG    [2023-06-01 15:02:26,431]  Row (True,)
+api.py [LINE:133] #DEBUG    [2023-06-01 15:02:26,436]  Make request: "sendMessage" with data: "{'chat_id': 6405640, 'text': 'The bot is up and running', 'parse_mode': 'html'}" and files "None"
+api.py [LINE:95] #DEBUG    [2023-06-01 15:02:26,666]  Response for sendMessage: [200] "'{"ok":true,"result":{"message_id":34,"from":{"id":1400622643,"is_bot":true,"first_name":"Myhuk","username":"Myhuk_bot"},"chat":{"id":6405640,"first_name":"rmdir","last_name":"life","username":"rmdir_life","type":"private"},"date":1685617346,"text":"The bot is up and running"}}'"
+api.py [LINE:133] #DEBUG    [2023-06-01 15:02:26,667]  Make request: "setMyCommands" with data: "{'commands': '[{"command": "start", "description": "Start"}]', 'scope': '{"type": "default"}'}" and files "None"
+api.py [LINE:95] #DEBUG    [2023-06-01 15:02:26,818]  Response for setMyCommands: [200] "'{"ok":true,"result":true}'"
+dispatcher.py [LINE:358] #INFO     [2023-06-01 15:02:26,819]  Start polling.
+api.py [LINE:133] #DEBUG    [2023-06-01 15:02:26,819]  Make request: "getWebhookInfo" with data: "{}" and files "None"
+api.py [LINE:95] #DEBUG    [2023-06-01 15:02:26,918]  Response for getWebhookInfo: [200] "'{"ok":true,"result":{"url":"","has_custom_certificate":false,"pending_update_count":0}}'"
+api.py [LINE:133] #DEBUG    [2023-06-01 15:02:26,919]  Make request: "getUpdates" with data: "{'timeout': 20}" and files "None"
+api.py [LINE:95] #DEBUG    [2023-06-01 15:02:47,078]  Response for getUpdates: [200] "'{"ok":true,"result":[]}'"
+api.py [LINE:133] #DEBUG    [2023-06-01 15:02:47,180]  Make request: "getUpdates" with data: "{'timeout': 20}" and files "None"
+api.py [LINE:95] #DEBUG    [2023-06-01 15:03:07,283]  Response for getUpdates: [200] "'{"ok":true,"result":[]}'"
+api.py [LINE:133] #DEBUG    [2023-06-01 15:03:07,384]  Make request: "getUpdates" with data: "{'timeout': 20}" and files "None"
+api.py [LINE:95] #DEBUG    [2023-06-01 15:03:27,476]  Response for getUpdates: [200] "'{"ok":true,"result":[]}'"
+api.py [LINE:133] #DEBUG    [2023-06-01 15:03:27,577]  Make request: "getUpdates" with data: "{'timeout': 20}" and files "None"
+api.py [LINE:95] #DEBUG    [2023-06-01 15:03:47,677]  Response for getUpdates: [200] "'{"ok":true,"result":[]}'"
+api.py [LINE:133] #DEBUG    [2023-06-01 15:03:47,779]  Make request: "getUpdates" with data: "{'timeout': 20}" and files "None"
+dispatcher.py [LINE:433] #INFO     [2023-06-01 15:03:50,468]  Stop polling...
+executor.py [LINE:329] #WARNING  [2023-06-01 15:03:50,469]  Goodbye!
