@@ -1,7 +1,7 @@
+from aiogram import types
 from aiogram.types import CallbackQuery
 
-from loader import dp, bot
-from aiogram import types
+from loader import dp
 
 from utils.arrival import arrival
 
