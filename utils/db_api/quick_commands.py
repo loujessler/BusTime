@@ -67,7 +67,11 @@ async def delete_bus_stop(user, name: str, id_stop: int):
 
 
 async def select_all_bus_stops(user):
-    bus_stops = await BusStop.query.where(BusStop.user_id == user.user_id).gino.all()
+    try:
+        bus_stops = await BusStop.query.where(BusStop.user_id == user.user_id).gino.all()
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        bus_stops = []
     return bus_stops
 
 

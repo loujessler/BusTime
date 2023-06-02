@@ -1,31 +1,6 @@
 from aiogram import types
 from aiogram.types import BotCommandScopeDefault, BotCommandScopeChat
 
-from utils.db_api import quick_commands as commands
-
-texts = {
-    'menu': {
-        'ru': 'Главное меню',
-        'en': 'Main menu',
-    },
-    'wallet': {
-        'ru': '💰 Мои остановки',
-        'en': '💰 My bus stops',
-    },
-    'cheques': {
-        'ru': '🧾 Чеки',
-        'en': '🧾 Cheques',
-    },
-    'settings': {
-        'ru': '⚙️ Настройки',
-        'en': '⚙️ Settings',
-    },
-    'help': {
-        'ru': '💬 Помощь',
-        'en': '💬 Help',
-    },
-}
-
 
 async def set_default_commands(bot):
     return await bot.set_my_commands(
@@ -49,9 +24,16 @@ async def set_start_commands(bot, chat_id, language):
             types.BotCommand('my_bus_stops', '🚏 My bus stops'),
             types.BotCommand('settings', '⚙️ Settings'),
             types.BotCommand('help', '💬 Help'),
-        ]
+        ],
+        'ka': [
+            types.BotCommand('menu', 'მთავარი მენიუ'),
+            types.BotCommand('my_bus_stops', '🚏 ჩემი გაჩერებული გაჩერება'),
+            types.BotCommand('settings', '⚙️ პარამეტრები'),
+            types.BotCommand('help', '💬 დახმარება'),
+        ],
     }
     for language_code, commands in text_commands.items():
+        print(language_code, commands)
         await bot.set_my_commands(
             commands=commands,
             scope=BotCommandScopeChat(chat_id),

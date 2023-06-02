@@ -3,11 +3,13 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 texts = {
     'bus_stops': {
         'ru': '🚏 Мои остановки',
-        'en': '🚏 My bus stops'
+        'en': '🚏 My bus stops',
+        'ka': '🚏 ჩემი გაჩერებული გაჩერება'
     },
     'settings': {
         'ru': '⚙️ Настройки',
-        'en': '⚙️ Settings'
+        'en': '⚙️ Settings',
+        'ka': '⚙️ პარამეტრები'
     },
 }
 
@@ -17,7 +19,7 @@ def ikb_menu(user):
                                inline_keyboard=[
                                    [
                                        InlineKeyboardButton(text=texts['bus_stops'][user.language],
-                                                            callback_data='my bus stops'),
+                                                            callback_data='my_bus_stops'),
                                    ],
                                    [
                                        InlineKeyboardButton(text=texts['settings'][user.language],

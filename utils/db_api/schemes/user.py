@@ -1,4 +1,4 @@
-from sqlalchemy import Column, BigInteger, String, Integer, sql, ForeignKey
+from sqlalchemy import Column, BigInteger, String, sql
 from sqlalchemy.orm import relationship
 
 from utils.db_api.db_gino import TimedBaseModel

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, sql, ForeignKey
+from sqlalchemy import Column, String, Integer, sql, ForeignKey, BigInteger
 from sqlalchemy.orm import relationship
 
 from utils.db_api.db_gino import TimedBaseModel
@@ -10,10 +10,7 @@ class BusStop(TimedBaseModel):
     id = Column(Integer, autoincrement=True, primary_key=True, unique=True)
     name = Column(String(200))
     id_stop = Column(Integer, primary_key=True)
-    # user_id = Column(Integer, ForeignKey('users.id'))
     user = relationship('User', back_populates='bus_stops')
-    user_id = Column(Integer, ForeignKey('users.user_id'))
-    # Определяем отношение один-ко-многим с моделью User
-    # user = relationship('User', back_populates='bus_stops')
+    user_id = Column(BigInteger, ForeignKey('users.user_id'))
 
     query: sql.select

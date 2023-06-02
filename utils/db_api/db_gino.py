@@ -5,7 +5,6 @@ import sqlalchemy as sa
 from typing import List
 
 from aiogram import Dispatcher
-from sqlalchemy import Column, BigInteger, String
 
 from data import config
 
