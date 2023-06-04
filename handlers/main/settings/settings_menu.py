@@ -7,8 +7,9 @@ from filters import HaveInDb
 from handlers.main.bot_start import edit_ls
 from keyboards.inline.settings import ikb_menu_settings
 
-from data.messages.settings_messages import Messages
+from data.languages import languages
 from utils.db_api import quick_commands as commands
+from utils.i18n import MessageFormatter
 
 
 @dp.callback_query_handler(text='back_to_settings')
@@ -16,7 +17,11 @@ from utils.db_api import quick_commands as commands
 async def handler_settings_menu(call: CallbackQuery):
     user = await commands.select_user(call.from_user.id)
     await edit_ls.edit_last_message(
-        Messages(user).menu_msg(),
+        MessageFormatter(user).get_message(
+            {'setting_menu': 'bold',
+             'setting_menu_lang': 'italic'},
+            {'language': languages[user.language]}, 2
+        ),
         call,
         ikb_menu_settings(user)
     )
@@ -27,7 +32,11 @@ async def settings_menu_command(message: Message):
     user = await commands.select_user(message.from_user.id)
     await message.delete()
     await edit_ls.edit_last_message(
-        Messages(user).menu_msg(),
+        MessageFormatter(user).get_message(
+            {'setting_menu': 'bold',
+             'setting_menu_lang': 'italic'},
+            {'language': languages[user.language]}, 2
+        ),
         message,
         ikb_menu_settings(user)
     )

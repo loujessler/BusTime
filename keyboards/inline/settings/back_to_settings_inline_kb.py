@@ -1,22 +1,15 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-texts = {
-    'back_to_settings': {
-        'ru': '🔙 Назад в настройки',
-        'en': '🔙 Back to settings',
-        'ka': '🔙 დაბრუნება პარამეტრებში'
-    },
-    'back': {
-        'ru': '🔝 В главное меню',
-        'en': '🔝 Main menu',
-        'ka': '🔝 მთავარი მენიუ'
-    },
-}
+from utils.i18n import MessageFormatter
+
+
+texts = ['back_to_settings', 'back']
 
 
 def ikb_back_to_settings(user):
     ikb = InlineKeyboardMarkup(row_width=1)
-    for callback_data in texts.keys():
-        ikb.add(InlineKeyboardButton(text=texts[callback_data][user.language],
+    for callback_data in texts:
+        ikb.add(InlineKeyboardButton(text=MessageFormatter(user).get_message(
+                                           {callback_data: 'none'}, None, 0, 'keyboards'),
                                      callback_data=callback_data))
     return ikb

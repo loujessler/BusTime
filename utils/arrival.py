@@ -16,12 +16,14 @@ edit_ls = EditLastMessage(bot)
 
 
 async def arrival(id_stop, aio_type):
-    chat_id = return_msg_aio_type(aio_type).chat.id
+    message = return_msg_aio_type(aio_type)
+    await message.delete()
+    chat_id = message.chat.id
     code_bus_stop = id_stop
     url = f'http://transfer.ttc.com.ge:8080/otp/routers/ttc/stopArrivalTimes?stopId={code_bus_stop}'
 
     try:
-        async with httpx.AsyncClient() as client:
+        async with httpx.AsyncClient(timeout=15.0) as client:
             response = await client.get(url)
             response.raise_for_status()  # This will raise an exception for 4xx and 5xx status codes
 

@@ -15,5 +15,8 @@ POSTGRES_USER = str(os.getenv('POSTGRES_USER'))
 POSTGRES_PASSWORD = str(os.getenv('POSTGRES_PASSWORD'))
 DATABASE = str(os.getenv('DATABASE'))
 DEBUG = str(os.getenv('DEBUG'))
+# Настройка i18n
+I18N_DOMAIN = 'bustime'
+LOCALES_DIR = str(os.getenv('LOCALES_DIR'))
 
 POSTGRES_URL = f'postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{ip}/{DATABASE}'

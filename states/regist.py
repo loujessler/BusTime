@@ -2,6 +2,7 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 
 
 class Regist(StatesGroup):
+    locale = State()
     language = State()
     change_language = State()
     name_bus_stops_state = State()

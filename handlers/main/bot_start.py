@@ -1,9 +1,9 @@
 from aiogram import types
+import aiogram.utils.markdown as fmt
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
 
 from data.languages import languages
-from data.messages.start_messages import Messages
 
 from filters import IsPrivate, HaveInDb
 
@@ -17,6 +17,7 @@ from states.regist import Regist
 from utils.db_api import quick_commands as commands
 from utils.edit_last_message import EditLastMessage
 from utils.set_bot_commands import set_start_commands
+from utils.i18n import MessageFormatter
 
 edit_ls = EditLastMessage(bot)
 
@@ -25,10 +26,13 @@ edit_ls = EditLastMessage(bot)
 async def command_start(message: types.Message):
     user_id = message.from_user.id
     user = await commands.select_user(user_id)
-
+    language_mes = fmt.text(
+        f'✌️ Hi, {message.from_user.first_name}.\n',
+        fmt.hbold('🏳️ Choose your language: ')
+    )
     if user is None:
         await message.answer(
-            Messages.language_mes(message),
+            language_mes,
             parse_mode='HTML',
             reply_markup=ikb_languages
         )
@@ -36,7 +40,9 @@ async def command_start(message: types.Message):
         return
 
     if user.status == 'active':
-        text = Messages(user).finish_registration()
+        text = MessageFormatter(user).get_message({'welcome_message': 'bold',
+                                                   'instructions_message': 'italic'},
+                                                  None, 2)
         markup = ikb_menu(user)
     elif user.status == 'baned':
         text = 'Ты забанен!'
@@ -55,6 +61,11 @@ async def command_start(message: types.Message):
                            state=Regist.language)
 async def first_message(call: types.CallbackQuery, state: FSMContext):
     language = call.data
+
+    # # Set the chosen language
+    # global _
+    # _ = set_language(language).gettext
+
     await state.update_data(language=language)
     user_id = call.from_user.id
     first_name = call.from_user.first_name
@@ -76,7 +87,9 @@ async def first_message(call: types.CallbackQuery, state: FSMContext):
     if user is not None:
         await set_start_commands(call.bot, user_id, language)
         await edit_ls.edit_last_message(
-            Messages(user).finish_registration(),
+            MessageFormatter(user).get_message({'welcome_message': 'bold',
+                                                'instructions_message': 'italic'},
+                                               None, 2),
             call, ikb_menu(user)
         )
 
