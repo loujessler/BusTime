@@ -50,6 +50,7 @@ async def ignore_text_in_id_bus_stops_state(message: types.Message, state: FSMCo
 @dp.callback_query_handler(text='add_new_bus_stop')
 async def set_name_bus_stops(call: types.CallbackQuery, state: FSMContext):
     user = await commands.select_user(call.from_user.id)
+    asyncio.create_task(TimeRegistrate(state, call, user).state_timer())
     sent_message = await edit_ls.edit_last_message(
         MessageFormatter(user).get_message({'bus_stops_name': 'none'}),
         call, None, 'HTML', True
@@ -70,7 +71,6 @@ async def number_bus_stop(message: types.Message, state: FSMContext):
         MessageFormatter(user).get_message({'bus_stops_id_stop': 'none'}),
         message, None, 'HTML', True
     )
-    # await state.update_data(message_id=sent_message.message_id)
     Regist.id_bus_stops_state.message_id = sent_message.message_id
     await Regist.id_bus_stops_state.set()
 
