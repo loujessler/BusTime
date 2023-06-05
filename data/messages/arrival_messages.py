@@ -29,9 +29,6 @@ class ArrivalMessages:
             route_number = number_to_emoji(arrival_time['RouteNumber'])
             minutes = arrival_time['ArrivalTime']
             sticker_time = '⚡️' if minutes <= 5 else '⏳'
-            # line_msg = self.messages['bus_arrival_times'][self.user.language].format(sticker_time=sticker_time,
-            #                                                                          route_number=route_number,
-            #                                                                          minutes=minutes)
             line_msg = MessageFormatter(self.user).get_message({'arrival_bus_times': 'none'},
                                                                {'route_number': route_number,
                                                                 'minutes': minutes,

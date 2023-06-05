@@ -9,7 +9,7 @@ from utils.db_api import quick_commands as commands
 from utils.i18n import MessageFormatter
 
 
-@dp.callback_query_handler(text='back')
+@dp.callback_query_handler(text=['back', 'back_to_main_menu'])
 async def handler_back(call: CallbackQuery):
     user = await commands.select_user(call.from_user.id)
     await edit_ls.edit_last_message(

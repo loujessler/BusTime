@@ -15,10 +15,10 @@ async def set_default_commands(bot):
 
 async def set_start_commands(bot, chat_id, user):
     command_ids = {
-        'menu': 'main_menu_command',
-        'my_bus_stops': 'my_bus_stops_command',
-        'settings': 'settings_command',
-        'help': 'help_command'
+        'menu': 'menu',
+        'my_bus_stops': 'my_bus_stops',
+        'settings': 'settings',
+        'help': 'help'
     }
 
     formatter = MessageFormatter(user)

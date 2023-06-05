@@ -34,9 +34,8 @@ async def change_language(call: types.CallbackQuery):
 async def update_language(call: types.CallbackQuery, state: FSMContext):
     user = await commands.select_user(call.from_user.id)
     await commands.update_language(user.user_id, call.data)
-    print(call.from_user.id, user.user_id)
-    await set_start_commands(call.bot, call.from_user.id, user)
     user = await commands.select_user(call.from_user.id)
+    await set_start_commands(call.bot, call.from_user.id, user)
     await edit_ls.edit_last_message(
         MessageFormatter(user).get_message(
             {'setting_change_language_done': 'bold'}),
