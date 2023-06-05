@@ -36,7 +36,7 @@ class ArrivalMessages:
                                                                {'route_number': route_number,
                                                                 'minutes': minutes,
                                                                 'sticker_time': sticker_time}),
-            message += line_msg + "\n"
+            message += line_msg[0] + "\n"
         return fmt.text(message)
 
     def bus_arrival_not(self):
