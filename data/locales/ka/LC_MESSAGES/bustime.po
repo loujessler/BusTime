@@ -63,6 +63,9 @@ msgstr "🔍 აირჩიეთ ფავორიტი საგარე�
 msgid "bus_stops_finish_add_stop"
 msgstr "✅ დამატებული საგარემო: {name} - {id_stop}"
 
+msgid "bus_stops_finish_cancel"
+msgstr "❌ გაჩერება არ არის შენახული"
+
 # Arrival
 msgid "arrival_bus_times"
 msgstr "{sticker_time} {route_number} → {minutes} წუთ"

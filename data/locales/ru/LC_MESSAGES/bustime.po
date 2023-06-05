@@ -63,6 +63,9 @@ msgstr "🔍 Выберите избранную остановку"
 msgid "bus_stops_finish_add_stop"
 msgstr "✅ Сохранена остановка: {name} - {id_stop}"
 
+msgid "bus_stops_finish_cancel"
+msgstr "❌ Остановка не сохранена"
+
 # Arrival
 msgid "arrival_bus_times"
 msgstr "{sticker_time} {route_number} → {minutes} мин"

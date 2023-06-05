@@ -63,6 +63,10 @@ msgstr "🔍 Виберіть улюблену зупинку"
 msgid "bus_stops_finish_add_stop"
 msgstr "✅ Збережено зупинку: {name} - {id_stop}"
 
+msgid "bus_stops_finish_cancel"
+msgstr "❌ Зупинка не збережена"
+
+
 # Arrival
 msgid "arrival_bus_times"
 msgstr "{sticker_time} {route_number} → {minutes} хв"

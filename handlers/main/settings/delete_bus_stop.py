@@ -36,7 +36,7 @@ async def choose_stop(call: types.CallbackQuery):
 
 @dp.callback_query_handler(HaveInDb(True), state=Regist.delete_bus_stop)
 async def handler_delete_bus_stop(call: types.CallbackQuery, state: FSMContext):
-    if call.data == 'back':
+    if call.data == 'back_to_main_menu':
         # Here call your function or handler for 'back'
         await handler_back(call)
         await state.finish()
