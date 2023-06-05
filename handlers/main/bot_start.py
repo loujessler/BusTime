@@ -85,7 +85,7 @@ async def first_message(call: types.CallbackQuery, state: FSMContext):
 
     user = await commands.select_user(user_id)
     if user is not None:
-        await set_start_commands(call.bot, user_id, language)
+        await set_start_commands(call.bot, user_id, user)
         await edit_ls.edit_last_message(
             MessageFormatter(user).get_message({'welcome_message': 'bold',
                                                 'instructions_message': 'italic'},
