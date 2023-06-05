@@ -4,24 +4,26 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from loader import bot
 
 from keyboards.inline import ikb_menu
-from keyboards.inline.settings.back_to_settings_inline_kb import texts
 
 from utils.additional import return_msg_aio_type
 from utils.edit_last_message import EditLastMessage
 from utils.db_api import quick_commands as commands
 
 from data.messages.arrival_messages import ArrivalMessages
+from utils.i18n import MessageFormatter
 
 edit_ls = EditLastMessage(bot)
 
 
 async def arrival(id_stop, aio_type):
-    chat_id = return_msg_aio_type(aio_type).chat.id
+    message = return_msg_aio_type(aio_type)
+    await message.delete()
+    chat_id = message.chat.id
     code_bus_stop = id_stop
     url = f'http://transfer.ttc.com.ge:8080/otp/routers/ttc/stopArrivalTimes?stopId={code_bus_stop}'
 
     try:
-        async with httpx.AsyncClient() as client:
+        async with httpx.AsyncClient(timeout=20.0) as client:
             response = await client.get(url)
             response.raise_for_status()  # This will raise an exception for 4xx and 5xx status codes
 
@@ -45,9 +47,9 @@ async def arrival(id_stop, aio_type):
                 ikb_menu(user)
             )
         else:
-            text = texts['back']
+            text = MessageFormatter(user).get_message({'back_to_main_menu': 'none'}, None, 0, 'keyboards')
             ikb = InlineKeyboardMarkup(row_width=2)
-            ikb.add(InlineKeyboardButton(text=text[user.language], callback_data='back'))
+            ikb.add(InlineKeyboardButton(text=text, callback_data='back'))
             await edit_ls.edit_last_message(
                 msg.bus_arrival_not(),
                 aio_type,
@@ -56,6 +58,8 @@ async def arrival(id_stop, aio_type):
 
     except httpx.HTTPStatusError as e:
         await bot.send_message(chat_id, f'Error while executing request: {e}')
+    except httpx.ReadTimeout:
+        await bot.send_message(chat_id, "The request to the server has timed out. Please try again later.")
 
 # async def arrival(id_stop, aio_type):
 #     chat_id = return_msg_aio_type(aio_type).chat.id

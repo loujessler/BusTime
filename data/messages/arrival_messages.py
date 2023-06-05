@@ -1,6 +1,7 @@
 import aiogram.utils.markdown as fmt
 
 from utils.additional import number_to_emoji
+from utils.i18n import MessageFormatter
 
 
 class ArrivalMessages:
@@ -28,15 +29,15 @@ class ArrivalMessages:
             route_number = number_to_emoji(arrival_time['RouteNumber'])
             minutes = arrival_time['ArrivalTime']
             sticker_time = '⚡️' if minutes <= 5 else '⏳'
-            line_msg = self.messages['bus_arrival_times'][self.user.language].format(sticker_time=sticker_time,
-                                                                                     route_number=route_number,
-                                                                                     minutes=minutes)
-            message += line_msg + "\n"
+            line_msg = MessageFormatter(self.user).get_message({'arrival_bus_times': 'none'},
+                                                               {'route_number': route_number,
+                                                                'minutes': minutes,
+                                                                'sticker_time': sticker_time}),
+            message += line_msg[0] + "\n"
         return fmt.text(message)
 
     def bus_arrival_not(self):
-        message = self.messages['bus_arrival_not'][self.user.language]
-        return fmt.text(message)
+        return MessageFormatter(self.user).get_message({'arrival_bus_not': 'none'})
 
 # import aiogram.utils.markdown as fmt
 #

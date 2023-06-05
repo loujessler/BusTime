@@ -8,13 +8,13 @@ from filters import HaveInDb
 from keyboards.inline.bus_stops import ikb_menu_bus_stops
 from keyboards.inline.settings import ikb_back_to_settings
 
-from data.messages.settings_messages import Messages
 from states.regist import Regist
 from utils.db_api import quick_commands as commands
 
 from handlers.main.settings.settings_menu import handler_settings_menu
 from handlers.main.inline_handlers.inline_back import handler_back
 from handlers.main.bot_start import edit_ls
+from utils.i18n import MessageFormatter
 
 
 @dp.callback_query_handler(HaveInDb(True), text='delete_bus_stop')
@@ -28,7 +28,7 @@ async def choose_stop(call: types.CallbackQuery):
                                              False).inline_keyboard + ikb_back_to_settings(user).inline_keyboard
 
     await edit_ls.edit_last_message(
-        Messages(user).get_choose_bus_stop(),
+        MessageFormatter(user).get_message({'setting_choose_bus_stop': 'bold'}),
         call, ikb
     )
     await Regist.delete_bus_stop.set()
@@ -36,7 +36,7 @@ async def choose_stop(call: types.CallbackQuery):
 
 @dp.callback_query_handler(HaveInDb(True), state=Regist.delete_bus_stop)
 async def handler_delete_bus_stop(call: types.CallbackQuery, state: FSMContext):
-    if call.data == 'back':
+    if call.data == 'back_to_main_menu':
         # Here call your function or handler for 'back'
         await handler_back(call)
         await state.finish()
@@ -49,7 +49,6 @@ async def handler_delete_bus_stop(call: types.CallbackQuery, state: FSMContext):
         return
 
     user = await commands.select_user(call.from_user.id)
-    msg_text = Messages(user)
 
     callback_data = call.data.split('_')
     id_unique = int(callback_data[2])
@@ -58,12 +57,12 @@ async def handler_delete_bus_stop(call: types.CallbackQuery, state: FSMContext):
     delete_stop = await commands.delete_bus_stop(user, id_unique)
     if delete_stop:
         await edit_ls.edit_last_message(
-            msg_text.get_delete_stop_true(),
+            MessageFormatter(user).get_message({'setting_delete_stop_true': 'bold'}),
             call, ikb_back_to_settings(user)
         )
     else:
         await edit_ls.edit_last_message(
-            msg_text.get_delete_stop_false(),
+            MessageFormatter(user).get_message({'setting_delete_stop_false': 'bold'}),
             call, ikb_back_to_settings(user)
         )
     await state.finish()

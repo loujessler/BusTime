@@ -1,0 +1,75 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ua\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.1\n"
+
+# Start message
+msgid "welcome_message"
+msgstr "🌟🚌 Ласкаво просимо до BUSTIME - сервісу розкладів громадського транспорту в Тбілісі! 🚍🎉"
+
+msgid "instructions_message"
+msgstr ""
+"Тут ви можете отримати актуальний розклад, вказавши номер зупинки. 🔢\n"
+"Просто введіть номер, і ми надамо вам інформацію про наближаючі автобуси. 📋\n"
+"\n"
+"😊💡 Ви також можете додати нотатки до зупинки, яка вас цікавить, для зручного відстеження інформації про неї. Для цього виберіть пункт \"Мої зупинки\" (/my_bus_stops) в меню і введіть назву зупинки та її ID. 📝"
+
+# Settings
+msgid "setting_menu"
+msgstr "🔧⚙️ Налаштування"
+
+msgid "setting_menu_lang"
+msgstr "🌐 Мова: {language}"
+
+msgid "setting_change_language"
+msgstr "🌐 Змінити мову"
+
+msgid "setting_change_language_done"
+msgstr "🔄 Мову успішно змінено"
+
+msgid "setting_choose_bus_stop"
+msgstr "🚏 Виберіть зупинку, яку хочете видалити"
+
+msgid "setting_delete_stop_true"
+msgstr "✅ Зупинку успішно видалено"
+
+msgid "setting_delete_stop_false"
+msgstr "❌ Зупинку не видалено. Спробуйте ще раз"
+
+# Bus stops
+msgid "bus_stops_no_bus_stops"
+msgstr ""
+"🚫 У вас ще немає улюблених зупинок\n"
+"\n"
+"🔠 Введіть ім'я зупинки:"
+
+msgid "bus_stops_name"
+msgstr "🔠 Введіть ім'я зупинки:"
+
+msgid "bus_stops_id_stop"
+msgstr "🆔 Введіть ID зупинки:"
+
+msgid "bus_stops_choose_bus_stop"
+msgstr "🔍 Виберіть улюблену зупинку"
+
+msgid "bus_stops_finish_add_stop"
+msgstr "✅ Збережено зупинку: {name} - {id_stop}"
+
+msgid "bus_stops_finish_cancel"
+msgstr "❌ Зупинка не збережена"
+
+
+# Arrival
+msgid "arrival_bus_times"
+msgstr "{sticker_time} {route_number} → {minutes} хв"
+
+msgid "arrival_bus_not"
+msgstr "У найближчий час 🚌 не очікується або такої 🚏 не існує"

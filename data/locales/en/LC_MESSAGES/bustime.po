@@ -1,0 +1,74 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.1\n"
+
+# Start message
+msgid "welcome_message"
+msgstr "🌟🚌 Welcome to BUSTIME - public transport schedule service in Tbilisi! 🚍🎉"
+
+msgid "instructions_message"
+msgstr ""
+"Here you can get the current schedule by indicating the bus stop number. 🔢\n"
+"Just enter the number, and we will provide you with information about the approaching buses. 📋\n"
+"\n"
+"😊💡 You can also add notes to the bus stop you are interested in for easy tracking of its information. To do this, select the 'My stops' (/my_bus_stops) item in the menu and enter the name of the stop and its ID. 📝"
+
+# Settings
+msgid "setting_menu"
+msgstr "🔧⚙️ Settings"
+
+msgid "setting_menu_lang"
+msgstr "🌐 Language: {language}"
+
+msgid "setting_change_language"
+msgstr "🌐 Change language"
+
+msgid "setting_change_language_done"
+msgstr "🔄 Language changed successfully"
+
+msgid "setting_choose_bus_stop"
+msgstr "🚏 Choose the stop you want to delete"
+
+msgid "setting_delete_stop_true"
+msgstr "✅ Stop deleted successfully"
+
+msgid "setting_delete_stop_false"
+msgstr "❌ Stop was not deleted. Try again"
+
+# Bus stops
+msgid "bus_stops_no_bus_stops"
+msgstr ""
+"🚫 You have no favourite stops yet\n"
+"\n"
+"🔠 Enter the name of the stop:"
+
+msgid "bus_stops_name"
+msgstr "🔠 Enter the name of the stop:"
+
+msgid "bus_stops_id_stop"
+msgstr "🆔 Enter the ID of the stop:"
+
+msgid "bus_stops_choose_bus_stop"
+msgstr "🔍 Choose a favourite stop"
+
+msgid "bus_stops_finish_add_stop"
+msgstr "✅ Saved stop: {name} - {id_stop}"
+
+msgid "bus_stops_finish_cancel"
+msgstr "❌ Stop not saved"
+
+# Arrival
+msgid "arrival_bus_times"
+msgstr "{sticker_time} {route_number} → {minutes} min"
+
+msgid "arrival_bus_not"
+msgstr "No 🚌 is expected in the near future or such a 🚏 does not exist"

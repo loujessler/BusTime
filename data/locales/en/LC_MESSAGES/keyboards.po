@@ -1,0 +1,37 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.1\n"
+
+# Keyboards
+msgid "bus_stops"
+msgstr "🚏 My bus stops"
+
+msgid "settings"
+msgstr "⚙️ Settings"
+
+msgid "add_new_bus_stop"
+msgstr "➕ Add more"
+
+msgid "change_language"
+msgstr "🌐 Change language"
+
+msgid "delete_bus_stop"
+msgstr "🚏 Delete bus stop"
+
+msgid "back"
+msgstr "🔙 Back"
+
+msgid "back_to_main_menu"
+msgstr "🔝 Back to main menu"
+
+msgid "back_to_settings"
+msgstr "🔙 Back to settings"

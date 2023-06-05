@@ -6,13 +6,17 @@ from loader import dp
 from utils.arrival import arrival
 
 
-# Хэндлер для обработки текстовых сообщений
+# # Хэндлер для обработки текстовых сообщений
 @dp.message_handler(content_types=types.ContentTypes.TEXT)
 async def handle_bus_stop_message(message: types.Message):
     # Получение текста сообщения
     text = message.text
-    if int(text):
-        await arrival(text, message)
+    try:
+        # Попытка преобразовать текст в целое число
+        bus_stop_id = int(text)
+        await arrival(bus_stop_id, message)
+    except ValueError:
+        pass
 
 
 @dp.callback_query_handler(text_startswith='stop_')

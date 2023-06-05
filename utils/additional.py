@@ -28,4 +28,4 @@ def return_msg_aio_type(aio_type) -> types.Message:
     elif isinstance(aio_type, types.Message):
         return aio_type
     else:
-        return None  # Выход из функции, если передан некорректный объект
+        return  # Выход из функции, если передан некорректный объект
