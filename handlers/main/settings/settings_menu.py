@@ -17,7 +17,7 @@ from utils.i18n import MessageFormatter
 async def handler_settings_menu(call: CallbackQuery):
     user = await commands.select_user(call.from_user.id)
     await edit_ls.edit_last_message(
-        MessageFormatter(user).get_message(
+        MessageFormatter(user.language).get_message(
             {'setting_menu': 'bold',
              'setting_menu_lang': 'italic'},
             {'language': languages[user.language]}, 2
@@ -32,7 +32,7 @@ async def settings_menu_command(message: Message):
     user = await commands.select_user(message.from_user.id)
     await message.delete()
     await edit_ls.edit_last_message(
-        MessageFormatter(user).get_message(
+        MessageFormatter(user.language).get_message(
             {'setting_menu': 'bold',
              'setting_menu_lang': 'italic'},
             {'language': languages[user.language]}, 2

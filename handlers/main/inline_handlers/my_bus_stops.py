@@ -52,7 +52,7 @@ async def set_name_bus_stops(call: types.CallbackQuery, state: FSMContext):
     user = await commands.select_user(call.from_user.id)
     asyncio.create_task(TimeRegistrate(state, call, user).state_timer())
     sent_message = await edit_ls.edit_last_message(
-        MessageFormatter(user).get_message({'bus_stops_name': 'none'}),
+        MessageFormatter(user.language).get_message({'bus_stops_name': 'none'}),
         call, None, 'HTML', True
     )
     Regist.name_bus_stops_state.message_id = sent_message.message_id  # Сохраняем message_id
@@ -68,7 +68,7 @@ async def number_bus_stop(message: types.Message, state: FSMContext):
     await bot.delete_message(message.from_user.id,
                              Regist.name_bus_stops_state.message_id)  # Используйте message_id отсюда
     sent_message = await edit_ls.edit_last_message(
-        MessageFormatter(user).get_message({'bus_stops_id_stop': 'none'}),
+        MessageFormatter(user.language).get_message({'bus_stops_id_stop': 'none'}),
         message, None, 'HTML', True
     )
     Regist.id_bus_stops_state.message_id = sent_message.message_id
@@ -85,12 +85,11 @@ async def create_fav_bus_stop(message: types.Message, state: FSMContext):
         data = await state.get_data()
         name = data.get('name')
         message_id = data.get('message_id')
-        # await bot.delete_message(message.from_user.id, message_id)
         await bot.delete_message(message.from_user.id, message.message_id)
         await bot.delete_message(message.from_user.id, Regist.id_bus_stops_state.message_id)
         await commands.add_bus_stop(user, name=name, id_stop=id_stop)
         bus_stops = await commands.select_all_bus_stops(user)
-        msg_f = MessageFormatter(user)
+        msg_f = MessageFormatter(user.language)
         if bus_stops:
             await edit_ls.edit_last_message(
                 msg_f.get_message({'bus_stops_finish_add_stop': 'none'},
@@ -105,53 +104,3 @@ async def create_fav_bus_stop(message: types.Message, state: FSMContext):
         await state.finish()
     else:
         await message.answer("Please input a number between 0 and 100000.")
-
-# @dp.callback_query_handler(text='add_new_bus_stop')
-# async def set_name_bus_stops(message: types.Message):
-#     user = await commands.select_user(message.from_user.id)
-#     await edit_ls.edit_last_message(
-#         MessageFormatter(user).get_message({'bus_stops_name': 'none'}),
-#         message
-#     )
-#     await Regist.name_bus_stops_state.set()
-#
-#
-# @dp.message_handler(HaveInDb(True), state=Regist.name_bus_stops_state)
-# async def number_bus_stop(message: types.Message, state: FSMContext):
-#     user = await commands.select_user(message.from_user.id)
-#     await state.update_data(name=message.text)
-#     await bot.delete_message(message.from_user.id, message.message_id)
-#     await edit_ls.edit_last_message(
-#         MessageFormatter(user).get_message({'bus_stops_id_stop': 'none'}),
-#         message
-#     )
-#     await Regist.id_bus_stops_state.set()
-#
-#
-# @dp.message_handler(HaveInDb(True), state=Regist.id_bus_stops_state)
-# async def create_fav_bus_stop(message: types.Message, state: FSMContext):
-#     user = await commands.select_user(message.from_user.id)
-#     id_stop = int(message.text)
-#     if 0 <= id_stop <= 100000:
-#         await state.update_data(id_stop=message.text)
-#         data = await state.get_data()
-#         name = data.get('name')
-#         await bot.delete_message(message.from_user.id, message.message_id)
-#         await commands.add_bus_stop(user, name=name, id_stop=id_stop)
-#         bus_stops = await commands.select_all_bus_stops(user)
-#         msg_f = MessageFormatter(user)
-#         if bus_stops:
-#             await edit_ls.edit_last_message(
-#                 msg_f.get_message({'bus_stops_finish_add_stop': 'none'},
-#                                   {'name': name, 'id_stop': id_stop}),
-#                 message, ikb_menu_bus_stops(user, bus_stops)
-#             )
-#         else:
-#             await edit_ls.edit_last_message(
-#                 msg_f.get_message({'bus_stops_finish_add_stop': 'none'},
-#                                   {'name': name, 'id_stop': id_stop}),
-#                 message
-#             )
-#         await state.finish()
-#     else:
-#         await message.answer("Please input a number between 0 and 100000.")

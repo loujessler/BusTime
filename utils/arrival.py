@@ -47,7 +47,7 @@ async def arrival(id_stop, aio_type):
                 ikb_menu(user)
             )
         else:
-            text = MessageFormatter(user).get_message({'back_to_main_menu': 'none'}, None, 0, 'keyboards')
+            text = MessageFormatter(user.language).get_message({'back_to_main_menu': 'none'}, None, 0, 'keyboards')
             ikb = InlineKeyboardMarkup(row_width=2)
             ikb.add(InlineKeyboardButton(text=text, callback_data='back'))
             await edit_ls.edit_last_message(

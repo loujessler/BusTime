@@ -24,12 +24,12 @@ async def my_bus_stops(aio_type, state):
             #     message, ikb=ikb_menu_bus_stops(bus_stops)
             # )
             await edit_ls.edit_last_message(
-                MessageFormatter(user).get_message({'bus_stops_choose_bus_stop': 'none'}),
+                MessageFormatter(user.language).get_message({'bus_stops_choose_bus_stop': 'none'}),
                 aio_type, ikb_menu_bus_stops(user, bus_stops)
             )
         else:
             sent_message = await edit_ls.edit_last_message(
-                MessageFormatter(user).get_message({'bus_stops_no_bus_stops': 'none'}),
+                MessageFormatter(user.language).get_message({'bus_stops_no_bus_stops': 'none'}),
                 aio_type, None, 'HTML', True
             )
             Regist.name_bus_stops_state.message_id = sent_message.message_id  # Сохраняем message_id
