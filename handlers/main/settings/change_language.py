@@ -20,7 +20,7 @@ from handlers.main.bot_start import edit_ls
 async def change_language(call: types.CallbackQuery):
     user = await commands.select_user(call.from_user.id)
     await edit_ls.edit_last_message(
-        MessageFormatter(user).get_message(
+        MessageFormatter(user.language).get_message(
             {'setting_change_language': 'bold'},
             None, 2
         ),
@@ -35,9 +35,9 @@ async def update_language(call: types.CallbackQuery, state: FSMContext):
     user = await commands.select_user(call.from_user.id)
     await commands.update_language(user.user_id, call.data)
     user = await commands.select_user(call.from_user.id)
-    await set_start_commands(call.bot, call.from_user.id, user)
+    await set_start_commands(call)
     await edit_ls.edit_last_message(
-        MessageFormatter(user).get_message(
+        MessageFormatter(user.language).get_message(
             {'setting_change_language_done': 'bold'}),
         call,
         ikb_back_to_settings(user)

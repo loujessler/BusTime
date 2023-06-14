@@ -21,7 +21,7 @@ async def on_startup(dp):
     await on_startup_notify(dp)
 
     from utils.set_bot_commands import set_default_commands
-    await set_default_commands(bot)
+    await set_default_commands()
 
 
 if __name__ == '__main__':

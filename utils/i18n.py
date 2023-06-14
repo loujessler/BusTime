@@ -12,8 +12,8 @@ class MessageFormatter:
         # Добавьте здесь другие стили по мере необходимости
     }
 
-    def __init__(self, user):
-        self.language = user.language
+    def __init__(self, language):
+        self.language = language
 
     def get_translations(self, domain):
         return Translations.load(config.LOCALES_DIR, [self.language], domain)

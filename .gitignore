@@ -1,2 +1,4 @@
 .env
 py_log.log
+/shelf/
+/workspace.xml

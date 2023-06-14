@@ -13,10 +13,9 @@ from utils.i18n import MessageFormatter
 async def handler_back(call: CallbackQuery):
     user = await commands.select_user(call.from_user.id)
     await edit_ls.edit_last_message(
-        MessageFormatter(user).get_message({'welcome_message': 'bold',
-                                            'instructions_message': 'italic'},
-                                           None, 2),
+        MessageFormatter(user.language).get_message({'welcome_message': 'bold',
+                                                     'instructions_message': 'italic'},
+                                                    None, 2),
         call,
         ikb_menu(user)
     )
-

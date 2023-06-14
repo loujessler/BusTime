@@ -13,9 +13,9 @@ def ikb_menu_bus_stops(user, bus_stops, not_delete=True):
         inline_keyboard.append(row)
     if not_delete:
         # Добавление двух дополнительных кнопок в отдельных рядах
-        inline_keyboard.append([InlineKeyboardButton(text=MessageFormatter(user).get_message(
+        inline_keyboard.append([InlineKeyboardButton(text=MessageFormatter(user.language).get_message(
                                            {'add_new_bus_stop': 'none'}, None, 0, 'keyboards'), callback_data='add_new_bus_stop')])
-        inline_keyboard.append([InlineKeyboardButton(text=MessageFormatter(user).get_message(
+        inline_keyboard.append([InlineKeyboardButton(text=MessageFormatter(user.language).get_message(
                                            {'back_to_main_menu': 'none'}, None, 0, 'keyboards'), callback_data='back')])
 
     ikb_bus_stops = InlineKeyboardMarkup(inline_keyboard=inline_keyboard)
