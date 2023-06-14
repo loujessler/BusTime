@@ -40,9 +40,9 @@ async def command_start(message: types.Message):
         return
 
     if user.status == 'active':
-        text = MessageFormatter(user).get_message({'welcome_message': 'bold',
-                                                   'instructions_message': 'italic'},
-                                                  None, 2)
+        text = MessageFormatter(user.language).get_message({'welcome_message': 'bold',
+                                                            'instructions_message': 'italic'},
+                                                           None, 2)
         markup = ikb_menu(user)
     elif user.status == 'baned':
         text = 'Ты забанен!'
@@ -61,10 +61,6 @@ async def command_start(message: types.Message):
                            state=Regist.language)
 async def first_message(call: types.CallbackQuery, state: FSMContext):
     language = call.data
-
-    # # Set the chosen language
-    # global _
-    # _ = set_language(language).gettext
 
     await state.update_data(language=language)
     user_id = call.from_user.id
@@ -85,11 +81,11 @@ async def first_message(call: types.CallbackQuery, state: FSMContext):
 
     user = await commands.select_user(user_id)
     if user is not None:
-        await set_start_commands(call.bot, user_id, user)
+        await set_start_commands(call)
         await edit_ls.edit_last_message(
-            MessageFormatter(user).get_message({'welcome_message': 'bold',
-                                                'instructions_message': 'italic'},
-                                               None, 2),
+            MessageFormatter(user.language).get_message({'welcome_message': 'bold',
+                                                         'instructions_message': 'italic'},
+                                                        None, 2),
             call, ikb_menu(user)
         )
 

@@ -34,7 +34,7 @@ class TimeRegistrate:
                 pass
         await self.state.finish()
         await edit_ls.edit_last_message(
-            MessageFormatter(self.user).get_message({'bus_stops_finish_cancel': 'none'}),
+            MessageFormatter(self.user.language).get_message({'bus_stops_finish_cancel': 'none'}),
             aio_type, ikb_default(self.user)
         )
 

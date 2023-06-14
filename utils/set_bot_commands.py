@@ -1,10 +1,12 @@
 from aiogram import types
 from aiogram.types import BotCommandScopeDefault, BotCommandScopeChat
 
+from data.languages import languages
+from loader import bot
 from utils.i18n import MessageFormatter
 
 
-async def set_default_commands(bot):
+async def set_default_commands():
     return await bot.set_my_commands(
         commands=[
             types.BotCommand('start', 'Start'),
@@ -13,7 +15,7 @@ async def set_default_commands(bot):
     )
 
 
-async def set_start_commands(bot, chat_id, user):
+async def set_start_commands(aio_type):
     command_ids = {
         'menu': 'menu',
         'my_bus_stops': 'my_bus_stops',
@@ -21,7 +23,12 @@ async def set_start_commands(bot, chat_id, user):
         'help': 'help'
     }
 
-    formatter = MessageFormatter(user)
+    if aio_type.from_user.language_code not in languages:
+        language = 'en'
+    else:
+        language = aio_type.from_user.language_code
+
+    formatter = MessageFormatter(language)
 
     commands = []
     for command, msg_id in command_ids.items():
@@ -30,36 +37,6 @@ async def set_start_commands(bot, chat_id, user):
 
     await bot.set_my_commands(
         commands=commands,
-        scope=BotCommandScopeChat(chat_id),
-        language_code=user.language
+        scope=BotCommandScopeChat(aio_type.message.chat.id),
+        language_code=language
     )
-
-
-
-# async def set_start_commands(bot, chat_id, language):
-#     text_commands = {
-#         'ru': [
-#             types.BotCommand('menu', 'Главное меню'),
-#             types.BotCommand('my_bus_stops', '🚏 Мои остановки'),
-#             types.BotCommand('settings', '⚙️ Настройки'),
-#             types.BotCommand('help', '💬 Помощь'),
-#         ],
-#         'en': [
-#             types.BotCommand('menu', 'Main menu'),
-#             types.BotCommand('my_bus_stops', '🚏 My bus stops'),
-#             types.BotCommand('settings', '⚙️ Settings'),
-#             types.BotCommand('help', '💬 Help'),
-#         ],
-#         'ka': [
-#             types.BotCommand('menu', 'მთავარი მენიუ'),
-#             types.BotCommand('my_bus_stops', '🚏 ჩემი გაჩერებული გაჩერება'),
-#             types.BotCommand('settings', '⚙️ პარამეტრები'),
-#             types.BotCommand('help', '💬 დახმარება'),
-#         ],
-#     }
-#     for language_code, commands in text_commands.items():
-#         await bot.set_my_commands(
-#             commands=commands,
-#             scope=BotCommandScopeChat(chat_id),
-#             language_code=language_code
-#         )
