@@ -1,4 +1,5 @@
 from .bot_start import dp
+from .admins import dp
 from .notification import dp
 from .inline_handlers import dp
 from .settings import dp
