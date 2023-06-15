@@ -69,7 +69,7 @@ msgstr "❌ Зупинка не збережена"
 
 # Arrival
 msgid "arrival_bus_times"
-msgstr "{sticker_time} {route_number} → {minutes} хв"
+msgstr "{sticker_time} {type_transport} {route_number} → {minutes} хв"
 
 msgid "arrival_bus_not"
 msgstr "У найближчий час 🚌 не очікується або такої 🚏 не існує"
