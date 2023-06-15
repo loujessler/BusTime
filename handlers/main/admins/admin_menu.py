@@ -44,7 +44,7 @@ async def count_users_func(call: types.CallbackQuery):
     count_users = await commands.count_users()
     await edit_ls.edit_last_message(
         MessageFormatter(user.language).get_message(
-            {'choose': 'bold'},
+            {'users': 'bold'},
             {'count_users': count_users},
             0,
             'admins'
