@@ -68,7 +68,7 @@ msgstr "❌ გაჩერება არ არის შენახულ�
 
 # Arrival
 msgid "arrival_bus_times"
-msgstr "{sticker_time} {route_number} → {minutes} წუთ"
+msgstr "{sticker_time} {type_transport} {route_number} → {minutes} წუთ"
 
 msgid "arrival_bus_not"
 msgstr "ახლომდელ დროს 🚌 არ იყოფება ან ასეთი 🚏 არ არსებობს"

@@ -11,6 +11,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.3.1\n"
 
+# Times
+msgid "minutes"
+msgstr "мин"
+
+msgid "seconds"
+msgstr "сек"
+
 # Keyboards
 msgid "bus_stops"
 msgstr "🚏 Мои остановки"
@@ -35,3 +42,28 @@ msgstr "🔝 В главное меню"
 
 msgid "back_to_settings"
 msgstr "🔙 Назад в настройки"
+
+msgid "refresh"
+msgstr "🔄 Обновить"
+
+# Notification
+msgid "notification"
+msgstr "🔔 Установить уведомление"
+
+msgid "set_notification"
+msgstr "✅ Установить"
+
+msgid "set_notification_time"
+msgstr "⏰ Задайте время для уведомления"
+
+msgid "done_set_notification_time"
+msgstr "👌 Установлено уведомление на {minutes} минут и {seconds} секунд"
+
+msgid "received_notification"
+msgstr "❗❗❗ВНИМАНИЕ❗❗❗\n"
+"\n"
+"🔔 Уведомление о прибытии 🚌"
+
+# Notification errors
+msgid "error_set_notification"
+msgstr "🚫 Нельзя установить уведомление на 0 минут и 0 секунд"

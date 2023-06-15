@@ -1,16 +1,14 @@
 import httpx
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from loader import bot
 
-from keyboards.inline import ikb_menu
+from keyboards.inline.inline_kb_default import ikb_default
 
 from utils.additional import return_msg_aio_type
 from utils.edit_last_message import EditLastMessage
 from utils.db_api import quick_commands as commands
 
 from data.messages.arrival_messages import ArrivalMessages
-from utils.i18n import MessageFormatter
 
 edit_ls = EditLastMessage(bot)
 
@@ -44,59 +42,25 @@ async def arrival(id_stop, aio_type):
             await edit_ls.edit_last_message(
                 msg.bus_arrival_times(),
                 aio_type,
-                ikb_menu(user)
+                ikb_default(user, {
+                    'refresh': f'stop_{code_bus_stop}',
+                    'notification': 'notification',
+                    'back_to_main_menu': 'back_to_main_menu',
+                })
             )
         else:
-            text = MessageFormatter(user.language).get_message({'back_to_main_menu': 'none'}, None, 0, 'keyboards')
-            ikb = InlineKeyboardMarkup(row_width=2)
-            ikb.add(InlineKeyboardButton(text=text, callback_data='back'))
             await edit_ls.edit_last_message(
                 msg.bus_arrival_not(),
                 aio_type,
-                ikb
+                ikb_default(user, {
+                    'refresh': f'stop_{code_bus_stop}',
+                    'notification': 'notification',
+                    'back_to_main_menu': 'back_to_main_menu',
+                })
+                # ikb_default(user)
             )
 
     except httpx.HTTPStatusError as e:
         await bot.send_message(chat_id, f'Error while executing request: {e}')
     except httpx.ReadTimeout:
         await bot.send_message(chat_id, "The request to the server has timed out. Please try again later.")
-
-# async def arrival(id_stop, aio_type):
-#     chat_id = return_msg_aio_type(aio_type).chat.id
-#     code_bus_stop = id_stop
-#     url = f'http://transfer.ttc.com.ge:8080/otp/routers/ttc/stopArrivalTimes?stopId={code_bus_stop}'
-#
-#     async with httpx.AsyncClient() as client:
-#         response = await client.get(url)
-#
-#     if response.status_code == 200:
-#         json_data = response.json()  # Получаем данные JSON
-#         # Проверяем наличие ключа 'ArrivalTime' и выводим его значение
-#         if 'ArrivalTime' in json_data:
-#             arrival_times = json_data['ArrivalTime']
-#             num_arrival_times = len(arrival_times)  # Находим длину arrival_times
-#             user = await commands.select_user(aio_type.from_user.id)
-#             msg = ArrivalMessages(user, arrival_times, code_bus_stop)
-#             if num_arrival_times:
-#                 await edit_ls.edit_last_message(
-#                     msg.bus_arrival_times(),
-#                     aio_type,
-#                     ikb_menu(user)
-#                 )
-#             else:
-#                 back = {
-#                     'ru': '🔝 В главное меню',
-#                     'en': '🔝 Main menu'
-#                 }
-#                 ikb = InlineKeyboardMarkup(row_width=2)
-#                 ikb.add(InlineKeyboardButton(text=back[user.language],
-#                                              callback_data='back'))
-#                 await edit_ls.edit_last_message(
-#                     msg.bus_arrival_not(),
-#                     aio_type,
-#                     ikb
-#                 )
-#         else:
-#             await bot.send_message(chat_id, 'ArrivalTime key not found in JSON data')
-#     else:
-#         await bot.send_message(chat_id, f'Error while executing request: {response.status_code}')
