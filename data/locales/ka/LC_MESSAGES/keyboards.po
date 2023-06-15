@@ -11,6 +11,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.3.1\n"
 
+# Times
+msgid "minutes"
+msgstr "წუთი"
+
+msgid "seconds"
+msgstr "წამი"
+
 # Keyboards
 msgid "bus_stops"
 msgstr "🚏 ჩემი გაჩერებები"
@@ -35,3 +42,28 @@ msgstr "🔝 მთავარი მენიუსკენ"
 
 msgid "back_to_settings"
 msgstr "🔙 პარამეტრებში"
+
+msgid "refresh"
+msgstr "🔄 განაახლეთ"
+
+# Notification
+msgid "notification"
+msgstr "🔔 შეტყობინების დაყენება"
+
+msgid "set_notification"
+msgstr "✅ მზადაა"
+
+msgid "set_notification_time"
+msgstr "⏰ დააყენეთ შეტყობინების დრო"
+
+msgid "done_set_notification_time"
+msgstr "👌 შეტყობინება დაყენებულია {minutes} წუთი(ები)ზე და {seconds} წამ(ებ)ზე"
+
+msgid "received_notification"
+msgstr "❗❗❗ყურადღება❗❗❗\n"
+"\n"
+"🔔 შემოსვლის შეტყობინება 🚌"
+
+# Notification errors
+msgid "error_set_notification"
+msgstr "🚫 შეუძლებელია შეტყობინების დაყენება 0 წუთისა და 0 წამისთვის"
