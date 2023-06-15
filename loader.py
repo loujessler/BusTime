@@ -18,7 +18,7 @@ import filters
 # NOTSET            0
 
 logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
-                    # filename="py_log.log",
+                    filename="py_log.log",
                     level=int(config.DEBUG))
 
 bot = Bot(token=config.API_TOKEN, parse_mode=types.ParseMode.HTML)
