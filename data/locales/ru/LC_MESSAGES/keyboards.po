@@ -67,3 +67,10 @@ msgstr "❗❗❗ВНИМАНИЕ❗❗❗\n"
 # Notification errors
 msgid "error_set_notification"
 msgstr "🚫 Нельзя установить уведомление на 0 минут и 0 секунд"
+
+# Admins
+msgid "count_users"
+msgstr "Посчитать пользователей"
+
+msgid "back_to_admin_menu"
+msgstr "🔙 Назад в меню администратора"
