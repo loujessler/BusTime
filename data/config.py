@@ -1,4 +1,5 @@
 import os
+import json
 
 from dotenv import load_dotenv
 
@@ -6,9 +7,10 @@ load_dotenv()  # take environment variables from .env.
 
 API_TOKEN = str(os.environ.get("API_TOKEN"))
 
-ADMINS = [
-    6405640
-]
+# Получение строки из переменной окружения
+str_admins = os.getenv('ADMINS')
+# Конвертация JSON строки обратно в список
+ADMINS = json.loads(str_admins)
 
 ip = str(os.getenv('ip'))
 POSTGRES_USER = str(os.getenv('POSTGRES_USER'))

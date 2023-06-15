@@ -1,6 +1,4 @@
 async def on_startup(dp):
-    import filters
-    filters.setup(dp)
 
     from loader import db
     from utils.db_api.db_gino import on_startup
