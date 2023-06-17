@@ -3,7 +3,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 from data import config
 
-from utils.compilation_languages import compile_translations
+from utils.localization.compilation_languages import compile_translations
 from utils.db_api.db_gino import db
 
 import logging

@@ -22,6 +22,9 @@ msgstr "сек"
 msgid "bus_stops"
 msgstr "🚏 Мои остановки"
 
+msgid "search_bus_stops"
+msgstr "🔎 Найти остановки поблизости"
+
 msgid "settings"
 msgstr "⚙️ Настройки"
 
@@ -72,5 +75,25 @@ msgstr "🚫 Нельзя установить уведомление на 0 м�
 msgid "count_users"
 msgstr "Посчитать пользователей"
 
+msgid "refresh_bus_stops_data"
+msgstr "Обновить информацию остановок"
+
 msgid "back_to_admin_menu"
 msgstr "🔙 Назад в меню администратора"
+
+# Search stops
+msgid "add_current_bus_stop"
+msgstr "➕ Добавить в избранное"
+
+msgid "search_check_arrival"
+msgstr "🕒 Посмотреть расписание остановки"
+
+# Setting
+msgid "settings_bus_stop"
+msgstr "⚙️ Настройки избранных остановок 🚏"
+
+msgid "change_name_bus_stop"
+msgstr "🔠 Изменить имя остановки"
+
+msgid "change_code_bus_stop"
+msgstr "🆔 Изменить ID остановки"

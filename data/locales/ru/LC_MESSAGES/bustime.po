@@ -38,11 +38,17 @@ msgstr "🔄 Язык успешно изменен"
 msgid "setting_choose_bus_stop"
 msgstr "🚏 Выберите остановку, которую хотите удалить"
 
+msgid "setting_choose_bus_stop_change"
+msgstr "🚏 Выберите остановку, которую изменить"
+
 msgid "setting_delete_stop_true"
 msgstr "✅ Остановка успешно удалена"
 
 msgid "setting_delete_stop_false"
 msgstr "❌ Остановка не удалена. Повторите попытку"
+
+msgid "settings_bus_stop"
+msgstr "⚙️ Настройки избранных остановок"
 
 # Bus stops
 msgid "bus_stops_no_bus_stops"
@@ -66,9 +72,40 @@ msgstr "✅ Сохранена остановка: {name} - {id_stop}"
 msgid "bus_stops_finish_cancel"
 msgstr "❌ Остановка не сохранена"
 
+msgid "change_name_bus_stops_cancel"
+msgstr "❌ Имя не изменено"
+
+msgid "change_code_bus_stops_cancel"
+msgstr "❌ ID не изменен"
+
 # Arrival
 msgid "arrival_bus_times"
 msgstr "{sticker_time} {type_transport} {route_number} → {minutes} мин"
 
 msgid "arrival_bus_not"
 msgstr "В ближайшее время 🚌 не ожидается или такой 🚏 не существует"
+
+msgid "arrival_bus_stop_not_exists"
+msgstr "Такой 🚏 не существует"
+
+# Show alerts
+msgid "send_location"
+msgstr ""
+"Пожалуйста, воспользуйтесь булавкой 📎 и выберите «Геопозиция», чтобы поделиться своим местоположением.\n\n"
+"А мы отправим вам остановки поблизости 😉"
+
+# Search stops
+msgid "found_stop_header"
+msgstr "*🚏 Ближайшие автобусные остановки:*"
+
+msgid "found_stop"
+msgstr ""
+"{i} {name}\n"
+"Код: {code}, Расстояние: `{distance} км`"
+
+msgid "found_stop_footer"
+msgstr "*👇 По кнопкам ниже можете выбрать остановку, чтобы посмотреть ее на карте 🌍 или добавить в избранное ⭐*"
+
+msgid "found_stop_choose"
+msgstr ""
+"Остановка: {name}\nКод: {code}\n[Посмотреть на Google Maps]({map_link})"

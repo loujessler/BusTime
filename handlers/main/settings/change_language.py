@@ -1,16 +1,16 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
+from keyboards.inline.inline_kb_default import ikb_default
 from loader import dp
 
 from data.languages import languages
 
 from keyboards.inline.language_inline_kb import ikb_languages
-from keyboards.inline.settings import ikb_back_to_settings
 
 from states.regist import Regist
 from utils.db_api import quick_commands as commands
-from utils.i18n import MessageFormatter
+from utils.localization.i18n import MessageFormatter
 from utils.set_bot_commands import set_start_commands
 
 from handlers.main.bot_start import edit_ls
@@ -40,6 +40,7 @@ async def update_language(call: types.CallbackQuery, state: FSMContext):
         MessageFormatter(user.language).get_message(
             {'setting_change_language_done': 'bold'}),
         call,
-        ikb_back_to_settings(user)
+        ikb_default(user, {'back_to_settings': 'back_to_settings',
+                           'back_to_main_menu': 'back_to_main_menu'})
     )
     await state.finish()

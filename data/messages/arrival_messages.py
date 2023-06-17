@@ -1,7 +1,7 @@
 import aiogram.utils.markdown as fmt
 
 from utils.additional import number_to_emoji
-from utils.i18n import MessageFormatter
+from utils.localization.i18n import MessageFormatter
 
 
 class ArrivalMessages:

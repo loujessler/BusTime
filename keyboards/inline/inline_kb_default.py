@@ -1,6 +1,6 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from utils.i18n import MessageFormatter
+from utils.localization.i18n import MessageFormatter
 
 
 # texts = ['back_to_settings', 'back_to_main_menu']

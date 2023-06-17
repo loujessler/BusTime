@@ -3,7 +3,7 @@ from aiogram.types import BotCommandScopeDefault, BotCommandScopeChat
 
 from data.languages import languages
 from loader import bot
-from utils.i18n import MessageFormatter
+from utils.localization.i18n import MessageFormatter
 
 
 async def set_default_commands():

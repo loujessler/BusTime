@@ -1,16 +1,23 @@
 from aiogram.types import CallbackQuery
 
-from loader import dp
+from loader import dp, bot
 
 from keyboards.inline import ikb_menu
 
 from handlers.main.bot_start import edit_ls
 from utils.db_api import quick_commands as commands
-from utils.i18n import MessageFormatter
+from utils.localization.i18n import MessageFormatter
 
 
-@dp.callback_query_handler(text=['back', 'back_to_main_menu'])
+@dp.callback_query_handler(text_startswith='back_to_main_menu')
 async def handler_back(call: CallbackQuery):
+    # Получаем данные из обратного вызова
+    callback_data = call.data
+    splitted_data = callback_data.split('_')
+    if len(splitted_data) > 4:
+        if splitted_data[4] == 'wmap':
+            await bot.delete_message(call.message.chat.id, splitted_data[5])
+
     user = await commands.select_user(call.from_user.id)
     await edit_ls.edit_last_message(
         MessageFormatter(user.language).get_message({'welcome_message': 'bold',
