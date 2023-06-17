@@ -15,6 +15,7 @@ def load_stops_data(tag: str = None):
     else:
         return {stop[tag] for stop in stops_data}
 
+
 # Функция для сохранения данных станций в JSON-файле
 def save_stations_data(stations_data):
     with open('./data/stations_data.json', 'w', encoding='utf-8') as f:
