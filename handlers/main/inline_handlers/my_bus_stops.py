@@ -53,7 +53,7 @@ async def set_name_bus_stops(call: types.CallbackQuery, state: FSMContext):
     # Получаем данные из обратного вызова
     callback_data = call.data
     splitted_data = callback_data.split('_')
-    if len(splitted_data) > 3:
+    if len(splitted_data) > 4:
         name = splitted_data[4]
         id_stop = int(splitted_data[5])
         await commands.add_bus_stop(user, name=name, id_stop=id_stop)

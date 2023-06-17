@@ -1,4 +1,4 @@
 .env
-py_log.log
+./py_log.log
 /shelf/
 /workspace.xml
