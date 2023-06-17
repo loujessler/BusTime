@@ -1,6 +1,6 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from utils.i18n import MessageFormatter
+from utils.localization.i18n import MessageFormatter
 
 
 def ikb_menu(user):
@@ -10,6 +10,11 @@ def ikb_menu(user):
                                        InlineKeyboardButton(text=MessageFormatter(user.language).get_message(
                                            {'bus_stops': 'none'}, None, 0, 'keyboards'),
                                            callback_data='my_bus_stops'),
+                                   ],
+                                   [
+                                       InlineKeyboardButton(text=MessageFormatter(user.language).get_message(
+                                           {'search_bus_stops': 'none'}, None, 0, 'keyboards'),
+                                           callback_data='search_bus_stops'),
                                    ],
                                    [
                                        InlineKeyboardButton(text=MessageFormatter(user.language).get_message(

@@ -1,6 +1,6 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from utils.i18n import MessageFormatter
+from utils.localization.i18n import MessageFormatter
 
 
 def make_keyboard(user, minutes, seconds):

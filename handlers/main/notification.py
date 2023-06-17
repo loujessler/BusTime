@@ -9,9 +9,8 @@ from handlers.main.bot_start import edit_ls
 
 from keyboards.inline.inline_kb_notification import make_keyboard
 
-from utils.arrival import arrival
 from utils.db_api import quick_commands as commands
-from utils.i18n import MessageFormatter
+from utils.localization.i18n import MessageFormatter
 
 
 @dp.callback_query_handler(text='notification')

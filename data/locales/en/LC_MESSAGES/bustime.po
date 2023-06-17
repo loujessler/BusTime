@@ -38,11 +38,17 @@ msgstr "🔄 Language changed successfully"
 msgid "setting_choose_bus_stop"
 msgstr "🚏 Choose the stop you want to delete"
 
+msgid "setting_choose_bus_stop_change"
+msgstr "🚏 Choose the stop to modify"
+
 msgid "setting_delete_stop_true"
 msgstr "✅ Stop deleted successfully"
 
 msgid "setting_delete_stop_false"
 msgstr "❌ Stop was not deleted. Try again"
+
+msgid "settings_bus_stop"
+msgstr "⚙️ Settings of favorite stops"
 
 # Bus stops
 msgid "bus_stops_no_bus_stops"
@@ -72,3 +78,28 @@ msgstr "{sticker_time} {type_transport} {route_number} → {minutes} min"
 
 msgid "arrival_bus_not"
 msgstr "No 🚌 is expected in the near future or such a 🚏 does not exist"
+
+msgid "arrival_bus_stop_not_exists"
+msgstr "Such a 🚏 does not exist"
+
+# Show alerts
+msgid "send_location"
+msgstr ""
+"Please use the pin icon 📎 and select 'Share Location' to share your current location.\n\n"
+"We will send you the nearby bus stops 😉"
+
+# Search stops
+msgid "found_stop_header"
+msgstr "*🚏 Nearest Bus Stops:*"
+
+msgid "found_stop"
+msgstr ""
+"{i} {name}\n"
+"Code: {code}, Distance: `{distance} km`"
+
+msgid "found_stop_footer"
+msgstr "*👇 You can select a stop below to view it on the map 🌍 or add it to favorites ⭐*"
+
+msgid "found_stop_choose"
+msgstr ""
+"Stop: {name}\nCode: {code}\n[View on Google Maps]({map_link})"

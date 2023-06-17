@@ -8,7 +8,7 @@ from utils.additional import return_msg_aio_type
 from utils.db_api import quick_commands as commands
 
 from handlers.main.bot_start import edit_ls
-from utils.i18n import MessageFormatter
+from utils.localization.i18n import MessageFormatter
 
 
 async def my_bus_stops(aio_type, state):
