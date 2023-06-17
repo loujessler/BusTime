@@ -7,7 +7,7 @@ from keyboards.inline.inline_kb_default import ikb_default
 
 from utils.additional import return_msg_aio_type
 from utils.db_api import quick_commands as commands
-from utils.i18n import MessageFormatter
+from utils.localization.i18n import MessageFormatter
 
 from handlers.main.bot_start import edit_ls
 
@@ -23,6 +23,7 @@ async def admin_menu(aio_type):
         ikb_default(
             user,
             {'count_users': 'count_users',
+             'refresh_bus_stops_data': 'refresh_bus_stops_data',
              'back_to_main_menu': 'back_to_main_menu'}
         )
     )
@@ -36,23 +37,3 @@ async def admin_handler(message: types.Message):
 @dp.callback_query_handler(text='back_to_admin_menu')
 async def admin_handler_cmd(call: types.CallbackQuery):
     await admin_menu(call)
-
-
-@dp.callback_query_handler(text='count_users')
-async def count_users_func(call: types.CallbackQuery):
-    user = await commands.select_user(call.from_user.id)
-    count_users = await commands.count_users()
-    await edit_ls.edit_last_message(
-        MessageFormatter(user.language).get_message(
-            {'users': 'bold'},
-            {'count_users': count_users},
-            0,
-            'admins'
-        ),
-        call,
-        ikb_default(
-            user,
-            {'back_to_admin_menu': 'back_to_admin_menu',
-             'back_to_main_menu': 'back_to_main_menu'}
-        )
-    )

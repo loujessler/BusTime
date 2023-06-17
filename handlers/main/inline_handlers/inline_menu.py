@@ -8,7 +8,7 @@ from keyboards.inline import ikb_menu
 
 from utils.db_api import quick_commands as commands
 from handlers.main.bot_start import edit_ls
-from utils.i18n import MessageFormatter
+from utils.localization.i18n import MessageFormatter
 
 
 @dp.message_handler(Command('menu'), HaveInDb(True))

@@ -12,7 +12,7 @@ from keyboards.inline.bus_stops import ikb_menu_bus_stops
 from states.regist import Regist, TimeRegistrate
 
 from utils.db_api import quick_commands as commands
-from utils.i18n import MessageFormatter
+from utils.localization.i18n import MessageFormatter
 from utils.my_bus_stops import my_bus_stops
 
 from handlers.main.bot_start import edit_ls
@@ -47,16 +47,38 @@ async def ignore_text_in_id_bus_stops_state(message: types.Message, state: FSMCo
     await bot.delete_message(chat_id=response.chat.id, message_id=response.message_id)
 
 
-@dp.callback_query_handler(text='add_new_bus_stop')
+@dp.callback_query_handler(text_startswith='add_new_bus_stop')
 async def set_name_bus_stops(call: types.CallbackQuery, state: FSMContext):
     user = await commands.select_user(call.from_user.id)
-    asyncio.create_task(TimeRegistrate(state, call, user).state_timer())
-    sent_message = await edit_ls.edit_last_message(
-        MessageFormatter(user.language).get_message({'bus_stops_name': 'none'}),
-        call, None, 'HTML', True
-    )
-    Regist.name_bus_stops_state.message_id = sent_message.message_id  # Сохраняем message_id
-    await Regist.name_bus_stops_state.set()
+    # Получаем данные из обратного вызова
+    callback_data = call.data
+    splitted_data = callback_data.split('_')
+    if len(splitted_data) > 3:
+        name = splitted_data[4]
+        id_stop = int(splitted_data[5])
+        await commands.add_bus_stop(user, name=name, id_stop=id_stop)
+        await bot.delete_message(call.message.chat.id, splitted_data[6])
+        bus_stops = await commands.select_all_bus_stops(user)
+        msg_f = MessageFormatter(user.language)
+        if bus_stops:
+            await edit_ls.edit_last_message(
+                msg_f.get_message({'bus_stops_finish_add_stop': 'none'},
+                                  {'name': name, 'id_stop': id_stop}),
+                call, ikb_menu_bus_stops(user, bus_stops)
+            )
+        else:
+            await edit_ls.edit_last_message(
+                msg_f.get_message({'bus_stops_finish_cancel': 'none'}),
+                call
+            )
+    else:
+        asyncio.create_task(TimeRegistrate(state, call, user).state_timer())
+        sent_message = await edit_ls.edit_last_message(
+            MessageFormatter(user.language).get_message({'bus_stops_name': 'none'}),
+            call, None, 'HTML', True
+        )
+        Regist.name_bus_stops_state.message_id = sent_message.message_id  # Сохраняем message_id
+        await Regist.name_bus_stops_state.set()
 
 
 @dp.message_handler(HaveInDb(True), state=Regist.name_bus_stops_state)

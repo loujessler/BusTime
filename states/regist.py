@@ -5,8 +5,8 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 from keyboards.inline.inline_kb_default import ikb_default
 from loader import bot
 from utils.additional import return_msg_aio_type
-from utils.arrival import edit_ls
-from utils.i18n import MessageFormatter
+from utils.ttc_requests.arrival import edit_ls
+from utils.localization.i18n import MessageFormatter
 
 
 class Regist(StatesGroup):
@@ -15,6 +15,8 @@ class Regist(StatesGroup):
     change_language = State()
     name_bus_stops_state = State()
     id_bus_stops_state = State()
+    change_name_bus_stop = State()
+    change_code_bus_stop = State()
     delete_bus_stop = State()
     msg = State()
 
@@ -25,7 +27,7 @@ class TimeRegistrate:
         self.sent_message = send_message
         self.user = user
 
-    async def on_timeout(self):
+    async def on_timeout(self, message_send: str):
         aio_type = return_msg_aio_type(self.sent_message)
         for i in range(4):
             try:
@@ -34,7 +36,7 @@ class TimeRegistrate:
                 pass
         await self.state.finish()
         await edit_ls.edit_last_message(
-            MessageFormatter(self.user.language).get_message({'bus_stops_finish_cancel': 'none'}),
+            MessageFormatter(self.user.language).get_message({message_send: 'none'}),
             aio_type, ikb_default(self.user)
         )
 
@@ -49,6 +51,10 @@ class TimeRegistrate:
             state_name = state_name.split(':')[1]
         # Проверка, есть ли у нас нужные данные
         if state_name == 'name_bus_stops_state' and 'name' not in data:
-            await self.on_timeout()
+            await self.on_timeout('bus_stops_finish_cancel')
         elif state_name == 'id_bus_stops_state' and 'id_stop' not in data:
-            await self.on_timeout()
+            await self.on_timeout('bus_stops_finish_cancel')
+        elif state_name == 'change_name_bus_stop' and 'name' not in data:
+            await self.on_timeout('change_name_bus_stops_cancel')
+        elif state_name == 'change_code_bus_stop' and 'stop_code' not in data:
+            await self.on_timeout('change_code_bus_stops_cancel')

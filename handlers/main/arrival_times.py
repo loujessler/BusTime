@@ -1,9 +1,9 @@
 from aiogram import types
 from aiogram.types import CallbackQuery
 
-from loader import dp
+from loader import dp, bot
 
-from utils.arrival import arrival
+from utils.ttc_requests.arrival import arrival
 
 
 # # Хэндлер для обработки текстовых сообщений
@@ -23,6 +23,10 @@ async def handle_bus_stop_message(message: types.Message):
 async def call_handler_stop(call: CallbackQuery):
     # Получаем данные из обратного вызова
     callback_data = call.data
-    text = callback_data.split('_')[1]
-    if int(text):
-        await arrival(text, call)
+    splitted_data = callback_data.split('_')
+    code_bus_stop = splitted_data[1]
+    if len(splitted_data) > 2:
+        if splitted_data[2] == 'wmap':
+            await bot.delete_message(call.message.chat.id, splitted_data[3])
+    if int(code_bus_stop):
+        await arrival(code_bus_stop, call)

@@ -17,7 +17,7 @@ from states.regist import Regist
 from utils.db_api import quick_commands as commands
 from utils.edit_last_message import EditLastMessage
 from utils.set_bot_commands import set_start_commands
-from utils.i18n import MessageFormatter
+from utils.localization.i18n import MessageFormatter
 
 edit_ls = EditLastMessage(bot)
 
