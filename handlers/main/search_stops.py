@@ -41,6 +41,7 @@ async def process_location(message: types.Message):
         buttons.append(button)
     msg += msg_class.get_message({'found_stop_footer': 'none'})
     keyboard.row(*buttons)
+    keyboard.inline_keyboard += ikb_default(user).inline_keyboard
     await message.answer(text=msg, reply_markup=keyboard, parse_mode=types.ParseMode.MARKDOWN)
 
 
