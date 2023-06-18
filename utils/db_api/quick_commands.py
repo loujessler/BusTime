@@ -91,16 +91,16 @@ async def delete_bus_stop(user, id_unique):
         return False
 
 
-async def select_bus_stop_by_id(id):
-    bus_stop = await BusStop.query.where(BusStop.id == id).gino.first()
+async def select_bus_stop_by_id(id_unique):
+    bus_stop = await BusStop.query.where(BusStop.id == id_unique).gino.first()
     return bus_stop
 
 
-async def update_name_bus_stop(id, name):
-    bus_stop = await select_bus_stop_by_id(id)
+async def update_name_bus_stop(id_unique, name):
+    bus_stop = await select_bus_stop_by_id(id_unique)
     await bus_stop.update(name=name).apply()
 
 
-async def update_code_bus_stop(id, id_stop):
-    bus_stop = await select_bus_stop_by_id(id)
+async def update_code_bus_stop(id_unique, id_stop):
+    bus_stop = await select_bus_stop_by_id(id_unique)
     await bus_stop.update(id_stop=id_stop).apply()

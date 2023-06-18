@@ -22,7 +22,7 @@ async def arrival(code_bus_stop, aio_type):
     except:
         pass
     user = await commands.select_user(aio_type.from_user.id)
-    if code_bus_stop not in load_stops_data('code'):
+    if str(code_bus_stop) not in load_stops_data('code'):
         await edit_ls.edit_last_message(
             MessageFormatter(user.language).get_message({'arrival_bus_stop_not_exists': 'bold'}),
             aio_type,
