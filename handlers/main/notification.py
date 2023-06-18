@@ -45,16 +45,16 @@ async def process_callback(call: types.CallbackQuery):
     elif action == 'dec_minutes':
         minutes = max(0, old_minutes - 1)
     elif action == 'inc_seconds':
-        seconds += 5
+        seconds += 10
         if seconds >= 60:
             minutes += 1
             seconds -= 60
     elif action == 'dec_seconds':
         if seconds == 0:
             minutes = max(0, minutes - 1)
-            seconds = 55
+            seconds = 50
         else:
-            seconds = max(0, old_seconds - 5)
+            seconds = max(0, old_seconds - 10)
     elif action == 'set_notification':
         if minutes == 0 and seconds == 0:
             await call.answer(msg.get_message({'error_set_notification': 'none'}, None, 0, 'keyboards'),
