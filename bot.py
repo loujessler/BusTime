@@ -1,3 +1,6 @@
+import os
+
+
 async def on_startup(dp):
 
     from loader import db
@@ -21,10 +24,21 @@ async def on_startup(dp):
     from utils.set_bot_commands import set_default_commands
     await set_default_commands()
 
+    # Запуск aiohttp сервера
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, '127.0.0.1', 8080)
+    await site.start()
+
 
 if __name__ == '__main__':
+    import asyncio
     from aiogram import executor
     from handlers import dp
-    from loader import shutdown, bot
+    from loader import shutdown, bot, app
+
+    from aiohttp import web
 
     executor.start_polling(dp, on_startup=on_startup, on_shutdown=shutdown)
+
+

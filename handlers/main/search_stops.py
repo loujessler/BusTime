@@ -29,7 +29,7 @@ async def process_location(message: types.Message):
     for i, (d, index) in enumerate(zip(dist[0], ind[0]), start=1):
         stop = bus_stops[index]
 
-        name = stop['name'] if user.language is 'ka' else stop['name_translit']
+        name = stop['name'] if user.language == 'ka' else stop['name_translit']
         code = stop['code']
         # преобразуем евклидово расстояние в географическое расстояние
         distance = d * 111  # примерное преобразование для масштаба градусов в километры на широтах около 45 градусов
@@ -52,7 +52,7 @@ async def process_callback_button(call: types.CallbackQuery):
     # Получаем данные из обратного вызова
     index = int(call.data.split('_')[1])
     stop = bus_stops[index]
-    name = stop['name'] if user.language is 'ka' else stop['name_translit']
+    name = stop['name'] if user.language == 'ka' else stop['name_translit']
     code = stop['code']
     map_link = f'http://www.google.com/maps/place/{stop["lat"]},{stop["lon"]}'
 
