@@ -1,5 +1,6 @@
 from aiogram import Bot, types, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiohttp.web_app import Application
 
 from data import config
 
@@ -31,6 +32,14 @@ dp = Dispatcher(bot, storage=storage)
 filters.setup(dp)
 
 compile_translations(config.LOCALES_DIR)
+
+# Web
+app = Application()
+from web.routers import handle, home
+# Добавление обработчиков в роутер приложения
+# app.router.add_get('/data/routes/{name}', handle)
+app.router.add_static('/data/routes/', path='./data/routes/', name='routes')
+app.router.add_get('/', home)
 
 
 async def shutdown(dispatcher: Dispatcher):
