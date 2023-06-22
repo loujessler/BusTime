@@ -1,3 +1,4 @@
+from .test import dp
 from .bot_start import dp
 from .admins import dp
 from .notification import dp
