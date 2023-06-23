@@ -63,6 +63,9 @@ msgstr "🔠 Enter the name of the stop:"
 msgid "bus_stops_id_stop"
 msgstr "🆔 Enter the ID of the stop:"
 
+msgid "click_for_cancel"
+msgstr "For cancellation -> /cancel"
+
 msgid "bus_stops_choose_bus_stop"
 msgstr "🔍 Choose a favourite stop"
 

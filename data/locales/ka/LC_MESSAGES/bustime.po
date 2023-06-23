@@ -63,6 +63,9 @@ msgstr "🔠 შეიყვანეთ საგარემოს სახ�
 msgid "bus_stops_id_stop"
 msgstr "🆔 შეიყვანეთ საგარემოს ID:"
 
+msgid "click_for_cancel"
+msgstr "გაუქმებისთვის -> /cancel"
+
 msgid "bus_stops_choose_bus_stop"
 msgstr "🔍 აირჩიეთ ფავორიტი საგარემო"
 
