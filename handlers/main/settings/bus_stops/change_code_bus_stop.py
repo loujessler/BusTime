@@ -1,7 +1,6 @@
-import asyncio
-
 from aiogram import types
 from aiogram.dispatcher import FSMContext
+from aiogram.dispatcher.filters import Command
 
 from loader import dp, bot
 
@@ -9,11 +8,30 @@ from handlers.main.bot_start import edit_ls
 
 from keyboards.inline.bus_stops import ikb_menu_bus_stops
 from keyboards.inline.inline_kb_default import ikb_default
-from states.regist import TimeRegistrate, Regist
 
+from states.regist import Regist
+
+from utils.cancel_state import cancel_func
 from utils.db_api import quick_commands as commands
 from utils.db_api.quick_commands import update_code_bus_stop, select_bus_stop_by_id
+from utils.decorators.get_user_db import get_user_db
 from utils.localization.i18n import MessageFormatter
+from utils.db_api.schemes.user import User as SCHUser
+
+
+# Отмена при определенных состояниях
+@dp.message_handler(Command('cancel'), state=Regist.change_code_bus_stop)
+@get_user_db
+async def ignore_commands_in_state(message: types.Message, user: SCHUser, state: FSMContext):
+    state_mapping = {
+        'Regist:change_code_bus_stop': Regist.change_code_bus_stop,
+    }
+    format_dict = {'change_code_bus_stops_cancel': 'none'}
+    buttons = {
+        'back_to_settings': 'back_to_settings',
+        'back_to_main_menu': 'back_to_main_menu',
+    }
+    await cancel_func(message, user, state, state_mapping, format_dict, buttons)
 
 
 @dp.callback_query_handler(text='change_code_bus_stop')
@@ -45,10 +63,11 @@ async def change_code_bus_stop(call: types.CallbackQuery, state: FSMContext):
     Regist.change_code_bus_stop.id_stop = splitted_data[3]
 
     user = await commands.select_user(call.from_user.id)
-    asyncio.create_task(TimeRegistrate(state, call, user).state_timer())
 
     sent_message = await edit_ls.edit_last_message(
-        MessageFormatter(user.language).get_message({'bus_stops_id_stop': 'none'}),
+        MessageFormatter(user.language).get_message(format_dict={'bus_stops_id_stop': 'none',
+                                                                 'click_for_cancel': 'italic'},
+                                                    line_breaks=2),
         call, None, 'HTML', True
     )
     Regist.change_code_bus_stop.message_id = sent_message.message_id  # Сохраняем message_id
