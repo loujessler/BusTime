@@ -9,11 +9,14 @@ from filters import HaveInDb
 
 from keyboards.inline.bus_stops import ikb_menu_bus_stops
 
-from states.regist import Regist, TimeRegistrate
+from states.regist import Regist
+from utils.cancel_state import cancel_func
 
 from utils.db_api import quick_commands as commands
+from utils.db_api.schemes.user import User as SCHUser
 from utils.localization.i18n import MessageFormatter
 from utils.my_bus_stops import my_bus_stops
+from utils.decorators.get_user_db import get_user_db
 
 from handlers.main.bot_start import edit_ls
 
@@ -29,18 +32,20 @@ async def message_my_bus_stops(message: types.Message, state: FSMContext):
     await my_bus_stops(message, state)
 
 
-# Игнорирование состояния при определенных состояниях
-@dp.message_handler(Regexp("^/"), state=Regist.name_bus_stops_state)
-@dp.message_handler(Regexp("^/"), state=Regist.id_bus_stops_state)
-async def ignore_commands_in_state(message: types.Message):
-    await message.delete()
-    response = await message.answer("Commands are not allowed in the current state.")
-    await asyncio.sleep(5)
-    await bot.delete_message(chat_id=response.chat.id, message_id=response.message_id)
+# Отмена при определенных состояниях
+@dp.message_handler(Command('cancel'), state=[Regist.name_bus_stops_state, Regist.id_bus_stops_state])
+@get_user_db
+async def ignore_commands_in_state(message: types.Message, user: SCHUser, state: FSMContext):
+    state_mapping = {
+        'Regist:name_bus_stops_state': Regist.name_bus_stops_state,
+        'Regist:id_bus_stops_state': Regist.id_bus_stops_state,
+    }
+    format_dict = {'bus_stops_finish_cancel': 'none'}
+    await cancel_func(message, user, state, state_mapping, format_dict)
 
 
 @dp.message_handler(HaveInDb(True), Regexp(r'^[^\d]+$'), state=Regist.id_bus_stops_state)
-async def ignore_text_in_id_bus_stops_state(message: types.Message, state: FSMContext):
+async def ignore_text_in_id_bus_stops_state(message: types.Message):
     await message.delete()
     response = await message.answer("Commands are not allowed in the current state.")
     await asyncio.sleep(5)
@@ -62,8 +67,8 @@ async def set_name_bus_stops(call: types.CallbackQuery, state: FSMContext):
         msg_f = MessageFormatter(user.language)
         if bus_stops:
             await edit_ls.edit_last_message(
-                msg_f.get_message({'bus_stops_finish_add_stop': 'none'},
-                                  {'name': name, 'id_stop': id_stop}),
+                msg_f.get_message(format_dict={'bus_stops_finish_add_stop': 'none'},
+                                  format_args={'name': name, 'id_stop': id_stop}),
                 call, ikb_menu_bus_stops(user, bus_stops)
             )
         else:
@@ -72,9 +77,10 @@ async def set_name_bus_stops(call: types.CallbackQuery, state: FSMContext):
                 call
             )
     else:
-        asyncio.create_task(TimeRegistrate(state, call, user).state_timer())
         sent_message = await edit_ls.edit_last_message(
-            MessageFormatter(user.language).get_message({'bus_stops_name': 'none'}),
+            MessageFormatter(user.language).get_message(format_dict={'bus_stops_name': 'none',
+                                                                     'click_for_cancel': 'italic'},
+                                                        line_breaks=2),
             call, None, 'HTML', True
         )
         Regist.name_bus_stops_state.message_id = sent_message.message_id  # Сохраняем message_id
@@ -84,13 +90,14 @@ async def set_name_bus_stops(call: types.CallbackQuery, state: FSMContext):
 @dp.message_handler(HaveInDb(True), state=Regist.name_bus_stops_state)
 async def number_bus_stop(message: types.Message, state: FSMContext):
     user = await commands.select_user(message.from_user.id)
-    asyncio.create_task(TimeRegistrate(state, message, user).state_timer())
     await state.update_data(name=message.text)
     await bot.delete_message(message.from_user.id, message.message_id)
     await bot.delete_message(message.from_user.id,
                              Regist.name_bus_stops_state.message_id)  # Используйте message_id отсюда
     sent_message = await edit_ls.edit_last_message(
-        MessageFormatter(user.language).get_message({'bus_stops_id_stop': 'none'}),
+        MessageFormatter(user.language).get_message(format_dict={'bus_stops_id_stop': 'none',
+                                                                 'click_for_cancel': 'italic'},
+                                                    line_breaks=2),
         message, None, 'HTML', True
     )
     Regist.id_bus_stops_state.message_id = sent_message.message_id
@@ -100,7 +107,6 @@ async def number_bus_stop(message: types.Message, state: FSMContext):
 @dp.message_handler(HaveInDb(True), state=Regist.id_bus_stops_state)
 async def create_fav_bus_stop(message: types.Message, state: FSMContext):
     user = await commands.select_user(message.from_user.id)
-    asyncio.create_task(TimeRegistrate(state, message, user).state_timer())
     id_stop = int(message.text)
     if 0 <= id_stop <= 100000:
         await state.update_data(id_stop=message.text)
