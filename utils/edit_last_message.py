@@ -9,7 +9,7 @@ class EditLastMessage:
     async def edit_last_message(self, new_message_text, aio_type, new_keyboard=None, parse_mode='HTML',
                                 return_message_info=False):
         # Получаем идентификатор чата в зависимости от типа входящего объекта
-        message = return_msg_aio_type(aio_type)
+        message = await return_msg_aio_type(aio_type)
 
         if message is not None:
             chat_id = message.chat.id

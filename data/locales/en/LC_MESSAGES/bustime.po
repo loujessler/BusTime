@@ -80,7 +80,7 @@ msgid "arrival_bus_times"
 msgstr "{sticker_time} {type_transport} {route_number} → {minutes} min"
 
 msgid "arrival_bus_not"
-msgstr "No 🚌 is expected in the near future or such a 🚏 does not exist"
+msgstr "No 🚌 is expected in the near future"
 
 msgid "arrival_bus_stop_not_exists"
 msgstr "Such a 🚏 does not exist"

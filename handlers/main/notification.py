@@ -16,21 +16,18 @@ from utils.localization.i18n import MessageFormatter
 @dp.callback_query_handler(text='notification')
 async def notification(call: types.CallbackQuery):
     user = await commands.select_user(call.from_user.id)
-    await call.message.edit_reply_markup(reply_markup=ikb_default(user, {
-        'back_to_main_menu': 'back_to_main_menu',
-    }))
-    await bot.send_message(
+    msg_locale = await bot.send_message(
         chat_id=call.message.chat.id,
         text=MessageFormatter(user.language).get_message({'set_notification_time': 'none'}, None, 0, 'keyboards'),
         reply_markup=make_keyboard(user, 1, 30)
     )
+    await call.message.edit_reply_markup(reply_markup=ikb_default(user, {
+        'back_to_main_menu': f'back_to_main_menu:message_id:{msg_locale.message_id}',
+    }))
 
 
-@dp.callback_query_handler(lambda c: c.data.startswith('inc_minutes') or
-                                     c.data.startswith('dec_minutes') or
-                                     c.data.startswith('inc_seconds') or
-                                     c.data.startswith('dec_seconds') or
-                                     c.data.startswith('set_notification'))
+@dp.callback_query_handler(text_startswith=['inc_minutes', 'dec_minutes', 'inc_seconds',
+                                            'dec_seconds', 'set_notification'])
 async def process_callback(call: types.CallbackQuery):
     user = await commands.select_user(call.from_user.id)
     msg = MessageFormatter(user.language)

@@ -35,13 +35,19 @@ async def message_my_bus_stops(message: types.Message, state: FSMContext):
 # Отмена при определенных состояниях
 @dp.message_handler(Command('cancel'), state=[Regist.name_bus_stops_state, Regist.id_bus_stops_state])
 @get_user_db
-async def ignore_commands_in_state(message: types.Message, user: SCHUser, state: FSMContext):
+async def cancel_state_bus_stops(message: types.Message, user: SCHUser, state: FSMContext):
     state_mapping = {
         'Regist:name_bus_stops_state': Regist.name_bus_stops_state,
         'Regist:id_bus_stops_state': Regist.id_bus_stops_state,
     }
     format_dict = {'bus_stops_finish_cancel': 'none'}
     await cancel_func(message, user, state, state_mapping, format_dict)
+
+
+# Игнорирование состояния при определенных состояниях
+@dp.message_handler(Regexp("^/"), state=[Regist.name_bus_stops_state, Regist.id_bus_stops_state])
+async def ignore_commands_in_state(message: types.Message):
+    await message.delete()
 
 
 @dp.message_handler(HaveInDb(True), Regexp(r'^[^\d]+$'), state=Regist.id_bus_stops_state)
