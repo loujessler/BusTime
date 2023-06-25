@@ -13,10 +13,10 @@ from utils.localization.i18n import MessageFormatter
 async def handler_back(call: CallbackQuery):
     # Получаем данные из обратного вызова
     callback_data = call.data
-    splitted_data = callback_data.split('_')
-    if len(splitted_data) > 4:
-        if splitted_data[4] == 'wmap':
-            await bot.delete_message(call.message.chat.id, splitted_data[5])
+    splitted_data = callback_data.split(':')
+    if len(splitted_data) > 1:
+        if splitted_data[1] == 'message_id':
+            await bot.delete_message(call.message.chat.id, splitted_data[2])
 
     user = await commands.select_user(call.from_user.id)
     await edit_ls.edit_last_message(

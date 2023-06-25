@@ -14,7 +14,7 @@ from handlers.main.bot_start import edit_ls
 
 async def admin_menu(aio_type):
     user = await commands.select_user(aio_type.from_user.id)
-    aio_type = return_msg_aio_type(aio_type)
+    aio_type = await return_msg_aio_type(aio_type)
     await aio_type.delete()
     await edit_ls.edit_last_message(
         MessageFormatter(user.language).get_message({'choose': 'bold'},

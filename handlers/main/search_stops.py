@@ -68,6 +68,6 @@ async def process_callback_button(call: types.CallbackQuery):
             user,
             {'search_check_arrival': f'stop_{code}_wmap_{msg_locale.message_id}',
              'add_current_bus_stop': f'add_new_bus_stop_{name}_{code}_{msg_locale.message_id}',
-             'back_to_main_menu': f'back_to_main_menu_wmap_{msg_locale.message_id}'}
+             'back_to_main_menu': f'back_to_main_menu:message_id:{msg_locale.message_id}'}
         )
     )
