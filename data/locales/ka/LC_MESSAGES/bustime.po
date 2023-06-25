@@ -80,7 +80,7 @@ msgid "arrival_bus_times"
 msgstr "{sticker_time} {type_transport} {route_number} → {minutes} წუთ"
 
 msgid "arrival_bus_not"
-msgstr "ახლომდელ დროს 🚌 არ იყოფება ან ასეთი 🚏 არ არსებობს"
+msgstr "ახლომდელ დროს 🚌 არ იყოფება"
 
 msgid "arrival_bus_stop_not_exists"
 msgstr "ასეთი 🚏 არ არსებობს"

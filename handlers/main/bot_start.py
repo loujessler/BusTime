@@ -1,18 +1,12 @@
 from aiogram import types
-import aiogram.utils.markdown as fmt
-from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
-
-from data.languages import languages
-
-from filters import IsPrivate, HaveInDb
-
-from keyboards.inline import ikb_menu
-from keyboards.inline.language_inline_kb import ikb_languages
 
 from loader import dp, bot
 
-from states.regist import Regist
+from filters import IsPrivate
+from data.languages import languages
+
+from keyboards.inline import ikb_menu
 
 from utils.db_api import quick_commands as commands
 from utils.edit_last_message import EditLastMessage
@@ -22,27 +16,43 @@ from utils.localization.i18n import MessageFormatter
 edit_ls = EditLastMessage(bot)
 
 
+async def create_user(aio_type: types.Message):
+    user_data = {'user_id': aio_type.from_user.id,
+                 'first_name': aio_type.from_user.first_name,
+                 'last_name': aio_type.from_user.last_name,
+                 'username': aio_type.from_user.username}
+
+    if aio_type.from_user.language_code not in languages:
+        user_data['language'] = 'en'
+    elif aio_type.from_user.language_code == 'be':
+        user_data['language'] = 'ru'
+    else:
+        user_data['language'] = aio_type.from_user.language_code
+
+    try:
+        await commands.add_user(user_id=user_data['user_id'],
+                                first_name=user_data['first_name'],
+                                last_name=user_data['last_name'],
+                                username=user_data['username'],
+                                status='active',
+                                language=user_data['language'])
+    except Exception as e:
+        # Here you can add logging or additional error handling
+        raise e
+
+
 @dp.message_handler(Command("start", prefixes="/"), IsPrivate())
 async def command_start(message: types.Message):
-    user_id = message.from_user.id
-    user = await commands.select_user(user_id)
-    language_mes = fmt.text(
-        f'✌️ Hi, {message.from_user.first_name}.\n',
-        fmt.hbold('🏳️ Choose your language: ')
-    )
+    user = await commands.select_user(message.from_user.id)
     if user is None:
-        await message.answer(
-            language_mes,
-            parse_mode='HTML',
-            reply_markup=ikb_languages
-        )
-        await Regist.language.set()
-        return
+        await create_user(message)
+        user = await commands.select_user(message.from_user.id)
 
     if user.status == 'active':
-        text = MessageFormatter(user.language).get_message({'welcome_message': 'bold',
-                                                            'instructions_message': 'italic'},
-                                                           None, 2)
+        text = MessageFormatter(user.language).get_message(
+            {'welcome_message': 'bold',
+             'instructions_message': 'italic'},
+            None, 2)
         markup = ikb_menu(user)
     elif user.status == 'baned':
         text = 'Ты забанен!'
@@ -50,46 +60,12 @@ async def command_start(message: types.Message):
     else:
         return
 
+    await set_start_commands(message)
     await message.answer(
         text,
         parse_mode='HTML',
         reply_markup=markup
     )
-
-
-@dp.callback_query_handler(HaveInDb(False), lambda c: c.data in [language for language in languages],
-                           state=Regist.language)
-async def first_message(call: types.CallbackQuery, state: FSMContext):
-    language = call.data
-
-    await state.update_data(language=language)
-    user_id = call.from_user.id
-    first_name = call.from_user.first_name
-    last_name = call.from_user.last_name
-    username = call.from_user.username
-
-    try:
-        await commands.add_user(user_id=user_id,
-                                first_name=first_name,
-                                last_name=last_name,
-                                username=username,
-                                status='active',
-                                language=language)
-    except Exception as e:
-        # Here you can add logging or additional error handling
-        raise e
-
-    user = await commands.select_user(user_id)
-    if user is not None:
-        await set_start_commands(call)
-        await edit_ls.edit_last_message(
-            MessageFormatter(user.language).get_message({'welcome_message': 'bold',
-                                                         'instructions_message': 'italic'},
-                                                        None, 2),
-            call, ikb_menu(user)
-        )
-
-    await state.finish()
 
 
 @dp.message_handler(IsPrivate(), text='/ban')

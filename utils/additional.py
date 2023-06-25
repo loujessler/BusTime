@@ -22,7 +22,7 @@ def number_to_emoji(number):
     return emoji_number
 
 
-def return_msg_aio_type(aio_type) -> types.Message:
+async def return_msg_aio_type(aio_type):
     if isinstance(aio_type, types.CallbackQuery):
         return aio_type.message
     elif isinstance(aio_type, types.Message):

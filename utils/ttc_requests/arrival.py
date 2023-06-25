@@ -16,7 +16,7 @@ edit_ls = EditLastMessage(bot)
 
 
 async def arrival(code_bus_stop, aio_type):
-    message = return_msg_aio_type(aio_type)
+    message = await return_msg_aio_type(aio_type)
     try:
         await message.delete()
     except:
@@ -67,7 +67,6 @@ async def arrival(code_bus_stop, aio_type):
                     aio_type,
                     ikb_default(user, {
                         'refresh': f'stop_{code_bus_stop}',
-                        'notification': 'notification',
                         'back_to_main_menu': 'back_to_main_menu',
                     })
                 )

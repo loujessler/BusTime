@@ -12,7 +12,7 @@ from utils.localization.i18n import MessageFormatter
 
 
 async def my_bus_stops(aio_type, state):
-    message = return_msg_aio_type(aio_type)
+    message = await return_msg_aio_type(aio_type)
     user = await commands.select_user(message.chat.id)
     if user:
         bus_stops = await commands.select_all_bus_stops(user)
