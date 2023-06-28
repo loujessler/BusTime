@@ -98,7 +98,7 @@ msgstr "*🚏 ახალი ავტობუსური გაჩერე�
 msgid "found_stop"
 msgstr ""
 "{i} {name}\n"
-"კოდი: {code}, მანძილი: `{distance} კმ`"
+"კოდი: `{code}`, მანძილი: `{distance} კმ`"
 
 msgid "found_stop_footer"
 msgstr "*👇 შეგიძლიათ აირჩიოთ გაჩერება ქვემოთ, რათა ნახოთ ის რუკაზე 🌍 ან დაამატოთ რჩევებში ⭐*"

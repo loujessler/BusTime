@@ -1,3 +1,4 @@
+from loguru import logger
 import httpx
 
 from loader import bot
@@ -21,7 +22,9 @@ async def arrival(code_bus_stop, aio_type):
         await message.delete()
     except:
         pass
-    user = await commands.select_user(aio_type.from_user.id)
+    user_id = aio_type.from_user.id
+    user = await commands.select_user(user_id)
+
     if str(code_bus_stop) not in load_stops_data('code'):
         await edit_ls.edit_last_message(
             MessageFormatter(user.language).get_message({'arrival_bus_stop_not_exists': 'bold'}),
@@ -75,3 +78,5 @@ async def arrival(code_bus_stop, aio_type):
             await bot.send_message(chat_id, f'Error while executing request: {e}')
         except httpx.ReadTimeout:
             await bot.send_message(chat_id, "The request to the server has timed out. Please try again later.")
+    # LOGS
+    logger.log(25, f"The user {user_id} receives the schedule from {code_bus_stop}.")

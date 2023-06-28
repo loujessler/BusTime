@@ -98,7 +98,7 @@ msgstr "*🚏 Nearest Bus Stops:*"
 msgid "found_stop"
 msgstr ""
 "{i} {name}\n"
-"Code: {code}, Distance: `{distance} km`"
+"Code: `{code}`, Distance: `{distance} km`"
 
 msgid "found_stop_footer"
 msgstr "*👇 You can select a stop below to view it on the map 🌍 or add it to favorites ⭐*"
