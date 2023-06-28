@@ -1,5 +1,6 @@
 from aiogram import types
 from aiogram.dispatcher.filters import Command
+from loguru import logger
 
 from loader import dp, bot
 
@@ -39,14 +40,18 @@ async def create_user(aio_type: types.Message):
     except Exception as e:
         # Here you can add logging or additional error handling
         raise e
+    # LOGS
+    logger.log(25, f"Created new user {user_data['user_id']}.")
 
 
 @dp.message_handler(Command("start", prefixes="/"), IsPrivate())
 async def command_start(message: types.Message):
-    user = await commands.select_user(message.from_user.id)
+    user_id = message.from_user.id
+    user = await commands.select_user(user_id)
+
     if user is None:
         await create_user(message)
-        user = await commands.select_user(message.from_user.id)
+        user = await commands.select_user(user_id)
 
     if user.status == 'active':
         text = MessageFormatter(user.language).get_message(
@@ -66,6 +71,8 @@ async def command_start(message: types.Message):
         parse_mode='HTML',
         reply_markup=markup
     )
+    # LOGS
+    logger.log(25, f"The user {user_id} clicked on /start button.")
 
 
 @dp.message_handler(IsPrivate(), text='/ban')

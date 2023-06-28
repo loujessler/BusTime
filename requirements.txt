@@ -16,3 +16,4 @@ transliterate>=1.10.2
 aiohttp~=3.8.4
 folium~=0.14.0
 selenium~=4.10.0
+loguru>=0.7.0

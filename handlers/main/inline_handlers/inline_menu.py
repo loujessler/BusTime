@@ -1,3 +1,4 @@
+from loguru import logger
 from aiogram import types
 from aiogram.dispatcher.filters import Command
 
@@ -13,7 +14,8 @@ from utils.localization.i18n import MessageFormatter
 
 @dp.message_handler(Command('menu'), HaveInDb(True))
 async def menu(message: types.Message):
-    user = await commands.select_user(message.from_user.id)
+    user_id = message.from_user.id
+    user = await commands.select_user(user_id)
     await message.delete()
     await edit_ls.edit_last_message(
         MessageFormatter(user.language).get_message({'welcome_message': 'bold',
@@ -22,3 +24,5 @@ async def menu(message: types.Message):
         message,
         ikb_menu(user)
     )
+    # LOGS
+    logger.log(25, f"The user {user_id} clicked on /menu button.")
