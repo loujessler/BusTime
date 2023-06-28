@@ -1,5 +1,7 @@
+from loguru import logger
 import aiogram.utils.markdown as fmt
 from babel.support import Translations
+
 from data import config
 
 
@@ -8,23 +10,23 @@ class MessageFormatter:
     FORMAT_FUNCTIONS = {
         'bold': fmt.hbold,
         'italic': fmt.hitalic,
-        'none': lambda text: text,  # Стиль без форматирования
-        # Добавьте здесь другие стили по мере необходимости
+        'link': fmt.hlink,
+        'none': str,  # Стиль без форматирования
     }
 
     def __init__(self, language):
         self.language = language
 
-    def get_translations(self, domain):
+    def get_translations(self, domain) -> Translations:
         return Translations.load(config.LOCALES_DIR, [self.language], domain)
 
-    def get_message(self, format_dict, format_args=None, line_breaks=0, domain=config.I18N_DOMAIN):
+    def get_message(self, format_dict, format_args=None, line_breaks=0, domain=config.I18N_DOMAIN) -> str:
         translation = self.get_translations(domain)
         messages = []
 
         for message_id, format_name in format_dict.items():
             # Получаем функцию форматирования из словаря по имени стиля
-            format_func = self.FORMAT_FUNCTIONS.get(format_name, lambda text: text)
+            format_func = self.FORMAT_FUNCTIONS.get(format_name)
 
             message = translation.gettext(message_id)
 
@@ -34,10 +36,14 @@ class MessageFormatter:
 
             # Если нет перевода для message_id
             if message == message_id:
-                print(f"Warning: no translation for {message_id} in {self.language}")
+                logger.warning(f"Warning: no translation for {message_id} in {self.language}")
                 message = format_func(message_id)  # Используем идентификатор сообщения вместо перевода
             else:
-                message = format_func(message)
+                if format_name == 'link':
+                    url = translation.gettext(message_id + '_link')
+                    message = format_func(message, url)
+                else:
+                    message = format_func(message)
 
             messages.append(message)
 

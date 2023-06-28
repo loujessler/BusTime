@@ -1,3 +1,5 @@
+from loguru import logger
+
 from aiogram import types
 
 from keyboards.inline.inline_kb_default import ikb_default
@@ -14,7 +16,8 @@ bus_stops = load_stops_data()
 
 @dp.message_handler(content_types=types.ContentType.LOCATION)
 async def process_location(message: types.Message):
-    user = await commands.select_user(message.from_user.id)
+    user_id = message.from_user.id
+    user = await commands.select_user(user_id)
 
     # Пользовательская геолокация
     user_lat, user_lon = message.location.latitude, message.location.longitude
@@ -43,11 +46,14 @@ async def process_location(message: types.Message):
     keyboard.row(*buttons)
     keyboard.inline_keyboard += ikb_default(user).inline_keyboard
     await message.answer(text=msg, reply_markup=keyboard, parse_mode=types.ParseMode.MARKDOWN)
+    # LOGS
+    logger.log(25, f"The user {user_id} is looking for stops nearby.")
 
 
 @dp.callback_query_handler(text_startswith='found_')
-async def process_callback_button(call: types.CallbackQuery):
-    user = await commands.select_user(call.from_user.id)
+async def process_found_bus_stop(call: types.CallbackQuery):
+    user_id = call.from_user.id
+    user = await commands.select_user(user_id)
 
     # Получаем данные из обратного вызова
     index = int(call.data.split('_')[1])
@@ -56,9 +62,10 @@ async def process_callback_button(call: types.CallbackQuery):
     code = stop['code']
     map_link = f'http://www.google.com/maps/place/{stop["lat"]},{stop["lon"]}'
 
-    msg_locale = await bot.send_location(call.from_user.id, stop["lat"], stop["lon"])
+    msg_locale = await bot.send_location(user_id, stop["lat"], stop["lon"])
+    msg_locale_id = msg_locale.message_id
     await bot.send_message(
-        call.from_user.id,
+        user_id,
         MessageFormatter(user.language).get_message(
             {'found_stop_choose': 'none'},
             {'name': name, 'code': code, 'map_link': map_link}
@@ -66,8 +73,8 @@ async def process_callback_button(call: types.CallbackQuery):
         parse_mode=types.ParseMode.MARKDOWN,
         reply_markup=ikb_default(
             user,
-            {'search_check_arrival': f'stop_{code}_wmap_{msg_locale.message_id}',
-             'add_current_bus_stop': f'add_new_bus_stop_{name}_{code}_{msg_locale.message_id}',
-             'back_to_main_menu': f'back_to_main_menu:message_id:{msg_locale.message_id}'}
+            {'search_check_arrival': f'stop_{code}_wmap_{msg_locale_id}',
+             'add_current_bus_stop': f'add_new_bus_stop_{name}_{code}_{msg_locale_id}',
+             'back_to_main_menu': f'back_to_main_menu:message_id:{msg_locale_id}'}
         )
     )
