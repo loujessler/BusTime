@@ -13,10 +13,8 @@ from states.regist import Regist
 from utils.cancel_state import cancel_func
 
 from utils.db_api import quick_commands as commands
-from utils.db_api.schemes.user import User as SCHUser
 from utils.localization.i18n import MessageFormatter
 from utils.my_bus_stops import my_bus_stops
-from utils.decorators.get_user_db import get_user_db
 
 from handlers.main.bot_start import edit_ls
 
@@ -34,13 +32,13 @@ async def message_my_bus_stops(message: types.Message, state: FSMContext):
 
 # Отмена при определенных состояниях
 @dp.message_handler(Command('cancel'), state=[Regist.name_bus_stops_state, Regist.id_bus_stops_state])
-@get_user_db
-async def cancel_state_bus_stops(message: types.Message, user: SCHUser, state: FSMContext):
+async def cancel_state_bus_stops(message: types.Message, state: FSMContext):
     state_mapping = {
         'Regist:name_bus_stops_state': Regist.name_bus_stops_state,
         'Regist:id_bus_stops_state': Regist.id_bus_stops_state,
     }
     format_dict = {'bus_stops_finish_cancel': 'none'}
+    user = await commands.select_user(message.from_user.id)
     await cancel_func(message, user, state, state_mapping, format_dict)
 
 
@@ -59,7 +57,7 @@ async def ignore_text_in_id_bus_stops_state(message: types.Message):
 
 
 @dp.callback_query_handler(text_startswith='add_new_bus_stop')
-async def set_name_bus_stops(call: types.CallbackQuery, state: FSMContext):
+async def set_name_bus_stops(call: types.CallbackQuery):
     user = await commands.select_user(call.from_user.id)
     # Получаем данные из обратного вызова
     callback_data = call.data

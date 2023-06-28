@@ -14,15 +14,12 @@ from states.regist import Regist
 from utils.cancel_state import cancel_func
 from utils.db_api import quick_commands as commands
 from utils.db_api.quick_commands import update_name_bus_stop
-from utils.decorators.get_user_db import get_user_db
 from utils.localization.i18n import MessageFormatter
-from utils.db_api.schemes.user import User as SCHUser
 
 
 # Отмена при определенных состояниях
 @dp.message_handler(Command('cancel'), state=Regist.change_name_bus_stop)
-@get_user_db
-async def ignore_commands_in_state(message: types.Message, user: SCHUser, state: FSMContext):
+async def ignore_commands_in_state(message: types.Message, state: FSMContext):
     state_mapping = {
         'Regist:change_name_bus_stop': Regist.change_name_bus_stop,
     }
@@ -31,6 +28,7 @@ async def ignore_commands_in_state(message: types.Message, user: SCHUser, state:
         'back_to_settings': 'back_to_settings',
         'back_to_main_menu': 'back_to_main_menu',
     }
+    user = await commands.select_user(message.from_user.id)
     await cancel_func(message, user, state, state_mapping, format_dict, buttons)
 
 
