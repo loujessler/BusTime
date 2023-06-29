@@ -4,7 +4,7 @@
 VENV_PATH="/BusTimes/env"
 
 # Путь до файла с Python скриптом
-PYTHON_SCRIPT_PATH="/BusTimes/bot.py"
+PYTHON_SCRIPT_PATH="/BusTimes/run.py"
 
 # Путь до файла с зависимостями
 REQUIREMENTS_PATH="/BusTimes/requirements.txt"
