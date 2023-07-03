@@ -77,7 +77,7 @@ msgstr "❌ Stop not saved"
 
 # Arrival
 msgid "arrival_bus_times"
-msgstr "{sticker_time} {type_transport} {route_number} → {minutes} min"
+msgstr "{sticker_time} {type_transport} {route_number} → {minutes} min  {destination_name}"
 
 msgid "arrival_bus_not"
 msgstr "No 🚌 is expected in the near future"

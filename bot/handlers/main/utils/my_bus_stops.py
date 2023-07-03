@@ -14,7 +14,7 @@ async def my_bus_stops(aio_type):
         bus_stops = await commands.select_all_bus_stops(user)
         if bus_stops:
             await edit_ls.edit_last_message(
-                MessageFormatter(user.language).get_message({'bus_stops_choose_bus_stop': 'none'}),
+                MessageFormatter(user.language).get_message({'bus_stops_choose_bus_stop': 'bold'}),
                 aio_type, ikb_menu_bus_stops(user, bus_stops)
             )
         else:

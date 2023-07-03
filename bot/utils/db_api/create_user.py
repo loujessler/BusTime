@@ -1,4 +1,3 @@
-from aiogram import types
 from loguru import logger
 
 from data.languages import languages

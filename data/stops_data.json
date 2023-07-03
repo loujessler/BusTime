@@ -698,10 +698,10 @@
     {
         "id": "1:926",
         "code": "926",
-        "name": "გიორგი მიროტაძის ქუჩა",
+        "name": "პეკინის გამზირი",
         "lat": 41.72023671220484,
         "lon": 44.77601408958436,
-        "name_translit": "giorgi miroTadzis qucha"
+        "name_translit": "pekinis gamziri"
     },
     {
         "id": "1:928",
@@ -1898,10 +1898,10 @@
     {
         "id": "1:1118",
         "code": "1118",
-        "name": "ალექსი გობრონიძის ქუჩა კორპუსი #35ა",
+        "name": "\"მუხიანის IVბ მ/რ, კორპუსი #35ა\"",
         "lat": 41.78100496972343,
         "lon": 44.83011692762375,
-        "name_translit": "aleqsi gobronidzis qucha korpusi #35a"
+        "name_translit": "\"mukhianis ivb m/r, korpusi #35a\""
     },
     {
         "id": "1:1119",
@@ -3898,10 +3898,10 @@
     {
         "id": "1:1507",
         "code": "1507",
-        "name": "ილორის ქუჩა",
+        "name": "თამარ ვახვახიშვილის ქუჩა",
         "lat": 41.7899538599093,
         "lon": 44.8034966737032,
-        "name_translit": "iloris qucha"
+        "name_translit": "tamar vakhvakhishvilis qucha"
     },
     {
         "id": "1:1508",
@@ -3914,10 +3914,10 @@
     {
         "id": "1:1509",
         "code": "1509",
-        "name": "აკაკი ვასაძის ქუჩა #24",
+        "name": "თამარ ვახვახიშვილის ქუჩა",
         "lat": 41.79412038255673,
         "lon": 44.81043756008149,
-        "name_translit": "akaki vasadzis qucha #24"
+        "name_translit": "tamar vakhvakhishvilis qucha"
     },
     {
         "id": "1:1511",
@@ -5498,10 +5498,10 @@
     {
         "id": "1:1834",
         "code": "1834",
-        "name": "დოესის ქუჩა",
+        "name": "ლეხ კაჩინსკის ქუჩა",
         "lat": 41.69045993809255,
         "lon": 44.83395248651505,
-        "name_translit": "doesis qucha"
+        "name_translit": "lekh kachinskis qucha"
     },
     {
         "id": "1:1836",
@@ -5546,10 +5546,10 @@
     {
         "id": "1:1842",
         "code": "1842",
-        "name": "დოესის ქუჩა",
+        "name": "ლეხ კაჩინსკის ქუჩა",
         "lat": 41.69039384114652,
         "lon": 44.83382910490037,
-        "name_translit": "doesis qucha"
+        "name_translit": "lekh kachinskis qucha"
     },
     {
         "id": "1:1843",
@@ -8226,26 +8226,26 @@
     {
         "id": "1:2590",
         "code": "2590",
-        "name": "ალექსი გობრონიძის ქუჩა #36",
+        "name": "\"მუხიანის IVბ მ/რ, კორპუსი #36\"",
         "lat": 41.78011891264277,
         "lon": 44.83364135026932,
-        "name_translit": "aleqsi gobronidzis qucha #36"
+        "name_translit": "\"mukhianis ivb m/r, korpusi #36\""
     },
     {
         "id": "1:2591",
         "code": "2591",
-        "name": "ალექსი გობრონიძის ქუჩა #42",
+        "name": "\"მუხიანის IVბ მ/რ, კორპუსი #42\"",
         "lat": 41.77981289008425,
         "lon": 44.83586758375168,
-        "name_translit": "aleqsi gobronidzis qucha #42"
+        "name_translit": "\"mukhianis ivb m/r, korpusi #42\""
     },
     {
         "id": "1:2592",
         "code": "2592",
-        "name": "ალექსი გობრონიძის ქუჩა #36",
+        "name": "\"მუხიანის IVბ მ/რ, კორპუსი #36\"",
         "lat": 41.78027792378778,
         "lon": 44.83320482075215,
-        "name_translit": "aleqsi gobronidzis qucha #36"
+        "name_translit": "\"mukhianis ivb m/r, korpusi #36\""
     },
     {
         "id": "1:2593",
@@ -12090,18 +12090,18 @@
     {
         "id": "1:3394",
         "code": "3394",
-        "name": "ჭიჭიკო ბენდელიანის ქუჩა",
+        "name": "მარინე იაშვილის ქუჩა",
         "lat": 41.73834133450548,
         "lon": 44.80509996414185,
-        "name_translit": "ch'ich'iko bendelianis qucha"
+        "name_translit": "marine iashvilis qucha"
     },
     {
         "id": "1:3395",
         "code": "3395",
-        "name": "ჭიჭიკო ბენდელიანის ქუჩა",
+        "name": "მარინე იაშვილის ქუჩა",
         "lat": 41.73850245064209,
         "lon": 44.80479016900063,
-        "name_translit": "ch'ich'iko bendelianis qucha"
+        "name_translit": "marine iashvilis qucha"
     },
     {
         "id": "1:3396",
@@ -13722,10 +13722,10 @@
     {
         "id": "1:3668",
         "code": "3668",
-        "name": "ალექსი გობრონიძის ქუჩა კორპუსი #35ა",
+        "name": "\"მუხიანის IVბ მ/რ, კორპუსი #35ა\"",
         "lat": 41.78080895815076,
         "lon": 44.83040392398834,
-        "name_translit": "aleqsi gobronidzis qucha korpusi #35a"
+        "name_translit": "\"mukhianis ivb m/r, korpusi #35a\""
     },
     {
         "id": "1:3669",
@@ -15970,10 +15970,10 @@
     {
         "id": "1:4015",
         "code": "4015",
-        "name": "თინა იოსებიძის ქუჩა",
+        "name": "ანა კალანდაძის ქუჩა",
         "lat": 41.72709923373144,
         "lon": 44.77181911468507,
-        "name_translit": "tina iosebidzis qucha"
+        "name_translit": "ana kalandadzis qucha"
     },
     {
         "id": "1:4016",
@@ -20642,26 +20642,26 @@
     {
         "id": "1:20092",
         "code": "20092",
-        "name": "ბესარიონ ქებურიას დასახლება I ქუჩა #10",
+        "name": "\"ბესარიონ ქებურიას დასახლება, რუსუდან ჟორდანიას ქუჩა #10\"",
         "lat": 41.68660016322855,
         "lon": 44.93601590394974,
-        "name_translit": "besarion qeburias dasakhleba i qucha #10"
+        "name_translit": "\"besarion qeburias dasakhleba, rusudan zhordanias qucha #10\""
     },
     {
         "id": "1:20093",
         "code": "20093",
-        "name": "ბესარიონ ქებურიას დასახლება I ქუჩა #34",
+        "name": "\"ბესარიონ ქებურიას დასახლება, რუსუდან ჟორდანიას ქუჩა #34\"",
         "lat": 41.68477535251299,
         "lon": 44.93560552597046,
-        "name_translit": "besarion qeburias dasakhleba i qucha #34"
+        "name_translit": "\"besarion qeburias dasakhleba, rusudan zhordanias qucha #34\""
     },
     {
         "id": "1:20094",
         "code": "20094",
-        "name": "ბესარიონ ქებურიას დასახლება I ქუჩა #56",
+        "name": "\"ბესარიონ ქებურიას დასახლება, რუსუდან ჟორდანიას ქუჩა #54ა\"",
         "lat": 41.68289940917347,
         "lon": 44.93551433086396,
-        "name_translit": "besarion qeburias dasakhleba i qucha #56"
+        "name_translit": "\"besarion qeburias dasakhleba, rusudan zhordanias qucha #54a\""
     },
     {
         "id": "1:20095",
@@ -20682,26 +20682,26 @@
     {
         "id": "1:20097",
         "code": "20097",
-        "name": "ბესარიონ ქებურიას დასახლება I ქუჩა #56",
+        "name": "\"ბესარიონ ქებურიას დასახლება, რუსუდან ჟორდანიას ქუჩა #54ა\"",
         "lat": 41.68293296229765,
         "lon": 44.93558675050736,
-        "name_translit": "besarion qeburias dasakhleba i qucha #56"
+        "name_translit": "\"besarion qeburias dasakhleba, rusudan zhordanias qucha #54a\""
     },
     {
         "id": "1:20098",
         "code": "20098",
-        "name": "ბესარიონ ქებურიას დასახლება I ქუჩა #34",
+        "name": "\"ბესარიონ ქებურიას დასახლება, რუსუდან ჟორდანიას ქუჩა #34\"",
         "lat": 41.68480439765528,
         "lon": 44.93567526340485,
-        "name_translit": "besarion qeburias dasakhleba i qucha #34"
+        "name_translit": "\"besarion qeburias dasakhleba, rusudan zhordanias qucha #34\""
     },
     {
         "id": "1:20099",
         "code": "20099",
-        "name": "ბესარიონ ქებურიას დასახლება I ქუჩა #10",
+        "name": "\"ბესარიონ ქებურიას დასახლება, რუსუდან ჟორდანიას ქუჩა #10\"",
         "lat": 41.68671634042397,
         "lon": 44.93611514568329,
-        "name_translit": "besarion qeburias dasakhleba i qucha #10"
+        "name_translit": "\"besarion qeburias dasakhleba, rusudan zhordanias qucha #10\""
     },
     {
         "id": "1:20100",
