@@ -1,6 +1,12 @@
 from aiogram import types
 
 
+async def capitalize_words(sentence):
+    words = sentence.split()
+    capitalized_words = [word.capitalize() for word in words]
+    return ' '.join(capitalized_words)
+
+
 def number_to_emoji(number):
     emoji_numbers = {
         '0': '0⃣',

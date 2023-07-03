@@ -1,9 +1,9 @@
 from asyncpg import UniqueViolationError
 
-from bot.utils.create_user import create_user
-from bot.utils.db_api.db_gino import db
-from bot.utils.db_api.schemes.user import User
-from bot.utils.db_api.schemes.bus_stops import BusStop
+from .create_user import create_user
+from .db_gino import db
+from .schemes.user import User
+from .schemes.bus_stops import BusStop
 
 
 async def add_user(user_id: int,

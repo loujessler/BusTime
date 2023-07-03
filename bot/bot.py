@@ -1,5 +1,8 @@
 import os
 
+from aiohttp import web
+from bot.loader import app
+
 
 async def on_startup(dp):
 

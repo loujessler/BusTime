@@ -4,20 +4,14 @@ from aiogram.dispatcher.filters import Regexp
 
 from bot.loader import dp, bot
 
-from bot.handlers.main.ttc.ttc_requests.arrival import arrival
+from bot.handlers.main.ttc.ttc_requests.get_ttc_api import GetTTC
 
 
 # # Хэндлер для обработки текстовых сообщений
 @dp.message_handler(Regexp(r'^\d+$'))
 async def handle_bus_stop_message(message: types.Message):
-    # Получение текста сообщения
-    text = message.text
-    try:
-        # Попытка преобразовать текст в целое число
-        bus_stop_id = int(text)
-        await arrival(bus_stop_id, message)
-    except ValueError:
-        pass
+    await message.delete()
+    await GetTTC(message).arrival(message.text)
 
 
 @dp.callback_query_handler(text_startswith='stop_')
@@ -30,4 +24,4 @@ async def call_handler_stop(call: CallbackQuery):
         if splitted_data[2] == 'wmap':
             await bot.delete_message(call.message.chat.id, splitted_data[3])
     if int(code_bus_stop):
-        await arrival(code_bus_stop, call)
+        await GetTTC(call).arrival(code_bus_stop)

@@ -83,7 +83,7 @@ msgstr "❌ ID не изменен"
 
 # Arrival
 msgid "arrival_bus_times"
-msgstr "{sticker_time} {type_transport} {route_number} → {minutes} мин"
+msgstr "{sticker_time} {type_transport} {route_number} → {minutes} мин {destination_name}"
 
 msgid "arrival_bus_not"
 msgstr "В ближайшее время 🚌 не ожидается"

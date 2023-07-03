@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.dispatcher.filters import Command
 
 from bot.loader import dp, bot
-from bot.utils.my_bus_stops import my_bus_stops
+from bot.handlers.main.utils.my_bus_stops import my_bus_stops
 
 
 @dp.message_handler(Command('my_bus_stops'))
