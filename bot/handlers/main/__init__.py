@@ -1,4 +1,3 @@
-from .test import dp
 from .bot_start import dp
 from .bot_commands import dp
 from .settings import dp
