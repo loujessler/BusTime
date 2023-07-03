@@ -1,6 +1,5 @@
 from aiogram import Bot, types, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
-from aiohttp.web_app import Application
 
 from data import config
 from .log_inter import InterceptHandler, LoguruLogger
@@ -36,15 +35,6 @@ dp.middleware.setup(AntiSpamMiddleware())
 filters.setup(dp)
 
 compile_translations(config.LOCALES_DIR)
-
-# Web
-app = Application()
-from .web.routers import home
-
-# Добавление обработчиков в роутер приложения
-# app.router.add_get('/data/routes/{name}', handle)
-app.router.add_static('/data/routes/', path='data/routes/', name='routes')
-app.router.add_get('/', home)
 
 
 async def shutdown(dispatcher: Dispatcher):

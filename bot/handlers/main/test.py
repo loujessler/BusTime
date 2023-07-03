@@ -47,7 +47,7 @@ class PageBuilder:
         existing_files = os.path.exists(f'home_page/routes/{self.route_number}_forward_{forward}.html')
         if existing_files and not config.REFRESH_BUS_ROUTES:
             # If file already exists, just send the first match
-            html_name = f'{self.route_number}_{forward}.html'
+            html_name = f'{self.route_number}_forward_{forward}.html'
         else:
             # Fetch the route data and generate the map
             coordinates, stop_info = await self.__get_coord_info(forward)
@@ -58,7 +58,7 @@ class PageBuilder:
 
             for stop in stop_info:
                 icon = folium.features.CustomIcon('./data/media/bus_stop_icon3.png',
-                                                  icon_size=[20, 20])  # Add custom icon
+                                                  icon_size=[18, 18])  # Add custom icon
                 folium.Marker(location=(stop[0], stop[1]),
                               popup=f"Stop ID: <b>{stop[2]}</b>",
                               icon=icon).add_to(m)
@@ -90,8 +90,6 @@ async def command_start(message: types.Message):
             web_app = WebAppInfo(url=route_url)
             button = types.InlineKeyboardButton(text=f'{forward}',
                                                 web_app=web_app)
-            # button = types.InlineKeyboardButton(f'{forward}',
-            #                                     callback_data=f'route_{route_number}_{forward}')
             buttons.append(button)
         keyboard.row(*buttons)
         keyboard.inline_keyboard += ikb_default(user.language).inline_keyboard
