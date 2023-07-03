@@ -3,7 +3,7 @@ import json
 
 from dotenv import load_dotenv
 
-load_dotenv('./.env')  # take environment variables from .env.
+load_dotenv()  # take environment variables from .env.
 
 API_TOKEN = str(os.environ.get("API_TOKEN"))
 
