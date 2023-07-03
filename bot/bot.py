@@ -1,7 +1,3 @@
-import os
-
-from aiohttp import web
-from bot.loader import app
 
 
 async def on_startup(dp):
@@ -26,14 +22,3 @@ async def on_startup(dp):
 
     from .utils.set_bot_commands import set_default_commands
     await set_default_commands()
-
-    # Запуск aiohttp сервера
-    # runner = web.AppRunner(app)
-    # await runner.setup()
-    # site = web.TCPSite(runner, '127.0.0.1', 8080)
-    # await site.start()
-
-
-
-
-
