@@ -4,19 +4,18 @@ from aiogram import types
 
 from bot.keyboards.inline.inline_kb_default import ikb_default
 from bot.loader import dp, bot
-from bot.utils.additional import number_to_emoji
+from bot.utils.additional import number_to_emoji, capitalize_words
 
-from bot.utils.data_utils.json_data import load_stops_data
+from bot.utils.data_utils.json_data import load_json_data
 from bot.utils.data_utils.kd_tree import array_cord
 from bot.utils.localization.i18n import MessageFormatter
-
-bus_stops = load_stops_data()
 
 
 @dp.message_handler(content_types=types.ContentType.LOCATION)
 async def process_location(message: types.Message):
     user_id = message.from_user.id
     user = message.conf.get('user')
+    bus_stops = await load_json_data('stops_data')
 
     # Пользовательская геолокация
     user_lat, user_lon = message.location.latitude, message.location.longitude
@@ -32,6 +31,7 @@ async def process_location(message: types.Message):
         stop = bus_stops[index]
 
         name = stop['name'] if user.language == 'ka' else stop['name_translit']
+        name = await capitalize_words(name)
         code = stop['code']
         # преобразуем евклидово расстояние в географическое расстояние
         distance = d * 111  # примерное преобразование для масштаба градусов в километры на широтах около 45 градусов
@@ -53,11 +53,13 @@ async def process_location(message: types.Message):
 async def process_found_bus_stop(call: types.CallbackQuery):
     user_id = call.from_user.id
     user = call.conf.get('user')
+    bus_stops = await load_json_data('stops_data')
 
     # Получаем данные из обратного вызова
     index = int(call.data.split('_')[1])
     stop = bus_stops[index]
     name = stop['name'] if user.language == 'ka' else stop['name_translit']
+    name = await capitalize_words(name)
     code = stop['code']
     map_link = f'http://www.google.com/maps/place/{stop["lat"]},{stop["lon"]}'
 

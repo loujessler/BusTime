@@ -3,7 +3,7 @@ import json
 
 from dotenv import load_dotenv
 
-load_dotenv()  # take environment variables from .env.
+load_dotenv('./.env')  # take environment variables from .env.
 
 API_TOKEN = str(os.environ.get("API_TOKEN"))
 
@@ -14,14 +14,17 @@ SERVER_MODE = int(os.getenv('SERVER_MODE'))
 str_admins = os.getenv('ADMINS')
 # Конвертация JSON строки обратно в список
 ADMINS = json.loads(str_admins)
-
+# База данных
 ip = str(os.getenv('ip'))
 POSTGRES_USER = str(os.getenv('POSTGRES_USER'))
 POSTGRES_PASSWORD = str(os.getenv('POSTGRES_PASSWORD'))
 DATABASE = str(os.getenv('DATABASE'))
-DEBUG = int(os.getenv('DEBUG'))
+
+POSTGRES_URL = f'postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{ip}/{DATABASE}'
+# Дополнительные параметры
 # Настройка i18n
 I18N_DOMAIN = 'bustime'
 LOCALES_DIR = str(os.getenv('LOCALES_DIR'))
 
-POSTGRES_URL = f'postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{ip}/{DATABASE}'
+DEBUG = int(os.getenv('DEBUG'))
+REFRESH_BUS_ROUTES = int(os.getenv('REFRESH_BUS_ROUTES'))

@@ -9,11 +9,11 @@ from bot.loader import dp, bot
 from bot.keyboards.inline.bus_stops import ikb_menu_bus_stops
 
 from bot.states.regist import Regist
-from bot.utils.cancel_state import cancel_func
+from bot.handlers.main.utils.cancel import cancel_func
 
 from bot.utils.db_api import quick_commands as commands
 from bot.utils.localization.i18n import MessageFormatter
-from bot.utils.my_bus_stops import my_bus_stops
+from bot.handlers.main.utils.my_bus_stops import my_bus_stops
 
 from bot.handlers.main.bot_start import edit_ls
 

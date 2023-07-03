@@ -11,7 +11,7 @@ from bot.keyboards.inline.inline_kb_default import ikb_default
 
 from bot.states.regist import Regist
 
-from bot.utils.cancel_state import cancel_func
+from bot.handlers.main.utils.cancel import cancel_func
 from bot.utils.db_api import quick_commands as commands
 from bot.utils.db_api.quick_commands import update_name_bus_stop
 from bot.utils.localization.i18n import MessageFormatter

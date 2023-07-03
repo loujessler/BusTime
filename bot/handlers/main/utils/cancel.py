@@ -3,9 +3,7 @@ from aiogram.dispatcher import FSMContext
 
 from bot.loader import bot
 
-from bot.utils.db_api.schemes.user import User as SCHUser
 from bot.utils.localization.i18n import MessageFormatter
-
 from bot.keyboards.inline.inline_kb_default import ikb_default
 
 
