@@ -8,13 +8,13 @@ from bot.handlers.main.ttc.ttc_requests.get_ttc_api import GetTTC
 
 
 # # Хэндлер для обработки текстовых сообщений
-@dp.message_handler(Regexp(r'^\d+$'))
+@dp.message_handler(Regexp(r'^\d+$'), is_bus_stop=True)
 async def handle_bus_stop_message(message: types.Message):
     await message.delete()
     await GetTTC(message).arrival(message.text)
 
 
-@dp.callback_query_handler(text_startswith='stop_')
+@dp.callback_query_handler(text_startswith='stop_', is_bus_stop=True)
 async def call_handler_stop(call: CallbackQuery):
     # Получаем данные из обратного вызова
     callback_data = call.data

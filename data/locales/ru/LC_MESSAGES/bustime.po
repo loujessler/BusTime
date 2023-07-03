@@ -88,8 +88,8 @@ msgstr "{sticker_time} {type_transport} {route_number} → {minutes} мин {des
 msgid "arrival_bus_not"
 msgstr "В ближайшее время 🚌 не ожидается"
 
-msgid "arrival_bus_stop_not_exists"
-msgstr "Такой 🚏 не существует"
+msgid "arrival_bus_stop_or_bus_not_exists"
+msgstr "Такой 🚏 или 🚌 не существует"
 
 # Show alerts
 msgid "send_location"
@@ -129,3 +129,13 @@ msgstr "Инструкция"
 
 msgid "help_instruction_link"
 msgstr "https://telegra.ph/Instrukciya-06-26-21"
+
+# Search bus route
+msgid "choose route"
+msgstr "Направления автобуса №{route_number}:"
+
+msgid "route 1"
+msgstr "1⃣   {first_route}"
+
+msgid "route 2"
+msgstr "2⃣   {second_route}"
