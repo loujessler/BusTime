@@ -9,9 +9,7 @@ from bot.loader import bot
 from bot.keyboards.inline.inline_kb_default import ikb_default
 from bot.utils.additional import return_msg_aio_type, capitalize_words
 from bot.utils.preloader import show_loading_message
-from bot.utils.data_utils.json_data import load_json_data
 from bot.utils.edit_last_message import EditLastMessage
-from bot.utils.localization.i18n import MessageFormatter
 from data.messages.arrival_messages import ArrivalMessages
 
 edit_ls = EditLastMessage(bot)
@@ -48,49 +46,44 @@ class GetTTC:
     # Даныые о рсаписании автобусов
     async def arrival(self, code_bus_stop: str):
         message = await return_msg_aio_type(self.aio_type)
+        chat_id = message.chat.id
+        url = f'http://transfer.ttc.com.ge:8080/otp/routers/ttc/stopArrivalTimes?stopId={code_bus_stop}'
 
-        if code_bus_stop not in await load_json_data('stops_data', 'code'):
-            message_data = [MessageFormatter(self.language).get_message({'arrival_bus_stop_not_exists': 'bold'}),
-                            ikb_default(self.language, {
-                                'back_to_main_menu': 'back_to_main_menu',
-                            })]
+        event = asyncio.Event()
+        loading_task = asyncio.create_task(show_loading_message(message, event))
+        response_task = asyncio.create_task(self.get_api_response(url, event))
+        await asyncio.wait([loading_task, response_task])
+        json_data = response_task.result().json()
+
+        if json_data is None:
+            print("WARNING")
+            return
+
+        arrival_time_key = 'ArrivalTime'
+        if arrival_time_key not in json_data:
+            logger.warning(f'{arrival_time_key} key not found in JSON data')
+            return
+
+        arrival_times = json_data[arrival_time_key]
+        msg = ArrivalMessages(self.user, arrival_times, code_bus_stop)
+
+        if len(arrival_times):
+            message_data = [await msg.bus_arrival_times(), ikb_default(
+                self.language, {
+                    'refresh': f'stop_{code_bus_stop}',
+                    'notification': 'notification',
+                    'back_to_main_menu': 'back_to_main_menu',
+                })]
         else:
-            chat_id = message.chat.id
-            url = f'http://transfer.ttc.com.ge:8080/otp/routers/ttc/stopArrivalTimes?stopId={code_bus_stop}'
+            message_data = [await msg.bus_arrival_not(), ikb_default(
+                self.language, {
+                    'refresh': f'stop_{code_bus_stop}',
+                    'back_to_main_menu': 'back_to_main_menu',
+                })]
 
-            event = asyncio.Event()
-            loading_task = asyncio.create_task(show_loading_message(message, event))
-            response_task = asyncio.create_task(self.get_api_response(url, event))
-            await asyncio.wait([loading_task, response_task])
-            json_data = response_task.result().json()
-
-            if json_data is None:
-                print("WARNING")
-                return
-
-            arrival_time_key = 'ArrivalTime'
-            if arrival_time_key not in json_data:
-                logger.warning(f'{arrival_time_key} key not found in JSON data')
-                return
-
-            arrival_times = json_data[arrival_time_key]
-            msg = ArrivalMessages(self.user, arrival_times, code_bus_stop)
-
-            if len(arrival_times):
-                message_data = [await msg.bus_arrival_times(), ikb_default(
-                    self.language, {
-                        'refresh': f'stop_{code_bus_stop}',
-                        'notification': 'notification',
-                        'back_to_main_menu': 'back_to_main_menu',
-                    })]
-            else:
-                message_data = [await msg.bus_arrival_not(), ikb_default(
-                    self.language, {
-                        'refresh': f'stop_{code_bus_stop}',
-                        'back_to_main_menu': 'back_to_main_menu',
-                    })]
         if 'message_data' in locals():
             await edit_ls.edit_last_message(message_data[0], self.aio_type, message_data[1])
+
         # LOGS
         logger.log(25, f"The user {self.user_id} receives the schedule from {code_bus_stop}.")
 
