@@ -44,7 +44,7 @@ class PageBuilder:
         return coordinates, stop_info
 
     async def create_page(self, forward: str) -> str:
-        existing_files = os.path.exists(f'data/routes/{self.route_number}_forward_{forward}.html')
+        existing_files = os.path.exists(f'home_page/routes/{self.route_number}_forward_{forward}.html')
         if existing_files and not config.REFRESH_BUS_ROUTES:
             # If file already exists, just send the first match
             html_name = f'{self.route_number}_{forward}.html'
@@ -65,7 +65,7 @@ class PageBuilder:
             m.fit_bounds(coordinates)  # Automatically adjust map to show the whole route
 
             html_name = f"{self.route_number}_forward_{forward}.html"
-            m.save(os.path.join('data', 'routes', html_name))
+            m.save(os.path.join('home_page', 'routes', html_name))
 
         return html_name
 
