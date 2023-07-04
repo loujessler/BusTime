@@ -60,16 +60,6 @@ class PageBuilder:
             # Make map with folium
             m = folium.Map(location=coordinates[0], zoom_start=14)
 
-            # Создаем HTML код для кнопки
-            button = """
-            <div style="position: fixed; bottom: 0; width: 100%; height: 4%;">
-                <button id="myButton" class="myButtonClass" style="width: 100%; height: 100%;">Click me</button>
-            </div>
-            """
-
-            # Добавляем этот элемент на карту
-            m.get_root().html.add_child(folium.Html(button))
-
             m.get_root().html.add_child(folium.JavascriptLink('https://telegram.org/js/telegram-web-app.js'))
 
             # Загружаем и читаем JavaScript файл
