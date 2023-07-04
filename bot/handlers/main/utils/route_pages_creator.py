@@ -62,10 +62,15 @@ class PageBuilder:
             m.get_root().html.add_child(folium.JavascriptLink('https://telegram.org/js/telegram-web-app.js'))
 
             # Создаем элемент folium
-            js_element = folium.Element('https://telegram.org/js/telegram-web-app.js')
+            js_element = folium.Element('<script src=https://telegram.org/js/telegram-web-app.js></script>')
 
             # Добавляем этот элемент на карту
             m.get_root().html.add_child(js_element)
+
+            js_element2 = folium.Element('<script src=./js/route_page.js></script>')
+
+            # Добавляем этот элемент на карту
+            m.get_root().html.add_child(js_element2)
 
             m.get_root().html.add_child(folium.JavascriptLink(url="./js/route_page.js"))
             folium.plugins.AntPath(coordinates, color="#3d00f7", delay=1000, weight=2.5, opacity=1).add_to(m)
