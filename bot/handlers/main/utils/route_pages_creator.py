@@ -64,10 +64,16 @@ class PageBuilder:
             # Создаем элемент folium
             js_element = folium.Element('<script src=https://telegram.org/js/telegram-web-app.js></script>')
 
+            # Загружаем и читаем JavaScript файл
+            with open('./data/static/js/route_page.js', 'r') as f:
+                js = f.read()
+            # Оборачиваем содержимое файла в теги <script>
+            js = '<script type="text/javascript">' + js + '</script>'
+
             # Добавляем этот элемент на карту
             m.get_root().html.add_child(js_element)
 
-            js_element2 = folium.Element('<script src=./js/route_page.js></script>')
+            js_element2 = folium.Element(js)
 
             # Добавляем этот элемент на карту
             m.get_root().html.add_child(js_element2)
