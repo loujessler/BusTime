@@ -72,11 +72,11 @@ class PageBuilder:
             # Добавляем этот элемент на карту
             m.get_root().html.add_child(js_element2)
 
-            m.get_root().html.add_child(folium.JavascriptLink(url="./js/route_page.js"))
+            m.get_root().html.add_child(folium.JavascriptLink(url="./data/static/js/route_page.js"))
             folium.plugins.AntPath(coordinates, color="#3d00f7", delay=1000, weight=2.5, opacity=1).add_to(m)
 
             for stop in stop_info:
-                icon = folium.features.CustomIcon('./data/media/bus_stop_icon.png',
+                icon = folium.features.CustomIcon('./data/static/media/bus_stop_icon.png',
                                                   icon_size=[18, 18])  # Add custom icon
                 folium.Marker(location=(stop[0], stop[1]),
                               popup=f"Stop ID: <b>{stop[2]}</b>",
