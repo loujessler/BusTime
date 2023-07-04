@@ -59,6 +59,20 @@ class PageBuilder:
             coordinates, stop_info = await self.__get_coord_info(forward)
             # Make map with folium
             m = folium.Map(location=coordinates[0], zoom_start=14)
+
+            # Создаем HTML код для кнопки
+            button = """
+            <div style="position: fixed; bottom: 0; width: 100%; height: 4%;">
+                <button id="myButton" class="myButtonClass" style="width: 100%; height: 100%;">Click me</button>
+            </div>
+            """
+
+            # Создаем элемент folium
+            button_element = folium.Element(button)
+
+            # Добавляем этот элемент на карту
+            m.get_root().html.add_child(button_element)
+
             m.get_root().html.add_child(folium.JavascriptLink('https://telegram.org/js/telegram-web-app.js'))
 
             # Создаем элемент folium
@@ -78,7 +92,7 @@ class PageBuilder:
             # Добавляем этот элемент на карту
             m.get_root().html.add_child(js_element2)
 
-            m.get_root().html.add_child(folium.JavascriptLink(url="./data/static/js/route_page.js"))
+            m.get_root().html.add_child(folium.JavascriptLink("./data/static/js/route_page.js"))
             folium.plugins.AntPath(coordinates, color="#3d00f7", delay=1000, weight=2.5, opacity=1).add_to(m)
 
             for stop in stop_info:
