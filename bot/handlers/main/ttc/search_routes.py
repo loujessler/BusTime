@@ -7,6 +7,7 @@ from bot.loader import dp, bot
 from bot.handlers.main.utils.route_pages_creator import PageBuilder
 from bot.keyboards.inline.inline_kb_default import ikb_default
 from bot.utils.localization.i18n import MessageFormatter
+from data import config
 
 
 @dp.message_handler(Regexp(r'\d+$'), is_bus=True)
@@ -23,7 +24,10 @@ async def command_start(message: types.Message):
     for forward in forwards:
         html_name = await page_bldr.create_page(forward)
         route_url = f"http://127.0.0.1:8080/data/routes/{html_name}"
-        route_url = f"https://bustime.ge/routes/{html_name}"
+        if config.TEST_WEB_APP:
+            route_url = f"https://bustime.ge/test/routes/{html_name}"
+        else:
+            route_url = f"https://bustime.ge/routes/{html_name}"
         web_app = WebAppInfo(url=route_url)
         button = types.InlineKeyboardButton(text=f'{forward}',
                                             web_app=web_app)
