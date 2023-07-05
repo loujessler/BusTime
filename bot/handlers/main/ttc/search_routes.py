@@ -22,7 +22,7 @@ async def command_start(message: types.Message):
     keyboard = types.InlineKeyboardMarkup()
     buttons = []
     for forward in forwards:
-        html_name = await page_bldr.create_page(forward)
+        html_name = await page_bldr.create_page(forward, user.language)
         route_url = f"http://127.0.0.1:8080/data/routes/{html_name}"
         if config.TEST_WEB_APP:
             route_url = f"https://bustime.ge/test/routes/{html_name}"
