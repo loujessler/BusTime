@@ -28,3 +28,5 @@ LOCALES_DIR = str(os.getenv('LOCALES_DIR'))
 
 DEBUG = int(os.getenv('DEBUG'))
 REFRESH_BUS_ROUTES = int(os.getenv('REFRESH_BUS_ROUTES'))
+
+TEST_WEB_APP = int(os.getenv('TEST_WEB_APP'))
