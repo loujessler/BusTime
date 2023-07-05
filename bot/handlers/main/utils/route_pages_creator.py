@@ -91,7 +91,7 @@ class PageBuilder:
                 icon = folium.features.CustomIcon('./data/static/media/bus_stop_icon.png',
                                                   icon_size=[18, 18])  # Add custom icon
                 folium.Marker(location=(stop[0], stop[1]),
-                              popup=f"Stop ID: <a id='mystop' href='#'>{stop[2]}</a>",
+                              popup=f"Stop ID: <a id='mystop' href='#' onclick='handleClick(this)'>{stop[2]}</a>",
                               icon=icon).add_to(m)
             m.fit_bounds(coordinates)  # Automatically adjust map to show the whole route
             html_name = f'{self.route_number}_forward_{forward}.html'
