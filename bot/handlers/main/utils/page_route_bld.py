@@ -2,13 +2,14 @@ import os
 import folium
 import folium.plugins
 
+from bot.handlers.main.utils.folium_web_app_bld import FoliumWebAppBuilder
 from bot.utils.additional import number_to_emoji
 from bot.utils.data_utils.json_data import load_json_data
 from bot.utils.localization.i18n import MessageFormatter
 from data import config
 
 
-class PageBuilder:
+class PageRouteBuilder:
     def __init__(self, route_number: str):
         self.route_number = route_number
 
@@ -58,40 +59,20 @@ class PageBuilder:
         else:
             # Fetch the route data and generate the map
             coordinates, stop_info = await self.__get_coord_info(forward)
+
+            msg = MessageFormatter(language, 'webapp')
             # Make map with folium
-            m = folium.Map(location=coordinates[0], zoom_start=14)
-
-            m.get_root().html.add_child(folium.JavascriptLink('https://telegram.org/js/telegram-web-app.js'))
-            # Оборачиваем содержимое файла в теги <script>
-            text_main_btn = MessageFormatter(language, 'keyboards').get_message(format_dict={'back': 'none'})
-            js = f"""
-            var WebApp = window.Telegram.WebApp;
-            var MainButton = WebApp.MainButton;
-            
-            MainButton.show();
-            
-            MainButton.setText("{text_main_btn}")
-            
-            MainButton.onClick(function() {{
-              WebApp.close();
-            }});
-            WebApp.onEvent('mainButtonClicked', function() {{
-              /* also */
-            }});
-            """
-            js = '<script type="text/javascript">' + js + '</script>'
-
-            # Добавляем этот элемент на карту
-            m.get_root().html.add_child(folium.Element(js))
-            m.get_root().html.add_child(folium.JavascriptLink("../js/ttc/route_page.js"))
+            m = FoliumWebAppBuilder(coordinates[0], msg)
 
             folium.plugins.AntPath(coordinates, color="#3d00f7", delay=500, weight=2.5, opacity=1).add_to(m)
 
             for stop in stop_info:
                 icon = folium.features.CustomIcon('./data/static/media/bus_stop_icon.png',
                                                   icon_size=[18, 18])  # Add custom icon
+                popup = f"{msg.get_message(format_dict={'bus_stop': 'none'})} " \
+                        f"ID: <a id='mystop' href='#' onclick='handleClick(this)'>{stop[2]}</a>"
                 folium.Marker(location=(stop[0], stop[1]),
-                              popup=f"Stop ID: <a id='mystop' href='#' onclick='handleClick(this)'>{stop[2]}</a>",
+                              popup=popup,
                               icon=icon).add_to(m)
             m.fit_bounds(coordinates)  # Automatically adjust map to show the whole route
             html_name = f'{self.route_number}_forward_{forward}.html'

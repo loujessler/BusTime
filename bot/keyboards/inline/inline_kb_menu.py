@@ -14,6 +14,11 @@ def ikb_menu(user):
                                    ],
                                    [
                                        InlineKeyboardButton(text=formatter.get_message(
+                                           {'show_bus_stops': 'none'}, None, 0),
+                                           callback_data='show_bus_stops'),
+                                   ],
+                                   [
+                                       InlineKeyboardButton(text=formatter.get_message(
                                            {'search_bus_stops': 'none'}, None, 0),
                                            callback_data='search_bus_stops'),
                                    ],
