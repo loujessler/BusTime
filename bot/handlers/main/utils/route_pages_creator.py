@@ -73,7 +73,7 @@ class PageBuilder:
             # # Добавляем этот элемент на карту
             # m.get_root().html.add_child(js_element)
 
-            m.get_root().html.add_child(folium.JavascriptLink("js/ttc/route_page.js"))
+            m.get_root().html.add_child(folium.JavascriptLink("../js/ttc/route_page.js"))
             folium.plugins.AntPath(coordinates, color="#3d00f7", delay=1000, weight=2.5, opacity=1).add_to(m)
 
             for stop in stop_info:
