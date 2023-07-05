@@ -19,7 +19,7 @@ async def command_start(message: types.Message):
 
     forwards = await page_bldr.check_forwards()
     # Create Keyboard
-    keyboard = types.InlineKeyboardMarkup()
+    keyboard = types.ReplyKeyboardMarkup()
     buttons = []
     for forward in forwards:
         html_name = await page_bldr.create_page(forward, user.language)
@@ -33,7 +33,7 @@ async def command_start(message: types.Message):
                                             web_app=web_app)
         buttons.append(button)
     keyboard.row(*buttons)
-    keyboard.inline_keyboard += ikb_default(user.language).inline_keyboard
+    # keyboard.inline_keyboard += ikb_default(user.language).inline_keyboard
     # Create message
     msg = MessageFormatter(user.language).get_message(format_dict={'choose route': 'bold'},
                                                       format_args={'route_number': route_number}) + '\n\n'
