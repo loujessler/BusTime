@@ -86,5 +86,7 @@ class PageBuilder:
 
             html_name = f"{self.route_number}_forward_{forward}.html"
             m.save(os.path.join('home_page', 'routes', html_name))
+        if config.TEST_WEB_APP:
+            html_name = 'test/' + html_name
 
         return html_name
