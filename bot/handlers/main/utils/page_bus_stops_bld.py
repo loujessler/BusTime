@@ -14,11 +14,9 @@ class PageBusStopsBuilder:
         self.language = language
 
     async def create_page(self) -> str:
+        html_name = f'bus_stops_info_{self.language}.html'
         existing_files = os.path.exists(f'home_page/bus_stops_info/bus_stops_info_{self.language}.html')
-        if existing_files:
-            # If file already exists, just send the first match
-            html_name = f'bus_stops_info.html'
-        else:
+        if not existing_files:
             # Fetch the route data and generate the map
             stop_info = await load_json_data(f"stops_data")
 
@@ -37,7 +35,6 @@ class PageBusStopsBuilder:
                 folium.Marker(location=(stop['lat'], stop['lon']),
                               popup=popup,
                               icon=icon).add_to(marker_cluster)  # Add markers to the MarkerCluster instead of map
-            html_name = f'bus_stops_info_{self.language}.html'
-            m.save(os.path.join('home_page', 'bus_stops_info', html_name))
 
+            m.save(os.path.join('home_page', 'bus_stops_info', html_name))
         return html_name
