@@ -83,10 +83,11 @@ class PageBuilder:
                               popup=f"Stop ID: <b>{stop[2]}</b>",
                               icon=icon).add_to(m)
             m.fit_bounds(coordinates)  # Automatically adjust map to show the whole route
+            html_name = f'{self.route_number}_forward_{forward}.html'
+
             if config.TEST_WEB_APP:
-                html_name = f"test/{self.route_number}_forward_{forward}.html"
+                m.save(os.path.join('test', 'home_page', 'routes', html_name))
             else:
-                html_name = f'{self.route_number}_forward_{forward}.html'
-            m.save(os.path.join('home_page', 'routes', html_name))
+                m.save(os.path.join('home_page', 'routes', html_name))
 
         return html_name
