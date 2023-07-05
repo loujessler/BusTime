@@ -4,6 +4,7 @@ import folium.plugins
 
 from bot.utils.additional import number_to_emoji
 from bot.utils.data_utils.json_data import load_json_data
+from bot.utils.localization.i18n import MessageFormatter
 from data import config
 
 
@@ -49,7 +50,7 @@ class PageBuilder:
 
         return coordinates, stop_info
 
-    async def create_page(self, forward: str) -> str:
+    async def create_page(self, forward: str, language: str) -> str:
         existing_files = os.path.exists(f'home_page/routes/{self.route_number}_forward_{forward}.html')
         if existing_files and not config.REFRESH_BUS_ROUTES:
             # If file already exists, just send the first match
@@ -61,19 +62,29 @@ class PageBuilder:
             m = folium.Map(location=coordinates[0], zoom_start=14)
 
             m.get_root().html.add_child(folium.JavascriptLink('https://telegram.org/js/telegram-web-app.js'))
+            # m.get_root().html.add_child(folium.JavascriptLink("../js/ttc/route_page.js"))
+            # Оборачиваем содержимое файла в теги <script>
+            text_main_btn = MessageFormatter(language, 'keyboards').get_message(format_dict={'back': 'none'})
+            js = f"""
+            var WebApp = window.Telegram.WebApp;
+            var MainButton = WebApp.MainButton;
+            
+            MainButton.show();
+            
+            MainButton.setText("{text_main_btn}")
+            
+            MainButton.onClick(function() {{
+              WebApp.close();
+            }});
+            WebApp.onEvent('mainButtonClicked', function() {{
+              /* also */
+            }});
+            """
+            js = '<script type="text/javascript">' + js + '</script>'
 
-            # # Загружаем и читаем JavaScript файл
-            # with open('./data/static/js/route_page.js', 'r') as f:
-            #     js = f.read()
-            # # Оборачиваем содержимое файла в теги <script>
-            # js = '<script type="text/javascript">' + js + '</script>'
-            #
-            # js_element = folium.Element(js)
-            #
-            # # Добавляем этот элемент на карту
-            # m.get_root().html.add_child(js_element)
+            # Добавляем этот элемент на карту
+            m.get_root().html.add_child(folium.Element(js))
 
-            m.get_root().html.add_child(folium.JavascriptLink("../js/ttc/route_page.js"))
             folium.plugins.AntPath(coordinates, color="#3d00f7", delay=1000, weight=2.5, opacity=1).add_to(m)
 
             for stop in stop_info:
