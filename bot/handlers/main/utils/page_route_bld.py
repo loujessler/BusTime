@@ -52,11 +52,9 @@ class PageRouteBuilder:
         return coordinates, stop_info
 
     async def create_page(self, forward: str, language: str) -> str:
+        html_name = f'{self.route_number}_forward_{forward}.html'
         existing_files = os.path.exists(f'home_page/routes/{self.route_number}_forward_{forward}.html')
-        if existing_files and not config.REFRESH_BUS_ROUTES:
-            # If file already exists, just send the first match
-            html_name = f'{self.route_number}_forward_{forward}.html'
-        else:
+        if not existing_files and not config.REFRESH_BUS_ROUTES:
             # Fetch the route data and generate the map
             coordinates, stop_info = await self.__get_coord_info(forward)
 
@@ -75,8 +73,6 @@ class PageRouteBuilder:
                               popup=popup,
                               icon=icon).add_to(m)
             m.fit_bounds(coordinates)  # Automatically adjust map to show the whole route
-            html_name = f'{self.route_number}_forward_{forward}.html'
-
             m.save(os.path.join('home_page', 'routes', html_name))
 
         return html_name
