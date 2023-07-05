@@ -20,5 +20,5 @@ from bot.handlers.main.bot_start import edit_ls
 
 # Отмена при определенных состояниях
 @dp.message_handler(content_types=['web_app_data'])
-async def get_webapp_data(message: types.Message):
-    await message.answer(message.web_app_data.data)
+async def get_webapp_data(call: types.CallbackQuery):
+    await call.answer(call.message.web_app_data.data)
