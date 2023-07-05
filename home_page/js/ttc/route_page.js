@@ -5,5 +5,5 @@ document.getElementById('mystop').addEventListener('click', function (event) {{
     event.preventDefault();
     var stopID = event.target.innerText;
     WebApp.sendData(stopID)
-    console.log('Stop ID clicked: ' + {stop[2]});
+    console.log('Stop ID clicked: ' + stopID);
 }});
