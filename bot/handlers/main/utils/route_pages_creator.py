@@ -62,7 +62,6 @@ class PageBuilder:
             m = folium.Map(location=coordinates[0], zoom_start=14)
 
             m.get_root().html.add_child(folium.JavascriptLink('https://telegram.org/js/telegram-web-app.js'))
-            # m.get_root().html.add_child(folium.JavascriptLink("../js/ttc/route_page.js"))
             # Оборачиваем содержимое файла в теги <script>
             text_main_btn = MessageFormatter(language, 'keyboards').get_message(format_dict={'back': 'none'})
             js = f"""
@@ -84,6 +83,7 @@ class PageBuilder:
 
             # Добавляем этот элемент на карту
             m.get_root().html.add_child(folium.Element(js))
+            m.get_root().html.add_child(folium.JavascriptLink("../js/ttc/route_page.js"))
 
             folium.plugins.AntPath(coordinates, color="#3d00f7", delay=500, weight=2.5, opacity=1).add_to(m)
 
