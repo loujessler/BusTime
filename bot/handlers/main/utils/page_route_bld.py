@@ -60,7 +60,7 @@ class PageRouteBuilder:
 
             msg = MessageFormatter(language, 'webapp')
             # Make map with folium
-            m = await FoliumWebAppBuilder(coordinates[0], msg).webapp_bubble()
+            m = await FoliumWebAppBuilder(coordinates[0], msg, 14).webapp_bubble()
 
             folium.plugins.AntPath(coordinates, color="#3d00f7", delay=500, weight=2.5, opacity=1).add_to(m)
 

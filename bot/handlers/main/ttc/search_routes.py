@@ -5,7 +5,6 @@ from aiogram import types
 from bot.loader import dp, bot
 
 from bot.handlers.main.utils.page_route_bld import PageRouteBuilder
-from bot.keyboards.inline.inline_kb_default import ikb_default
 from bot.utils.additional import number_to_emoji
 from bot.utils.localization.i18n import MessageFormatter
 from data import config
