@@ -54,7 +54,7 @@ class PageRouteBuilder:
     async def create_page(self, forward: str, language: str) -> str:
         html_name = f'{self.route_number}_forward_{forward}.html'
         existing_files = os.path.exists(f'home_page/routes/{self.route_number}_forward_{forward}.html')
-        if not existing_files and not config.REFRESH_BUS_ROUTES:
+        if not existing_files or config.REFRESH_HTML_FILES:
             # Fetch the route data and generate the map
             coordinates, stop_info = await self.__get_coord_info(forward)
 
@@ -66,7 +66,7 @@ class PageRouteBuilder:
 
             for stop in stop_info:
                 icon = folium.features.CustomIcon(os.path.join('data', 'static', 'media', 'bus_stop_icon.png'),
-                                                  icon_size=[16, 16])  # Add custom icon
+                                                  icon_size=[17, 17])  # Add custom icon
                 popup = f"{msg.get_message(format_dict={'bus_stop': 'none'})} " \
                         f"ID: <a id='mystop' href='#' onclick='handleClick(this)'>{stop[2]}</a>"
                 folium.Marker(location=(stop[0], stop[1]),
