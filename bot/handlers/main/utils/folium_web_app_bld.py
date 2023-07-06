@@ -13,6 +13,8 @@ class FoliumWebAppBuilder(folium.Map):
         super().__init__(location=location, zoom_start=14)
         self.msg = msg_formatter
         self.get_root().html.add_child(folium.JavascriptLink('https://telegram.org/js/telegram-web-app.js'))
+        self.get_root().html.add_child(folium.CssLink(
+            'http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css'))
 
     async def webapp_bubble(self):
 
