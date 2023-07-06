@@ -60,12 +60,12 @@ class PageRouteBuilder:
 
             msg = MessageFormatter(language, 'webapp')
             # Make map with folium
-            m = FoliumWebAppBuilder(coordinates[0], msg)
+            m = await FoliumWebAppBuilder(coordinates[0], msg).webapp_bubble()
 
             folium.plugins.AntPath(coordinates, color="#3d00f7", delay=500, weight=2.5, opacity=1).add_to(m)
 
             for stop in stop_info:
-                icon = folium.features.CustomIcon('./data/static/media/bus_stop_icon.png',
+                icon = folium.features.CustomIcon('./img/bus_stop_icon.png',
                                                   icon_size=[18, 18])  # Add custom icon
                 popup = f"{msg.get_message(format_dict={'bus_stop': 'none'})} " \
                         f"ID: <a id='mystop' href='#' onclick='handleClick(this)'>{stop[2]}</a>"

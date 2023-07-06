@@ -22,10 +22,10 @@ class PageBusStopsBuilder:
 
             msg = MessageFormatter(self.language, 'webapp')
             # Make map with folium
-            m = FoliumWebAppBuilder([41.70329262810114, 44.79726756680793], msg)
+            m = await FoliumWebAppBuilder([41.70329262810114, 44.79726756680793], msg).webapp_bubble()
 
             # Create a MarkerCluster object
-            icon = '../../data/static/media/bus_stop_icon.png'
+            icon = './img/bus_stop_icon.png'
             callback = ('function (row) {'
                         'var marker = L.marker(new L.LatLng(row[0], row[1]), {color: "red"});'
                         'var icon = L.AwesomeMarkers.icon({'
