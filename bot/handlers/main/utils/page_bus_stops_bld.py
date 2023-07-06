@@ -3,7 +3,7 @@ import folium
 import folium.plugins as folium_plg
 
 from bot.handlers.main.utils.folium_web_app_bld import FoliumWebAppBuilder
-from bot.utils.additional import number_to_emoji
+from bot.utils.additional import number_to_emoji, get_image_data
 from bot.utils.data_utils.json_data import load_json_data
 from bot.utils.localization.i18n import MessageFormatter
 from data import config
@@ -25,7 +25,7 @@ class PageBusStopsBuilder:
             m = await FoliumWebAppBuilder([41.70329262810114, 44.79726756680793], msg).webapp_bubble()
 
             # Create a MarkerCluster object
-            icon = '../home_page/img/bus_stop_icon.png'
+            icon = await get_image_data(os.path.join('data', 'static', 'media', 'bus_stop_icon.png'))
             callback = ('function (row) {'
                         'var marker = L.marker(new L.LatLng(row[0], row[1]), {color: "red"});'
                         'var icon = L.AwesomeMarkers.icon({'
@@ -48,6 +48,7 @@ class PageBusStopsBuilder:
                         'return marker};')
             data = [(stop['lat'],
                      stop['lon'],
+                     f"{msg.get_message(format_dict={'bus_stop': 'none'})} "
                      f"ID: <a id='mystop' href='#' onclick='handleClick(this)'>{stop['code']}</a>",
                      icon) for stop in stop_info]
             folium_plg.FastMarkerCluster(data=data,

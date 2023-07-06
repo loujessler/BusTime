@@ -65,8 +65,8 @@ class PageRouteBuilder:
             folium.plugins.AntPath(coordinates, color="#3d00f7", delay=500, weight=2.5, opacity=1).add_to(m)
 
             for stop in stop_info:
-                icon = folium.features.CustomIcon('./img/bus_stop_icon.png',
-                                                  icon_size=[18, 18])  # Add custom icon
+                icon = folium.features.CustomIcon(os.path.join('data', 'static', 'media', 'bus_stop_icon.png'),
+                                                  icon_size=[16, 16])  # Add custom icon
                 popup = f"{msg.get_message(format_dict={'bus_stop': 'none'})} " \
                         f"ID: <a id='mystop' href='#' onclick='handleClick(this)'>{stop[2]}</a>"
                 folium.Marker(location=(stop[0], stop[1]),
