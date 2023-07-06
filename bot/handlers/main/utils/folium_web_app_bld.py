@@ -1,11 +1,7 @@
-import os
 import folium
 import folium.plugins
 
-from bot.utils.additional import number_to_emoji
-from bot.utils.data_utils.json_data import load_json_data
 from bot.utils.localization.i18n import MessageFormatter
-from data import config
 
 
 class FoliumWebAppBuilder(folium.Map):
