@@ -25,7 +25,7 @@ class PageBusStopsBuilder:
             m = await FoliumWebAppBuilder([41.70329262810114, 44.79726756680793], msg).webapp_bubble()
 
             # Create a MarkerCluster object
-            icon = '../img/bus_stop_icon.png'
+            icon = '../home_page/img/bus_stop_icon.png'
             callback = ('function (row) {'
                         'var marker = L.marker(new L.LatLng(row[0], row[1]), {color: "red"});'
                         'var icon = L.AwesomeMarkers.icon({'
