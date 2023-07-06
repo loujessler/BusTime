@@ -1,4 +1,11 @@
 from aiogram import types
+import base64
+
+
+async def get_image_data(filepath):
+    with open(filepath, 'rb') as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+    return "data:image/png;base64," + encoded_string
 
 
 async def capitalize_words(sentence):
