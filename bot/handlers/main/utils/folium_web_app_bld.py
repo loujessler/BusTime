@@ -9,8 +9,8 @@ from data import config
 
 
 class FoliumWebAppBuilder(folium.Map):
-    def __init__(self, location, msg_formatter: MessageFormatter):
-        super().__init__(location=location, zoom_start=14)
+    def __init__(self, location, msg_formatter: MessageFormatter, zoom: int):
+        super().__init__(location=location, zoom_start=zoom)
         self.msg = msg_formatter
         self.get_root().html.add_child(folium.JavascriptLink('https://telegram.org/js/telegram-web-app.js'))
         self.get_root().html.add_child(folium.CssLink(
@@ -46,39 +46,3 @@ class FoliumWebAppBuilder(folium.Map):
         self.get_root().html.add_child(folium.JavascriptLink("../js/ttc/route_page.js"))
 
         return self  # Return the modified object itself
-
-
-# class FoliumWebAppBuilder(folium):
-#     def __init__(self, location, msg_formatter: MessageFormatter):
-#         self.location = location
-#         self.msg = msg_formatter
-#
-#     async def webapp_bubble(self):
-#
-#         # Make map with folium
-#         m = folium.Map(location=self.location, zoom_start=14)
-#
-#         m.get_root().html.add_child(folium.JavascriptLink('https://telegram.org/js/telegram-web-app.js'))
-#         # Оборачиваем содержимое файла в теги <script>
-#         js = f"""
-#         var WebApp = window.Telegram.WebApp;
-#         var MainButton = WebApp.MainButton;
-#
-#         MainButton.show();
-#
-#         MainButton.setText("{self.msg.get_message(format_dict={'close': 'none'})}")
-#
-#         MainButton.onClick(function() {{
-#           WebApp.close();
-#         }});
-#         WebApp.onEvent('mainButtonClicked', function() {{
-#           /* also */
-#         }});
-#         """
-#         js = '<script type="text/javascript">' + js + '</script>'
-#
-#         # Добавляем этот элемент на карту
-#         m.get_root().html.add_child(folium.Element(js))
-#         m.get_root().html.add_child(folium.JavascriptLink("../js/ttc/route_page.js"))
-#
-#         return m

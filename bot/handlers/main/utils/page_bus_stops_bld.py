@@ -14,14 +14,15 @@ class PageBusStopsBuilder:
     async def create_page(self) -> str:
         html_name = f'bus_stops_info_{self.language}.html'
         existing_files = os.path.exists(f'home_page/bus_stops_info/bus_stops_info_{self.language}.html')
-        icon = await get_image_data(os.path.join('data', 'static', 'media', 'bus_stop_icon.png'))
+        path_icon = os.path.join('data', 'static', 'media', 'bus_stop_icon.png')
+        icon = await get_image_data(path_icon)
         if not existing_files:
             # Fetch the route data and generate the map
             stop_info = await load_json_data(f"stops_data")
 
             msg = MessageFormatter(self.language, 'webapp')
             # Make map with folium
-            m = await FoliumWebAppBuilder([41.70329262810114, 44.79726756680793], msg).webapp_bubble()
+            m = await FoliumWebAppBuilder([41.70329262810114, 44.79726756680793], msg, 12).webapp_bubble()
 
             # Create a MarkerCluster object
             callback = ('function (row) {'
