@@ -25,7 +25,7 @@ class PageRouteBuilder:
 
     async def get_route_directions(self, forwards, language) -> list:
         route_directions = []
-        for index, forward in enumerate(forwards):
+        for forward in forwards:
             data = await load_json_data(f"routes/{self.route_number}_forward_{forward}")
 
             # Извлечение данных о остановках
@@ -34,7 +34,7 @@ class PageRouteBuilder:
             # Получение имени первой и последней остановки
             first_stop_name = stops[0][name]
             last_stop_name = stops[-1][name]
-            route_directions.append(f"{number_to_emoji(index)} {first_stop_name} 👉 {last_stop_name}")
+            route_directions.append(f"{number_to_emoji(forward)} {first_stop_name} 👉 {last_stop_name}")
         return route_directions
 
     async def __get_coord_info(self, forward: str):

@@ -29,6 +29,7 @@ async def command_start(message: types.Message):
         else:
             route_url = f"https://bustime.ge/routes/{html_name}"
         web_app = WebAppInfo(url=route_url)
+        # Create Buttons
         button = types.InlineKeyboardButton(text=f'#{route_number} 👉 {number_to_emoji(forward)}',
                                             web_app=web_app)
         buttons.append(button)
