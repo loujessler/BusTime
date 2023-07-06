@@ -51,9 +51,9 @@ class GetTTC:
 
         event = asyncio.Event()
         loading_task = asyncio.create_task(show_loading_message(message, event))
-        response_task = asyncio.create_task(self.get_api_response(url, event))
+        response_task = asyncio.create_task(self.get_api_response(url, event, True))
         await asyncio.wait([loading_task, response_task])
-        json_data = response_task.result().json()
+        json_data = response_task.result()
 
         if json_data is None:
             print("WARNING")
@@ -94,9 +94,9 @@ class GetTTC:
 
         event = asyncio.Event()
         loading_task = asyncio.create_task(show_loading_message(message, event))
-        response_task = asyncio.create_task(self.get_api_response(url, event))
+        response_task = asyncio.create_task(self.get_api_response(url, event, True))
         await asyncio.wait([loading_task, response_task])
-        json_data = response_task.result().json()
+        json_data = response_task.result()
 
         # Отделяем остановки от станций одним проходом
         stops = []
