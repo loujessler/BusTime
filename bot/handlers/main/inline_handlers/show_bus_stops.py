@@ -4,7 +4,6 @@ from aiogram.types.web_app_info import WebAppInfo
 from bot.handlers.main.utils.page_bus_stops_bld import PageBusStopsBuilder
 from bot.loader import dp, bot
 
-from bot.utils.localization.i18n import MessageFormatter
 from data import config
 import time
 
