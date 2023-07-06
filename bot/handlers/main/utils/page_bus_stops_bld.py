@@ -16,6 +16,7 @@ class PageBusStopsBuilder:
     async def create_page(self) -> str:
         html_name = f'bus_stops_info_{self.language}.html'
         existing_files = os.path.exists(f'home_page/bus_stops_info/bus_stops_info_{self.language}.html2')
+        icon = await get_image_data(os.path.join('data', 'static', 'media', 'bus_stop_icon.png'))
         if not existing_files:
             # Fetch the route data and generate the map
             stop_info = await load_json_data(f"stops_data")
@@ -25,7 +26,6 @@ class PageBusStopsBuilder:
             m = await FoliumWebAppBuilder([41.70329262810114, 44.79726756680793], msg).webapp_bubble()
 
             # Create a MarkerCluster object
-            icon = await get_image_data(os.path.join('data', 'static', 'media', 'bus_stop_icon.png'))
             callback = ('function (row) {'
                         'var marker = L.marker(new L.LatLng(row[0], row[1]), {color: "red"});'
                         'var icon = L.AwesomeMarkers.icon({'
