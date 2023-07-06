@@ -23,4 +23,4 @@ async def callback_show_bus_stops(call: types.CallbackQuery):
     button = types.InlineKeyboardButton(text=f'Открыть карту с остановками',
                                         web_app=web_app)
     keyboard.row(button)
-    await call.message.answer("Тест", reply_markup=keyboard)
+    await call.message.answer("👇 кнопка с картой остановок", reply_markup=keyboard)
