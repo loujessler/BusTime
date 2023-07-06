@@ -14,7 +14,7 @@ async def handle_bus_stop_message(message: types.Message):
     await GetTTC(message).arrival(message.text)
 
 
-@dp.callback_query_handler(text_startswith='stop_', is_bus_stop=True)
+@dp.callback_query_handler(text_startswith='stop_')
 async def call_handler_stop(call: CallbackQuery):
     # Получаем данные из обратного вызова
     callback_data = call.data
