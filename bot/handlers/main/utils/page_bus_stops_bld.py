@@ -15,7 +15,7 @@ class PageBusStopsBuilder:
 
     async def create_page(self) -> str:
         html_name = f'bus_stops_info_{self.language}.html'
-        existing_files = os.path.exists(f'home_page/bus_stops_info/bus_stops_info_{self.language}.html')
+        existing_files = os.path.exists(f'home_page/bus_stops_info/bus_stops_info_{self.language}.html2')
         if not existing_files:
             # Fetch the route data and generate the map
             stop_info = await load_json_data(f"stops_data")
@@ -25,7 +25,33 @@ class PageBusStopsBuilder:
             m = FoliumWebAppBuilder([41.70329262810114, 44.79726756680793], msg)
 
             # Create a MarkerCluster object
-            folium_plg.FastMarkerCluster(data=[(stop['lat'], stop['lon']) for stop in stop_info]).add_to(m)
+            icon = '../../data/static/media/bus_stop_icon.png'
+            callback = ('function (row) {'
+                        'var marker = L.marker(new L.LatLng(row[0], row[1]), {color: "red"});'
+                        'var icon = L.AwesomeMarkers.icon({'
+                        "icon: 'info-sign',"
+                        "iconColor: 'white',"
+                        "markerColor: 'green',"
+                        "prefix: 'glyphicon',"
+                        "extraClasses: 'fa-rotate-0'"
+                        '});'
+                        'var icon = L.icon({'
+                        'iconUrl: row[3],'
+                        'iconSize: [16, 16],'
+                        '});'
+                        f'marker.setIcon(icon);'
+                        "var popup = L.popup({maxWidth: '300'});"
+                        "const display_text = {text: row[2]};"
+                        "var mytext = $(`<div id='mytext' class='display_text' style='width: 100.0%; height: 100.0%;'> ${display_text.text}</div>`)[0];"
+                        f"popup.setContent(mytext);"
+                        "marker.bindPopup(popup);"
+                        'return marker};')
+            data = [(stop['lat'],
+                     stop['lon'],
+                     f"ID: <a id='mystop' href='#' onclick='handleClick(this)'>{stop['code']}</a>",
+                     icon) for stop in stop_info]
+            folium_plg.FastMarkerCluster(data=data,
+                                         callback=callback).add_to(m)
             # marker_cluster = folium_plg.MarkerCluster().add_to(m)
             #
             # for stop in stop_info:
