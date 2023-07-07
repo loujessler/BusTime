@@ -67,8 +67,13 @@ class PageRouteBuilder:
             for stop in stop_info:
                 icon = folium.features.CustomIcon(os.path.join('data', 'static', 'media', 'bus_stop_icon.png'),
                                                   icon_size=[17, 17])  # Add custom icon
-                popup = f"{msg.get_message(format_dict={'bus_stop': 'none'})} " \
-                        f"ID: <a id='mystop' href='#' onclick='handleClick(this)'>{stop[2]}</a>"
+
+                text = f"{msg.get_message(format_dict={'bus_stop': 'none'})} " \
+                       f"ID: <span id='mystop' " \
+                       f"style='color: #ffffff; text-decoration: none; transition: color 0.3s ease;'>" \
+                       f"{stop[2]}</span>"
+                text = f"<div id='mytext' class='display_text' onclick='handleClick(this)'>{text}</div>"
+                popup = folium.Popup(html=text, max_width=300)
                 folium.Marker(location=(stop[0], stop[1]),
                               popup=popup,
                               icon=icon).add_to(m)

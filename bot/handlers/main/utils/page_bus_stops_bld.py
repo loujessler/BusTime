@@ -20,7 +20,6 @@ class PageBusStopsBuilder:
         path_icon = os.path.join('data', 'static', 'media', 'bus_stop_icon.png')
         icon = await get_image_data(path_icon)
 
-        path_css = os.path.join('..', 'css', 'ttc', 'marker.css')
         if not existing_files or config.REFRESH_HTML_FILES:
             # Fetch the route data and generate the map
             stop_info = await load_json_data(f"stops_data")
@@ -28,8 +27,6 @@ class PageBusStopsBuilder:
             msg = MessageFormatter(self.language, 'webapp')
             # Make map with folium
             m = await FoliumWebAppBuilder([41.70329262810114, 44.79726756680793], msg, 12).webapp_bubble()
-
-            m.get_root().html.add_child(folium.CssLink(path_css))
 
             icon_marker = folium.Marker(location=[0, 0])  # Dummy marker at an arbitrary location
             icon_marker.add_child(folium.Html('<img src="{}">'.format(icon), script=True))
@@ -57,7 +54,7 @@ class PageBusStopsBuilder:
                      f"{msg.get_message(format_dict={'bus_stop': 'none'})} "
                      f"ID: <span id='mystop' "
                      "style='color: #ffffff; text-decoration: none; transition: color 0.3s ease;'>"
-                     f"{stop['code']}</span>"
+                     f"{stop['code']} 👆</span>"
                      ) for stop in stop_info]
             folium_plg.FastMarkerCluster(data=data,
                                          callback=callback).add_to(m)

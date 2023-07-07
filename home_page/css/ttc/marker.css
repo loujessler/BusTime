@@ -2,7 +2,8 @@
     width: 100.0%;
     height: 100.0%;
     color: white;
-    background: linear-gradient(135deg, #0088cc, #0077b3); /* Telegram blue background with gradient */
+    background: linear-gradient(135deg, #2a81cd, #0077b3); /* Telegram blue background with gradient */
+    border: solid #006699;
     border-radius: 5px;
     padding: 10px;
     font-size: 1.25em;
@@ -40,19 +41,24 @@
     box-shadow: none; /* Remove the shadow */
 }
 
-/* Style for the close button */
-.leaflet-popup-close-button {
-    background: linear-gradient(135deg, #0088cc, #0077b3) !important; /* Telegram blue background with gradient */
-    color: white !important; /* Telegram close button color */
-    font-size: 1.2em !important; /* Make the button a bit smaller */
-    border-radius: 5px; /* Makes the button circular */
-    width: 20px !important; /* Set a specific width */
-    height: 20px !important; /* Set a specific height */
-    line-height: 20px !important; /* Same as height to align 'x' vertically */
-    text-align: center !important; /* Center the 'x' */
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25); /* Shadow around the popup */
+@layer base {
+    /* Style for the close button */
+    .leaflet-popup-close-button {
+        background: linear-gradient(135deg, #0088cc, #0077b3) !important; /* Telegram blue background with gradient */
+        color: white !important; /* Telegram close button color */
+        font-size: 1.2em !important; /* Make the button a bit smaller */
+        border: solid #006699 !important;
+        border-radius: 5px; /* Makes the button circular */
+        width: 20px !important; /* Set a specific width */
+        height: 20px !important; /* Set a specific height */
+        line-height: 15px !important; /* Same as height to align 'x' vertically */
+        text-align: center !important; /* Center the 'x' */
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25); /* Shadow around the popup */
+    }
 }
 
-.leaflet-popup-close-button:hover {
-    background: linear-gradient(135deg, #0077b3, #006699) !important; /* Darker blue when hovered */
+@layer base {
+    .leaflet-popup-close-button:hover {
+        background: linear-gradient(135deg, #0077b3, #006699) !important; /* Darker blue when hovered */
+    }
 }
