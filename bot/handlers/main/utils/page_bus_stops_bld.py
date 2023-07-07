@@ -54,7 +54,7 @@ class PageBusStopsBuilder:
                      f"{msg.get_message(format_dict={'bus_stop': 'none'})} "
                      f"ID: <span id='mystop' "
                      "style='color: #ffffff; text-decoration: none; transition: color 0.3s ease;'>"
-                     f"{stop['code']} 👆</span>"
+                     f"{stop['code']}</span>"
                      ) for stop in stop_info]
             folium_plg.FastMarkerCluster(data=data,
                                          callback=callback).add_to(m)
