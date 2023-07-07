@@ -13,4 +13,3 @@ class IsBusStop(BoundFilter):
     async def check(self, message: types.Message):
         result = message.text in await load_json_data('stops_data', 'code')
         return result if self.is_bus_stop else not result
-

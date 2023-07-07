@@ -1,6 +1,6 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
-from aiogram.dispatcher.filters import Command
+from aiogram.dispatcher.filters import Command, Regexp
 
 from bot.loader import dp, bot
 
@@ -12,6 +12,7 @@ from bot.keyboards.inline.inline_kb_default import ikb_default
 from bot.states.regist import Regist
 
 from bot.handlers.main.utils.cancel import cancel_func
+from bot.handlers.main.utils.warnings.errors_bus_stop_input import error_regexp, error_bus_stop
 from bot.utils.db_api import quick_commands as commands
 from bot.utils.db_api.quick_commands import update_code_bus_stop, select_bus_stop_by_id
 from bot.utils.localization.i18n import MessageFormatter
@@ -72,7 +73,17 @@ async def change_code_bus_stop(call: types.CallbackQuery):
     await Regist.change_code_bus_stop.set()
 
 
-@dp.message_handler(state=Regist.change_code_bus_stop)
+@dp.message_handler(Regexp(r'^[^\d]+$'), state=Regist.change_code_bus_stop)
+async def change_bus_stop_error_regexp(message: types.Message):
+    await error_regexp(message)
+
+
+@dp.message_handler(is_bus_stop=False, state=Regist.change_code_bus_stop)
+async def change_bus_stop_error_bus_stop(message: types.Message):
+    await error_bus_stop(message)
+
+
+@dp.message_handler(is_bus_stop=True, state=Regist.change_code_bus_stop)
 async def change_code_bus_stop_finish(message: types.Message, state: FSMContext):
     user = message.conf.get('user')
     await state.update_data(stop_code=message.text)
