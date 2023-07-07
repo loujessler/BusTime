@@ -10,11 +10,11 @@ from bot.utils.localization.i18n import MessageFormatter
 from data import config
 
 
-@dp.message_handler(Regexp(r'\d+$'), is_bus=True)
-async def command_start(message: types.Message):
-    user = message.conf.get('user')
-    route_number = message.text
-    await bot.delete_message(message.chat.id, message.message_id)
+async def search_route(aio_type, route_number: str = None):
+    user = aio_type.conf.get('user')
+    if route_number is None:
+        route_number = aio_type.text
+        await aio_type.delete()
     page_bldr = PageRouteBuilder(route_number)
 
     forwards = await page_bldr.check_forwards()
@@ -40,6 +40,11 @@ async def command_start(message: types.Message):
     route_directions = await page_bldr.get_route_directions(forwards, user.language)
     for direction in route_directions:
         msg += direction + '\n\n'
-    await bot.send_message(chat_id=message.chat.id,
+    await bot.send_message(chat_id=aio_type.chat.id,
                            text=msg,
                            reply_markup=keyboard)
+
+
+@dp.message_handler(Regexp(r'\d+$'), is_bus=True)
+async def hndlr_search_route(message: types.Message):
+    await search_route(message)
