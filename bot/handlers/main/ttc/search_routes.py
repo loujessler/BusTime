@@ -29,10 +29,12 @@ async def search_route(aio_type, route_number: str = None):
             route_url = f"https://bustime.ge/routes/{html_name}"
         web_app = WebAppInfo(url=route_url)
         # Create Buttons
-        button = types.InlineKeyboardButton(text=f'#{route_number} 👉 {number_to_emoji(forward)}',
-                                            web_app=web_app)
+        button = types.KeyboardButton(text=f'#{route_number} 👉 {number_to_emoji(forward)}',
+                                      web_app=web_app)
         buttons.append(button)
     keyboard.row(*buttons)
+    keyboard.add(types.KeyboardButton(
+        text=MessageFormatter(user.language, 'keyboards').get_message({'back_to_main_menu': 'none'})))
     # keyboard.inline_keyboard += ikb_default(user.language).inline_keyboard
     # Create message
     msg = MessageFormatter(user.language).get_message(format_dict={'choose route': 'bold'},
