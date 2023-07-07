@@ -1,6 +1,7 @@
 import asyncio
 import httpx
 import xmltodict
+from aiogram import types
 
 from loguru import logger
 from transliterate import translit
@@ -87,7 +88,7 @@ class GetTTC:
                 })]
 
         if 'message_data' in locals():
-            await edit_ls.edit_last_message(message_data[0], self.aio_type, message_data[1])
+            await edit_ls.edit_last_message(message_data[0], self.aio_type, message_data[1], types.ParseMode.MARKDOWN)
 
         # LOGS
         logger.log(25, f"The user {self.user_id} receives the schedule from {code_bus_stop}.")

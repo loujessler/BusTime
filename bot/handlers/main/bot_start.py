@@ -3,6 +3,7 @@ from aiogram.dispatcher.filters import Command
 from loguru import logger
 
 from bot.loader import dp, bot
+from bot.handlers.main.ttc.search_routes import search_route
 
 from bot.filters import IsPrivate
 
@@ -14,6 +15,14 @@ from bot.utils.set_bot_commands import set_start_commands
 from bot.utils.localization.i18n import MessageFormatter
 
 edit_ls = EditLastMessage(bot)
+
+
+async def arg_links(aio_type):
+    await aio_type.delete()
+    args = aio_type.get_args()
+    if args.startswith("search_route_"):
+        route_number = args.split("_")[2]
+        await search_route(aio_type, route_number)
 
 
 async def main_menu(message: types.Message):
@@ -29,10 +38,13 @@ async def main_menu(message: types.Message):
 
 @dp.message_handler(Command("start", prefixes="/"), IsPrivate())
 async def command_start(message: types.Message):
-    await main_menu(message)
-    await set_start_commands(message)
-    # LOGS
-    logger.log(25, f"The user {message.from_user.id} clicked on /start button.")
+    if len(message.get_args()) > 0:
+        await arg_links(message)
+    else:
+        await main_menu(message)
+        await set_start_commands(message)
+        # LOGS
+        logger.log(25, f"The user {message.from_user.id} clicked on /start button.")
 
 
 @dp.message_handler(IsPrivate(), text='/ban')
