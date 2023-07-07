@@ -1,3 +1,4 @@
+import os
 import folium
 import folium.plugins
 
@@ -9,6 +10,8 @@ class FoliumWebAppBuilder(folium.Map):
         super().__init__(location=location, zoom_start=zoom)
         self.msg = msg_formatter
         self.get_root().html.add_child(folium.JavascriptLink('https://telegram.org/js/telegram-web-app.js'))
+        path_css = os.path.join('..', 'css', 'ttc', 'marker.css')
+        self.get_root().html.add_child(folium.CssLink(path_css))
 
     async def webapp_bubble(self):
 
