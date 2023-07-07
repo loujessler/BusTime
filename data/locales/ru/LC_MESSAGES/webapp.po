@@ -15,5 +15,5 @@ msgid "close"
 msgstr "Закрыть"
 
 msgid "bus_stop"
-msgstr "Остановка"
+msgstr "👆 Остановка"
 
