@@ -1,8 +1,8 @@
 .display_text {
     width: 100.0%;
     height: 100.0%;
-    color: white;
-    background: linear-gradient(135deg, #2a81cd, #0077b3); /* Telegram blue background with gradient */
+    color: var(--tg-theme-button-text-color);
+    background: var(--tg-theme-button-color); /* Telegram blue background with gradient */
     border: solid #006699;
     border-radius: 5px;
     padding: 10px;
@@ -44,8 +44,8 @@
 @layer base {
     /* Style for the close button */
     .leaflet-popup-close-button {
-        background: linear-gradient(135deg, #0088cc, #0077b3) !important; /* Telegram blue background with gradient */
-        color: white !important; /* Telegram close button color */
+        background: var(--tg-theme-button-color) !important; /* Telegram blue background with gradient */
+        color: var(--tg-theme-button-text-color) !important; /* Telegram close button color */
         font-size: 1.2em !important; /* Make the button a bit smaller */
         border: solid #006699 !important;
         border-radius: 5px; /* Makes the button circular */
