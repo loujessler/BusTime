@@ -2,6 +2,7 @@ import os
 import folium
 import folium.plugins
 
+from bot.handlers.main.ttc.ttc_requests.get_ttc_api import GetTTC
 from bot.handlers.main.utils.folium_web_app_bld import FoliumWebAppBuilder
 from bot.utils.additional import number_to_emoji
 from bot.utils.data_utils.json_data import load_json_data
@@ -34,7 +35,7 @@ class PageRouteBuilder:
             # Получение имени первой и последней остановки
             first_stop_name = stops[0][name]
             last_stop_name = stops[-1][name]
-            route_directions.append(f"{number_to_emoji(forward)} {first_stop_name} 👉 {last_stop_name}")
+            route_directions.append(f"{number_to_emoji(forward)}\n {first_stop_name} \n👇\n {last_stop_name}")
         return route_directions
 
     async def __get_coord_info(self, forward: str):
@@ -51,17 +52,24 @@ class PageRouteBuilder:
 
         return coordinates, stop_info
 
+    async def create_buses_markers(self, folium_map, forward: str):
+        locations = await GetTTC().where_bus_info(self.route_number, forward)
+        for location in locations:
+            icon = folium.features.CustomIcon(os.path.join('data', 'static', 'media', 'bus_icon.png'),
+                                              icon_size=[21, 21])  # Add custom icon
+            folium.Marker(location=location, icon=icon).add_to(folium_map)
+
     async def create_page(self, forward: str, language: str) -> str:
         html_name = f'{self.route_number}_forward_{forward}.html'
         existing_files = os.path.exists(f'home_page/routes/{self.route_number}_forward_{forward}.html')
         if not existing_files or config.REFRESH_HTML_FILES:
             # Fetch the route data and generate the map
             coordinates, stop_info = await self.__get_coord_info(forward)
-
             msg = MessageFormatter(language, 'webapp')
+
             # Make map with folium
             m = await FoliumWebAppBuilder(coordinates[0], msg, 14).webapp_bubble()
-
+            await self.create_buses_markers(m, forward)
             folium.plugins.AntPath(coordinates, color="#3d00f7", delay=500, weight=2.5, opacity=1).add_to(m)
 
             for stop in stop_info:
@@ -77,6 +85,7 @@ class PageRouteBuilder:
                 folium.Marker(location=(stop[0], stop[1]),
                               popup=popup,
                               icon=icon).add_to(m)
+
             m.fit_bounds(coordinates)  # Automatically adjust map to show the whole route
             m.save(os.path.join('home_page', 'routes', html_name))
 

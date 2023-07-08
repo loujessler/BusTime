@@ -92,13 +92,14 @@ msgid "arrival_bus_stop_or_bus_not_exists"
 msgstr "Такой 🚏 или 🚌 не существует"
 
 # Show alerts
-msgid "send_location"
-msgstr ""
-"Пожалуйста, воспользуйтесь булавкой 📎 и выберите «Геопозиция», чтобы поделиться своим местоположением.\n"
-"\n"
-"А мы отправим вам остановки поблизости 😉"
 
 # Search stops
+msgid "search_bus_stops_menu"
+msgstr "🔎 Поиск остановок"
+
+msgid "search_bus_stops_descript"
+msgstr "С помощью кнопок ниже 👇 выберите способ нахождения остановок"
+
 msgid "found_stop_header"
 msgstr "*🚏 Ближайшие автобусные остановки:*"
 
