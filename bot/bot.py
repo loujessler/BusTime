@@ -1,11 +1,14 @@
+from bot.migration_db import migrate_data
 
 
 async def on_startup(dp):
-
     from .loader import db
     from .utils.db_api.db_gino import on_startup
     await on_startup(dp)
 
+    ###
+    await migrate_data()
+    ###
     # Получаем список таблиц в базе данных
     table_name = 'users'
     query = f"SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = '{table_name}')"

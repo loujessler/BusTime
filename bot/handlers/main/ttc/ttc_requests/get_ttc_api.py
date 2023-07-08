@@ -21,6 +21,13 @@ class GetTTC:
     def __init__(self):
         self.ttc_url = "http://transfer.ttc.com.ge:8080/otp/routers/ttc"
 
+    @staticmethod
+    async def _make_asyncio_tasks(tasks: List[Coroutine[Any, Any, Any]]) -> List[Any]:
+        # Создаем задачи для каждой функции в списке
+        task_objs = [asyncio.create_task(task) for task in tasks]
+        await asyncio.wait(task_objs)
+        return [task.result() for task in task_objs]
+
     async def get_api_response(self, url: str, event=None, json: bool = False):
         client = httpx.AsyncClient(timeout=20.0)
         try:
@@ -37,13 +44,6 @@ class GetTTC:
             await client.aclose()
             if event is not None:
                 event.set()
-
-    @staticmethod
-    async def _make_asyncio_tasks(tasks: List[Coroutine[Any, Any, Any]]) -> List[Any]:
-        # Создаем задачи для каждой функции в списке
-        task_objs = [asyncio.create_task(task) for task in tasks]
-        await asyncio.wait(task_objs)
-        return [task.result() for task in task_objs]
 
     async def _load_get_api_tasks(self, aio_type, url: str, json: bool = False):
         event = asyncio.Event()
