@@ -6,7 +6,7 @@ from bot.utils.db_api.schemes.user_stops_association import user_stops_associati
 
 
 class BusStop(TimedBaseModel):
-    __tablename__ = 'bus_stops2'  # надо удалить 2 !!!!
+    __tablename__ = 'bus_stops'
 
     id = Column(Integer, autoincrement=True, primary_key=True, unique=True)
     name = Column(String(200))
