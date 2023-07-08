@@ -27,15 +27,14 @@ class GetTTC:
 
     @staticmethod
     async def get_api_response(url: str, event=None, json: bool = False):
+        client = httpx.AsyncClient(timeout=20.0)
         try:
-            async with httpx.AsyncClient(timeout=20.0) as client:
-                response = await client.get(url)
-                await client.aclose()
-                response.raise_for_status()  # This will raise an exception for 4xx and 5xx status codes
-                if json is True:
-                    return response.json()
-                else:
-                    return response
+            response = await client.get(url)
+            response.raise_for_status()  # This will raise an exception for 4xx and 5xx status codes
+            if json is True:
+                return response.json()
+            else:
+                return response
         except httpx.HTTPStatusError as e:
             logger.warning(f'Error while executing request: {e}')
             return None  # Return or assign default value when an error occurs
@@ -43,6 +42,7 @@ class GetTTC:
             logger.warning("The request to the server has timed out. Please try again later.")
             return None  # Return or assign default value when an error occurs
         finally:
+            await client.aclose()
             if event is not None:
                 event.set()
 
