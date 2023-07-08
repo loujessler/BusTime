@@ -38,11 +38,15 @@ compile_translations(config.LOCALES_DIR)
 
 
 async def shutdown(dispatcher: Dispatcher):
+    # закройте хранилище диспетчера
     await dispatcher.storage.close()
     await dispatcher.storage.wait_closed()
-    session = await bot.get_session()
-    print("Close session")
+
+    # закрыть aiohttp сессию
+    session = await dispatcher.bot.get_session()
     await session.close()
+
+    print('Bot has been stopped')
 
 
 __all__ = ['bot', 'db', 'storage', 'dp']
