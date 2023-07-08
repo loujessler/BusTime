@@ -11,7 +11,7 @@ from bot.handlers.main.ttc.ttc_requests.get_ttc_api import GetTTC
 @dp.message_handler(Regexp(r'^\d+$'), is_bus_stop=True)
 async def handle_bus_stop_message(message: types.Message):
     await message.delete()
-    await GetTTC(message).arrival(message.text)
+    await GetTTC().arrival(message, message.text)
 
 
 @dp.callback_query_handler(text_startswith='stop_')
@@ -24,4 +24,4 @@ async def call_handler_stop(call: CallbackQuery):
         if splitted_data[2] == 'wmap':
             await bot.delete_message(call.message.chat.id, splitted_data[3])
     if int(code_bus_stop):
-        await GetTTC(call).arrival(code_bus_stop)
+        await GetTTC().arrival(call, code_bus_stop)

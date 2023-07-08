@@ -1,3 +1,4 @@
+from typing import List, Callable, Any, Coroutine
 import asyncio
 import httpx
 import xmltodict
@@ -17,24 +18,15 @@ edit_ls = EditLastMessage(bot)
 
 
 class GetTTC:
-    def __init__(self, aio_type):
-        self.aio_type = aio_type
-        self.user_id = self.aio_type.from_user.id
-        self.user = self.aio_type.conf.get('user')
-        self.language = self.user.language
-        self.message = None
+    def __init__(self):
         self.ttc_url = "http://transfer.ttc.com.ge:8080/otp/routers/ttc"
 
-    @staticmethod
-    async def get_api_response(url: str, event=None, json: bool = False):
+    async def get_api_response(self, url: str, event=None, json: bool = False):
         client = httpx.AsyncClient(timeout=20.0)
         try:
-            response = await client.get(url)
+            response = await client.get(url=self.ttc_url + url)
             response.raise_for_status()  # This will raise an exception for 4xx and 5xx status codes
-            if json is True:
-                return response.json()
-            else:
-                return response
+            return response.json() if json else response
         except httpx.HTTPStatusError as e:
             logger.warning(f'Error while executing request: {e}')
             return None  # Return or assign default value when an error occurs
@@ -46,17 +38,24 @@ class GetTTC:
             if event is not None:
                 event.set()
 
-    # Даныые о рсаписании автобусов
-    async def arrival(self, code_bus_stop: str):
-        message = await return_msg_aio_type(self.aio_type)
-        chat_id = message.chat.id
-        url = f'{self.ttc_url}/stopArrivalTimes?stopId={code_bus_stop}'
+    @staticmethod
+    async def _make_asyncio_tasks(tasks: List[Coroutine[Any, Any, Any]]) -> List[Any]:
+        # Создаем задачи для каждой функции в списке
+        task_objs = [asyncio.create_task(task) for task in tasks]
+        await asyncio.wait(task_objs)
+        return [task.result() for task in task_objs]
 
+    async def _load_get_api_tasks(self, aio_type, url: str, json: bool = False):
         event = asyncio.Event()
-        loading_task = asyncio.create_task(show_loading_message(message, event))
-        response_task = asyncio.create_task(self.get_api_response(url, event, True))
-        await asyncio.wait([loading_task, response_task])
-        json_data = response_task.result()
+        tasks = [show_loading_message(aio_type, event),  self.get_api_response(url, event, json)]
+        return (await self._make_asyncio_tasks(tasks))[1]
+
+    # Даныые о рсаписании автобусов
+    async def arrival(self, aio_type, code_bus_stop: str):
+        user = aio_type.conf.get('user')
+        url = f'/stopArrivalTimes?stopId={code_bus_stop}'
+        message = await return_msg_aio_type(aio_type)
+        json_data = await self._load_get_api_tasks(message, url, True)
 
         if not isinstance(json_data, dict):
             logger.warning('Unexpected data type for json_data: ' + str(type(json_data)))
@@ -72,41 +71,36 @@ class GetTTC:
             return
 
         arrival_times = json_data[arrival_time_key]
-        msg = ArrivalMessages(self.user, arrival_times, code_bus_stop)
+        msg = ArrivalMessages(user, arrival_times, code_bus_stop)
+        language = user.language
 
         if len(arrival_times):
             message_data = [await msg.bus_arrival_times(), ikb_default(
-                self.language, {
+                language, {
                     'refresh': f'stop_{code_bus_stop}',
                     'notification': 'notification',
                     'back_to_main_menu': 'back_to_main_menu',
                 })]
         else:
             message_data = [await msg.bus_arrival_not(), ikb_default(
-                self.language, {
+                language, {
                     'refresh': f'stop_{code_bus_stop}',
                     'back_to_main_menu': 'back_to_main_menu',
                 })]
 
         if 'message_data' in locals():
-            await edit_ls.edit_last_message(message_data[0], self.aio_type, message_data[1], types.ParseMode.MARKDOWN)
+            await edit_ls.edit_last_message(message_data[0], aio_type, message_data[1], types.ParseMode.MARKDOWN)
         # LOGS
-        logger.log(25, f"The user {self.user_id} receives the schedule from {code_bus_stop}.")
+        logger.log(25, f"The user {aio_type.from_user.id} receives the schedule from {code_bus_stop}.")
 
     # Берем данные о остановках
-    async def fetch_stops_data(self):
-        url = f"{self.ttc_url}/index/stops"
-        message = await return_msg_aio_type(self.aio_type)
-
-        event = asyncio.Event()
-        loading_task = asyncio.create_task(show_loading_message(message, event))
-        response_task = asyncio.create_task(self.get_api_response(url, event, True))
-        await asyncio.wait([loading_task, response_task])
-        json_data = response_task.result()
+    async def fetch_stops_data(self, aio_type) -> list:
+        url = f"/index/stops"
+        message = await return_msg_aio_type(aio_type)
+        json_data = await self._load_get_api_tasks(message, url, True)
 
         # Отделяем остановки от станций одним проходом
-        stops = []
-        stations = []
+        stops, stations = [], []
         for item in json_data:
             item['name_translit'] = await capitalize_words(translit(item['name'], 'ka', reversed=True))
             if 'code' in item and item['code'].isdigit():
@@ -121,15 +115,10 @@ class GetTTC:
         return [stops, stations]
 
     # Данные о всех транспортных средств
-    async def fetch_bus_data(self):
-        url = f"{self.ttc_url}/routes"
-        message = await return_msg_aio_type(self.aio_type)
-
-        event = asyncio.Event()
-        loading_task = asyncio.create_task(show_loading_message(message, event))
-        response_task = asyncio.create_task(self.get_api_response(url, event))
-        await asyncio.wait([loading_task, response_task])
-        xml_data = response_task.result().text
+    async def fetch_bus_data(self, aio_type) -> list:
+        url = f"/routes"
+        message = await return_msg_aio_type(aio_type)
+        xml_data = (await self._load_get_api_tasks(message, url, True)).text
 
         # Преобразуем XML в словарь
         data_dict = xmltodict.parse(xml_data)
@@ -160,8 +149,8 @@ class GetTTC:
         return buses
 
     # Данные о маршрутах автобусов
-    async def fetch_bus_route_info(self, route_number, forward):
-        url = f"{self.ttc_url}/routeInfo?routeNumber={route_number}&type=bus&forward={forward}"
+    async def fetch_bus_route_info(self, route_number: str, forward: int) -> list:
+        url = f"/routeInfo?routeNumber={route_number}&type=bus&forward={forward}"
         json_data = await self.get_api_response(url=url, json=True)
 
         # Отделяем остановки от станций одним проходом
@@ -177,3 +166,12 @@ class GetTTC:
         bus_route['RouteStops'] = bus_route_stops
 
         return [name_bus, bus_route]
+
+    async def where_bus_info(self, route_number: str, forward: str) -> list:
+        url = f"/buses?routeNumber={route_number}&forward={forward}"
+        json_data = await self.get_api_response(url=url, json=True)
+
+        locations = []
+        for location in json_data['bus']:
+            locations.append([location['lat'], location['lon']])
+        return locations

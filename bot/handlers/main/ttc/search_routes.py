@@ -35,7 +35,6 @@ async def search_route(aio_type, route_number: str = None):
     keyboard.row(*buttons)
     keyboard.add(types.KeyboardButton(
         text=MessageFormatter(user.language, 'keyboards').get_message({'back_to_main_menu': 'none'})))
-    # keyboard.inline_keyboard += ikb_default(user.language).inline_keyboard
     # Create message
     msg = MessageFormatter(user.language).get_message(format_dict={'choose route': 'bold'},
                                                       format_args={'route_number': route_number}) + '\n\n'
@@ -48,5 +47,5 @@ async def search_route(aio_type, route_number: str = None):
 
 
 @dp.message_handler(Regexp(r'\d+$'), is_bus=True)
-async def hndlr_search_route(message: types.Message):
+async def handler_search_route(message: types.Message):
     await search_route(message)
