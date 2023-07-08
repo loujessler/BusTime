@@ -3,7 +3,6 @@
     height: 100.0%;
     color: var(--tg-theme-button-text-color);
     background: var(--tg-theme-button-color); /* Telegram blue background with gradient */
-    border: solid #006699;
     border-radius: 5px;
     padding: 10px;
     font-size: 1.25em;
@@ -21,7 +20,7 @@
     left: 45%; /* Center the arrow */
     border-width: 10px 10px 0;
     border-style: solid;
-    border-color: #0088cc transparent transparent; /* Arrow color */
+    border-color: var(--tg-theme-button-color) transparent transparent; /* Arrow color */
 }
 
 .display_text:hover {
@@ -47,7 +46,6 @@
         background: var(--tg-theme-button-color) !important; /* Telegram blue background with gradient */
         color: var(--tg-theme-button-text-color) !important; /* Telegram close button color */
         font-size: 1.2em !important; /* Make the button a bit smaller */
-        border: solid #006699 !important;
         border-radius: 5px; /* Makes the button circular */
         width: 20px !important; /* Set a specific width */
         height: 20px !important; /* Set a specific height */

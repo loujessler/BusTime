@@ -40,6 +40,9 @@ compile_translations(config.LOCALES_DIR)
 async def shutdown(dispatcher: Dispatcher):
     await dispatcher.storage.close()
     await dispatcher.storage.wait_closed()
+    session = await bot.get_session()
+    print("Close session")
+    await session.close()
 
 
 __all__ = ['bot', 'db', 'storage', 'dp']

@@ -30,6 +30,7 @@ class GetTTC:
         try:
             async with httpx.AsyncClient(timeout=20.0) as client:
                 response = await client.get(url)
+                await client.aclose()
                 response.raise_for_status()  # This will raise an exception for 4xx and 5xx status codes
                 if json is True:
                     return response.json()
@@ -89,7 +90,6 @@ class GetTTC:
 
         if 'message_data' in locals():
             await edit_ls.edit_last_message(message_data[0], self.aio_type, message_data[1], types.ParseMode.MARKDOWN)
-
         # LOGS
         logger.log(25, f"The user {self.user_id} receives the schedule from {code_bus_stop}.")
 
