@@ -61,15 +61,6 @@ async def add_bus_stop(user, name: str, id_stop: int):
         print('Остановка не добавлена')
 
 
-# async def delete_bus_stop(user, name: str, id_stop: int):
-#     try:
-#         bus_stop = BusStop(name=name, id_stop=id_stop, user_id=user.user_id)
-#         bus_stop.user = user
-#         await bus_stop.create()
-#     except UniqueViolationError:
-#         print('Остановка не добавлена')
-
-
 async def select_all_bus_stops(user):
     try:
         bus_stops = await BusStop.query.where(BusStop.user_id == user.user_id).gino.all()
