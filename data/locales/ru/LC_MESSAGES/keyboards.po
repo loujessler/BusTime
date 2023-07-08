@@ -22,11 +22,14 @@ msgstr "сек"
 msgid "bus_stops"
 msgstr "🚏 Мои остановки"
 
-msgid "show_bus_stops"
+msgid "search_bus_stops"
+msgstr "🔎 Найти остановки"
+
+msgid "show_map_bus_stops"
 msgstr "🌏 Остановки на карте"
 
-msgid "search_bus_stops"
-msgstr "🔎 Найти остановки поблизости"
+msgid "search_nearby_bus_stops"
+msgstr "📍 Остановки поблизости"
 
 msgid "settings"
 msgstr "⚙️ Настройки"

@@ -13,9 +13,9 @@ from bot.handlers.main.ttc.ttc_requests.get_ttc_api import GetTTC
 @dp.callback_query_handler(text='refresh_json_data', is_admin=True)
 async def update_stops(call: types.CallbackQuery):
     # Получение данных об остановках от API
-    get_ttc = GetTTC(call)
-    stops_data, stations_data = await get_ttc.fetch_stops_data()
-    buses_data = await get_ttc.fetch_bus_data()
+    get_ttc = GetTTC()
+    stops_data, stations_data = await get_ttc.fetch_stops_data(call)
+    buses_data = await get_ttc.fetch_bus_data(call)
     # Сохранение данных об остановках в JSON-файле
     data_dict = {'stops_data': stops_data,
                  'stations_data': stations_data,
@@ -30,11 +30,10 @@ async def update_stops(call: types.CallbackQuery):
 @dp.callback_query_handler(text='refresh_json_bus_routes', is_admin=True)
 async def update_stops(call: types.CallbackQuery):
     # Получение данных об остановках от API
-    get_ttc = GetTTC(call)
     buses = await load_json_data('buses_data', 'RouteNumber')
     for bus in buses:
-        for foward in [0, 1]:
-            bus_route = await get_ttc.fetch_bus_route_info(bus, foward)
+        for forward in [0, 1]:
+            bus_route = await GetTTC().fetch_bus_route_info(bus, forward)
             # Сохранение данных об остановках в JSON-файле
             await save_json_data(f"routes/{bus_route[0]}", bus_route[1])
 
