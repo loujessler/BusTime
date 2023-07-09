@@ -36,16 +36,19 @@ async def count_users():
     return count
 
 
-async def select_user(aio_type):
-    user = await User.query.where(User.user_id == aio_type.from_user.id).gino.first()
-    if user is None:
-        await create_user(aio_type)
+async def select_user(aio_type, user_id=None):
+    if user_id is not None:
+        user = await User.query.where(User.user_id == user_id).gino.first()
+    else:
         user = await User.query.where(User.user_id == aio_type.from_user.id).gino.first()
+        if user is None:
+            await create_user(aio_type)
+            user = await User.query.where(User.user_id == aio_type.from_user.id).gino.first()
     return user
 
 
-async def update_status(aio_type, status):
-    user = await select_user(aio_type)
+async def update_status(aio_type, status, user_id=None):
+    user = await select_user(aio_type, user_id)
     await user.update(status=status).apply()
 
 

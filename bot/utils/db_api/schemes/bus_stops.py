@@ -16,15 +16,3 @@ class BusStop(TimedBaseModel):
     users = relationship('User', secondary=user_stops_association, back_populates='bus_stops')
 
     query: sql.select
-
-
-# class BusStop(TimedBaseModel):
-#     __tablename__ = 'bus_stops'
-#
-#     id = Column(Integer, autoincrement=True, primary_key=True, unique=True)
-#     name = Column(String(200))
-#     id_stop = Column(Integer, primary_key=True)
-#     user = relationship('User', back_populates='bus_stops')
-#     user_id = Column(BigInteger, ForeignKey('users.user_id'))
-#
-#     query: sql.select
