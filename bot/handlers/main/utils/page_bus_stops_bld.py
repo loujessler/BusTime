@@ -38,7 +38,7 @@ class PageBusStopsBuilder:
                         'var marker = L.marker(new L.LatLng(row[0], row[1]), {color: "red"});'
                         'var icon = L.icon({'
                         'iconUrl: document.querySelector("#icon").src,'
-                        'iconSize: [17, 17],'
+                        'iconSize: [17, 30],'
                         '});'
                         f'marker.setIcon(icon);'
                         "var popup = L.popup({maxWidth: '300'});"

@@ -1,8 +1,10 @@
+import typing
+
+from aiogram import types
 from asyncpg import UniqueViolationError
 from sqlalchemy import and_
 
 from .create_user import create_user
-from .db_gino import db
 from .schemes.user import User
 from .schemes.bus_stops import BusStop
 from .schemes.user_stops import UserStop
@@ -26,40 +28,81 @@ async def add_user(user_id: int,
         print('Пользователь не добавлен')
 
 
-async def select_all_users():
-    users = await User.query.gino.all()
-    return users
+async def select_all_users() -> list:
+    return await User.query.gino.all()
 
 
-async def count_users():
-    count = await db.func.count(User.user_id).gino.scalar()
-    return count
+async def count_users() -> int:
+    users = await select_all_users()
+    return len(users)
 
 
-async def select_user(aio_type, user_id=None):
-    if user_id is not None:
+async def select_user(
+        aio_type: typing.Union[types.Message, types.CallbackQuery],
+        user_id: str = None
+) -> User:
+    """
+    Select user from database
+
+    :param aio_type:
+    :param user_id:
+    :return:
+    """
+    user_id = user_id if user_id else aio_type.from_user.id
+    user = await User.query.where(User.user_id == user_id).gino.first()
+    if user is None:
+        await create_user(aio_type)
         user = await User.query.where(User.user_id == user_id).gino.first()
-    else:
-        user = await User.query.where(User.user_id == aio_type.from_user.id).gino.first()
-        if user is None:
-            await create_user(aio_type)
-            user = await User.query.where(User.user_id == aio_type.from_user.id).gino.first()
     return user
 
 
-async def update_status(aio_type, status, user_id=None):
+async def update_status(
+        aio_type: typing.Union[types.Message, types.CallbackQuery],
+        status: str,
+        user_id: str = None
+):
+    """
+    Update status in database
+
+    :param aio_type:
+    :param status:
+    :param user_id:
+    :return:
+    """
     user = await select_user(aio_type, user_id)
     await user.update(status=status).apply()
 
 
-async def update_language(aio_type, language):
+async def update_language(
+        aio_type: typing.Union[types.Message, types.CallbackQuery],
+        language: str
+):
+    """
+    Update language in database
+
+    :param aio_type:
+    :param language:
+    :return:
+    """
     user = await select_user(aio_type)
     await user.update(language=language).apply()
 
 
 # ----- BUS STOP -----
 
-async def add_bus_stop(user, name: str, id_stop: int):
+async def add_bus_stop(
+        user: User,
+        name: str,
+        id_stop: int
+):
+    """
+    Add new bus stop for user
+
+    :param user:
+    :param name:
+    :param id_stop:
+    :return:
+    """
     try:
         bus_stop = await BusStop.query.where(and_(BusStop.name == name, BusStop.id_stop == id_stop)).gino.first()
         if not bus_stop:
@@ -70,20 +113,32 @@ async def add_bus_stop(user, name: str, id_stop: int):
         print('Остановка не добавлена')
 
 
-async def select_all_bus_stops(user):
+async def select_all_bus_stops(user: User) -> list:
+    """
+    Select all user's bus stops
+
+    :param user:
+    :return:
+    """
+    bus_stops = []
     try:
         user_stops = await UserStop.query.where(UserStop.user_id == user.user_id).gino.all()
-        bus_stops = []
         for user_stop in user_stops:
             bus_stop = await BusStop.query.where(BusStop.id == user_stop.stop_id).gino.first()
             bus_stops.append(bus_stop)
     except Exception as e:
         print(f"An error occurred: {e}")
-        bus_stops = []
     return bus_stops
 
 
-async def select_bus_stop(user, id_unique):
+async def select_bus_stop(user: User, id_unique: str) -> typing.Union[BusStop, None]:
+    """
+    Select user's bus stop
+
+    :param user:
+    :param id_unique:
+    :return:
+    """
     user_stop = await UserStop.query.where(
         (UserStop.user_id == user.user_id) & (UserStop.stop_id == id_unique)
     ).gino.first()
@@ -93,7 +148,14 @@ async def select_bus_stop(user, id_unique):
         return None
 
 
-async def delete_bus_stop(user, id_unique):
+async def delete_bus_stop(user: User, id_unique: str) -> bool:
+    """
+    Delete user's bus stop
+
+    :param user:
+    :param id_unique:
+    :return:
+    """
     user_stop = await UserStop.query.where(
         (UserStop.user_id == user.user_id) & (UserStop.stop_id == id_unique)
     ).gino.first()
@@ -104,17 +166,36 @@ async def delete_bus_stop(user, id_unique):
         return False
 
 
-async def select_bus_stop_by_id(id_unique):
-    bus_stop = await BusStop.query.where(BusStop.id == id_unique).gino.first()
-    return bus_stop
+async def select_bus_stop_by_id(id_unique: str) -> BusStop:
+    """
+    Select user's bus stop by ID
+
+    :param id_unique:
+    :return:
+    """
+    return await BusStop.query.where(BusStop.id == id_unique).gino.first()
 
 
-async def update_name_bus_stop(id_unique, name):
+async def update_name_bus_stop(id_unique: str, name: str):
+    """
+    Update name user's bus stop
+
+    :param id_unique:
+    :param name:
+    :return:
+    """
     bus_stop = await select_bus_stop_by_id(id_unique)
     await bus_stop.update(name=name).apply()
 
 
-async def update_code_bus_stop(id_unique, id_stop):
+async def update_code_bus_stop(id_unique: str, id_stop: str):
+    """
+    Update code user's bus stop
+
+    :param id_unique:
+    :param id_stop:
+    :return:
+    """
     bus_stop = await select_bus_stop_by_id(id_unique)
     await bus_stop.update(id_stop=id_stop).apply()
 

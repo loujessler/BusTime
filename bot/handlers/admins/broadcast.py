@@ -4,12 +4,9 @@ from aiogram.dispatcher.filters import Command
 from aiogram.utils.exceptions import BotBlocked, ChatNotFound
 
 from bot.loader import dp, bot
-
 from bot.states.broadcast_state import BroadcastStates
-
 from bot.handlers.main.utils.cancel import cancel_func
 from bot.utils.db_api import quick_commands as commands
-
 from bot.utils.edit_last_message import EditLastMessage
 
 edit_ls = EditLastMessage(bot)
@@ -41,7 +38,6 @@ async def broadcast_text(message: types.Message, state: FSMContext):
 
     for user in users:
         try:
-            # await bot.send_message(user.user_id, broadcast_text)
             await message.send_copy(chat_id=user.user_id,
                                     allow_sending_without_reply=True)
             if user.status == 'unsubscribed':
