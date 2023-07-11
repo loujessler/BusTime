@@ -18,6 +18,7 @@ msgstr "мин"
 msgid "seconds"
 msgstr "сек"
 
+
 # Keyboards
 msgid "bus_stops"
 msgstr "🚏 Мои остановки"
@@ -55,6 +56,7 @@ msgstr "🔙 Назад в настройки"
 msgid "refresh"
 msgstr "🔄 Обновить"
 
+
 # Notification
 msgid "notification"
 msgstr "🔔 Установить уведомление"
@@ -73,9 +75,11 @@ msgstr "❗❗❗ВНИМАНИЕ❗❗❗\n"
 "\n"
 "🔔 Уведомление о прибытии 🚌"
 
+
 # Notification errors
 msgid "error_set_notification"
 msgstr "🚫 Нельзя установить уведомление на 0 минут и 0 секунд"
+
 
 # Admins
 msgid "count_users"
@@ -84,8 +88,12 @@ msgstr "Посчитать пользователей"
 msgid "refresh_json_data"
 msgstr "Обновить информацию json данных"
 
+msgid "refresh_json_bus_routes"
+msgstr "Обновить инф. json маршрутов"
+
 msgid "back_to_admin_menu"
 msgstr "🔙 Назад в меню администратора"
+
 
 # Search stops
 msgid "add_current_bus_stop"
@@ -93,6 +101,7 @@ msgstr "➕ Добавить в избранное"
 
 msgid "search_check_arrival"
 msgstr "🕒 Посмотреть расписание остановки"
+
 
 # Setting
 msgid "settings_bus_stop"

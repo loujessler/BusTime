@@ -33,8 +33,10 @@ async def search_route(aio_type, route_number: str = None):
                                       web_app=web_app)
         buttons.append(button)
     keyboard.row(*buttons)
-    keyboard.add(types.KeyboardButton(
-        text=MessageFormatter(user.language, 'keyboards').get_message({'back_to_main_menu': 'none'})))
+    keyboard.add(types.InlineKeyboardButton(
+        text=MessageFormatter(user.language, 'keyboards').get_message({'back_to_main_menu': 'none'}),
+        url="https://google.com")
+    )
     # Create message
     msg = MessageFormatter(user.language).get_message(format_dict={'choose route': 'bold'},
                                                       format_args={'route_number': route_number}) + '\n\n'

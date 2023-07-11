@@ -88,8 +88,10 @@ async def set_name_bus_stops(call: types.CallbackQuery):
 async def number_bus_stop(message: types.Message, state: FSMContext):
     user = message.conf.get('user')
     await state.update_data(name=message.text)
-    await bot.delete_message(message.from_user.id, message.message_id)
-    await bot.delete_message(message.from_user.id, Regist.name_bus_stops_state.message_id)
+
+    for msg_id in [message.message_id, Regist.name_bus_stops_state.message_id]:
+        await bot.delete_message(message.from_user.id, msg_id)
+
     sent_message = await edit_ls.edit_last_message(
         MessageFormatter(user.language).get_message(format_dict={'bus_stops_id_stop': 'none',
                                                                  'click_for_cancel': 'italic'},
@@ -107,8 +109,10 @@ async def create_fav_bus_stop(message: types.Message, state: FSMContext):
     await state.update_data(id_stop=id_stop)
     data = await state.get_data()
     name = data.get('name')
-    await bot.delete_message(message.from_user.id, message.message_id)
-    await bot.delete_message(message.from_user.id, Regist.id_bus_stops_state.message_id)
+
+    for msg_id in [message.message_id, Regist.id_bus_stops_state.message_id]:
+        await bot.delete_message(message.from_user.id, msg_id)
+
     await commands.add_bus_stop(user, name=name, id_stop=id_stop)
     bus_stops = await commands.select_all_bus_stops(user)
     msg_f = MessageFormatter(user.language)

@@ -1,4 +1,5 @@
-from typing import List, Callable, Any, Coroutine
+import time
+from typing import List, Any, Coroutine
 import asyncio
 import httpx
 import xmltodict
@@ -118,7 +119,7 @@ class GetTTC:
     async def fetch_bus_data(self, aio_type) -> list:
         url = f"/routes"
         message = await return_msg_aio_type(aio_type)
-        xml_data = (await self._load_get_api_tasks(message, url, True)).text
+        xml_data = (await self._load_get_api_tasks(message, url)).text
 
         # Преобразуем XML в словарь
         data_dict = xmltodict.parse(xml_data)

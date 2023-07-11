@@ -1,0 +1,30 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.1\n"
+
+# Anti spam
+msgid "many messages"
+msgstr "Too many messages! Please wait."
+
+msgid "block for ten min"
+msgstr "You have been blocked for spamming for 10 minutes."
+
+msgid "you are block"
+msgstr "You have been blocked for spamming. Please try again later."
+
+
+# Change code bus stop
+msgid "dont_have_bus_stop"
+msgstr "Such 🚏 does not exist"
+
+msgid "only_digit"
+msgstr "Only numerical values are applicable"
