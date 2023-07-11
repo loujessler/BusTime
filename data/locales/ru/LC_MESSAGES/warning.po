@@ -11,6 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.3.1\n"
 
+
 # Anti spam
 msgid "many messages"
 msgstr "Слишком много сообщений! Пожалуйста, подождите."
@@ -20,6 +21,7 @@ msgstr "Вы были заблокированы за спам на 10 мину�
 
 msgid "you are block"
 msgstr "Вы были заблокированы за спам. Попробуйте позже."
+
 
 # Change code bus stop
 msgid "dont_have_bus_stop"

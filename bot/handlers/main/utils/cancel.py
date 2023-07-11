@@ -7,8 +7,24 @@ from bot.utils.localization.i18n import MessageFormatter
 from bot.keyboards.inline.inline_kb_default import ikb_default
 
 
-async def cancel_func(message: types.Message, language: str, state: FSMContext,
-                      state_mapping: dict, format_dict: dict, buttons: dict = None):
+async def cancel_func(
+        message: types.Message,
+        language: str,
+        state: FSMContext,
+        state_mapping: dict,
+        format_dict: dict,
+        buttons: dict = None):
+    """
+    Cancel state
+
+    :param message:
+    :param language:
+    :param state:
+    :param state_mapping:
+    :param format_dict:
+    :param buttons:
+    :return:
+    """
     current_state = await state.get_state()
     current_state_object = state_mapping.get(current_state)
     if current_state_object is not None:

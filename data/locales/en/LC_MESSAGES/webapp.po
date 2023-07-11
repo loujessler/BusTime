@@ -5,22 +5,14 @@ msgstr ""
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: ru\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.3.1\n"
 
+msgid "close"
+msgstr "Close"
 
-# Menu commands
-msgid "menu"
-msgstr "Главное меню"
-
-msgid "my_bus_stops"
-msgstr "🚏 Мои остановки"
-
-msgid "settings"
-msgstr "⚙️ Настройки"
-
-msgid "help"
-msgstr "💬 Помощь"
+msgid "bus_stop"
+msgstr "👆 Bus Stop"

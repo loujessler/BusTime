@@ -18,12 +18,19 @@ msgstr "min"
 msgid "seconds"
 msgstr "sec"
 
+
 # Keyboards
 msgid "bus_stops"
 msgstr "🚏 My stops"
 
 msgid "search_bus_stops"
-msgstr "🔎 Find nearby stops"
+msgstr "🔎 Find stops"
+
+msgid "show_map_bus_stops"
+msgstr "🌏 Stops on the map"
+
+msgid "search_nearby_bus_stops"
+msgstr "📍 Nearby stops"
 
 msgid "settings"
 msgstr "⚙️ Settings"
@@ -49,6 +56,7 @@ msgstr "🔙 Back to settings"
 msgid "refresh"
 msgstr "🔄 Refresh"
 
+
 # Notification
 msgid "notification"
 msgstr "🔔 Set notification"
@@ -57,7 +65,7 @@ msgid "set_notification"
 msgstr "✅ Set"
 
 msgid "set_notification_time"
-msgstr "⏰ Set notification time"
+msgstr "⏰ Set the time for notification"
 
 msgid "done_set_notification_time"
 msgstr "👌 Notification set for {minutes} minutes and {seconds} seconds"
@@ -65,21 +73,27 @@ msgstr "👌 Notification set for {minutes} minutes and {seconds} seconds"
 msgid "received_notification"
 msgstr "❗❗❗ATTENTION❗❗❗\n"
 "\n"
-"🔔 Arrival notification 🚌"
+"🔔 Notification of bus arrival 🚌"
+
 
 # Notification errors
 msgid "error_set_notification"
 msgstr "🚫 Can't set notification for 0 minutes and 0 seconds"
 
+
 # Admins
 msgid "count_users"
 msgstr "Count users"
 
-msgid "refresh_bus_stops_data"
-msgstr "Refresh stop information"
+msgid "refresh_json_data"
+msgstr "Refresh json data"
+
+msgid "refresh_json_bus_routes"
+msgstr "Refresh json route info"
 
 msgid "back_to_admin_menu"
 msgstr "🔙 Back to admin menu"
+
 
 # Search stops
 msgid "add_current_bus_stop"
@@ -88,9 +102,10 @@ msgstr "➕ Add to favorites"
 msgid "search_check_arrival"
 msgstr "🕒 Check stop schedule"
 
+
 # Setting
 msgid "settings_bus_stop"
-msgstr "⚙️ Settings for favorite stops 🚏"
+msgstr "⚙️ Settings of favorite stops 🚏"
 
 msgid "change_name_bus_stop"
 msgstr "🔠 Change stop name"

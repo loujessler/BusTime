@@ -9,7 +9,7 @@ from bot.utils.localization.i18n import MessageFormatter
 from bot.keyboards.inline.inline_kb_default import ikb_default
 
 
-@dp.message_handler(Command("help"), is_admin=True)
+@dp.message_handler(Command("help"))
 async def command_help(message: types.Message):
     await message.delete()
     user = message.conf.get('user')
