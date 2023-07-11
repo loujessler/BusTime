@@ -12,16 +12,18 @@ async def my_bus_stops(aio_type):
     user = aio_type.conf.get('user')
     if user:
         bus_stops = await commands.select_all_bus_stops(user)
+        msg_formatter = MessageFormatter(user.language)
         if bus_stops:
             await edit_ls.edit_last_message(
-                MessageFormatter(user.language).get_message({'bus_stops_choose_bus_stop': 'bold'}),
+                msg_formatter.get_message({'bus_stops_choose_bus_stop': 'bold'}),
                 aio_type, ikb_menu_bus_stops(user, bus_stops)
             )
         else:
             sent_message = await edit_ls.edit_last_message(
-                MessageFormatter(user.language).get_message(format_dict={'bus_stops_no_bus_stops': 'none',
-                                                                         'click_for_cancel': 'italic'},
-                                                            line_breaks=2),
+                msg_formatter.get_message(
+                    format_dict={'bus_stops_no_bus_stops': 'none',
+                                 'click_for_cancel': 'italic'},
+                    line_breaks=2),
                 aio_type, None, 'HTML', True
             )
             Regist.name_bus_stops_state.message_id = sent_message.message_id  # Сохраняем message_id
