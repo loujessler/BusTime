@@ -22,6 +22,7 @@ class FoliumWebAppBuilder(folium.Map):
         # For example, self.get_root() instead of m.get_root()
 
         js = f"""
+        <script type="text/javascript">
         var WebApp = window.Telegram.WebApp;
         var MainButton = WebApp.MainButton;
 
@@ -35,8 +36,8 @@ class FoliumWebAppBuilder(folium.Map):
         WebApp.onEvent('mainButtonClicked', function() {{
           /* also */
         }});
+        </script>
         """
-        js = '<script type="text/javascript">' + js + '</script>'
 
         # Добавляем этот элемент на карту
         self.get_root().html.add_child(folium.Element(js))
