@@ -1,3 +1,5 @@
+import typing
+
 from aiogram import types
 from aiogram.dispatcher.filters import Command
 from loguru import logger
@@ -17,7 +19,13 @@ from bot.utils.localization.i18n import MessageFormatter
 edit_ls = EditLastMessage(bot)
 
 
-async def arg_links(aio_type):
+async def arg_links(aio_type: typing.Union[types.Message, types.CallbackQuery]):
+    """
+    Func make request to bus direction
+
+    :param aio_type:
+    :return:
+    """
     await aio_type.delete()
     args = aio_type.get_args()
     if args.startswith("search_route_"):
@@ -26,6 +34,12 @@ async def arg_links(aio_type):
 
 
 async def main_menu(message: types.Message):
+    """
+    Func send message with main menu
+
+    :param message:
+    :return:
+    """
     user = message.conf.get('user')
     await edit_ls.edit_last_message(
         MessageFormatter(user.language).get_message({'welcome_message': 'bold',

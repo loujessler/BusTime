@@ -49,9 +49,10 @@ class PageBusStopsBuilder:
                         "marker.bindPopup(popup);"
                         'return marker};')
 
+            local_bus_stop_name = msg.get_message(format_dict={'bus_stop': 'none'})
             data = [(stop['lat'],
                      stop['lon'],
-                     f"{msg.get_message(format_dict={'bus_stop': 'none'})} "
+                     f"{local_bus_stop_name} "
                      f"ID: <span id='mystop' "
                      "style='color: #ffffff; text-decoration: none; transition: color 0.3s ease;'>"
                      f"{stop['code']}</span>"

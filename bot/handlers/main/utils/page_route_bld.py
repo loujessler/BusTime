@@ -1,4 +1,6 @@
 import os
+import typing
+
 import folium
 import folium.plugins
 
@@ -12,21 +14,43 @@ from bot.utils.localization.i18n import MessageFormatter
 class PageRouteBuilder:
     def __init__(self, route_number: str):
         self.route_number = route_number
+        self.route_data = {}
+
+    async def _load_route_data(self, forward: typing.Union[str, int]):
+        """
+        Load data from json file and cache in class
+
+        :param forward:
+        :return:
+        """
+        if forward not in self.route_data:
+            self.route_data[forward] = await load_json_data(f"routes/{self.route_number}_forward_{forward}")
+        return self.route_data[forward]
 
     async def check_forwards(self) -> list:
+        """
+        Func check have forwarded in json
+        :return:
+        """
         have_forwards = []
         for forward in [0, 1]:
-            data = await load_json_data(f"routes/{self.route_number}_forward_{forward}")
-
+            data = await self._load_route_data(forward)
             shape = data['Shape']
             if shape != '':
                 have_forwards.append(forward)
         return have_forwards
 
-    async def get_route_directions(self, forwards, language) -> list:
+    async def get_route_directions(self, forwards: list, language: str) -> list:
+        """
+        Func get route direction and create list with text of directions
+
+        :param forwards:
+        :param language:
+        :return:
+        """
         route_directions = []
         for forward in forwards:
-            data = await load_json_data(f"routes/{self.route_number}_forward_{forward}")
+            data = await self._load_route_data(forward)
 
             # Извлечение данных о остановках
             stops = data['RouteStops']
@@ -38,11 +62,14 @@ class PageRouteBuilder:
         return route_directions
 
     async def __get_coord_info(self, forward: str):
+        """
+        Func get coordinates from json
 
-        data = await load_json_data(f"routes/{self.route_number}_forward_{forward}")
-
+        :param forward:
+        :return:
+        """
+        data = await self._load_route_data(forward)
         shape = data['Shape']
-
         coordinates = shape.split(",")
         coordinates = [(float(c.split(":")[1]), float(c.split(":")[0])) for c in coordinates]
 
@@ -51,7 +78,14 @@ class PageRouteBuilder:
 
         return coordinates, stop_info
 
-    async def _create_buses_markers(self, folium_map, forward: str):
+    async def _create_buses_markers(self, folium_map: FoliumWebAppBuilder, forward: str):
+        """
+        Func create bus's markers
+
+        :param folium_map:
+        :param forward:
+        :return:
+        """
         locations = await GetTTC().where_bus_info(self.route_number, forward)
         for location in locations:
             icon = folium.features.CustomIcon(os.path.join('data', 'static', 'media', 'bus_icon.png'),
@@ -59,6 +93,13 @@ class PageRouteBuilder:
             folium.Marker(location=location, icon=icon).add_to(folium_map)
 
     async def create_page(self, forward: str, language: str) -> str:
+        """
+        Func create HTML page with bus's route
+
+        :param forward:
+        :param language:
+        :return:
+        """
         html_name = f'{self.route_number}_forward_{forward}.html'
 
         # Fetch the route data and generate the map
@@ -70,13 +111,15 @@ class PageRouteBuilder:
         await self._create_buses_markers(m, forward)
         folium.plugins.AntPath(coordinates, color="#3d00f7", delay=2000, weight=2.5, opacity=1).add_to(m)
 
+        icon_path = os.path.join('data', 'static', 'media', 'bus_stop_icon.png')
+        local_bus_stop_name = msg.get_message(format_dict={'bus_stop': 'none'})
         for stop in stop_info:
             icon = folium.features.CustomIcon(
-                os.path.join('data', 'static', 'media', 'bus_stop_icon.png'),
+                icon_path,
                 icon_size=[17, 30])  # Add custom icon
 
             text = f"<div id='mytext' class='display_text' onclick='handleClick(this)'>" \
-                   f"{msg.get_message(format_dict={'bus_stop': 'none'})} " \
+                   f"{local_bus_stop_name} " \
                    f"ID: <span id='mystop' " \
                    f"style='color: #ffffff; text-decoration: none; transition: color 0.3s ease;'>" \
                    f"{stop[2]}</span></div>"
