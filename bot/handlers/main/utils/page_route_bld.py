@@ -110,7 +110,7 @@ class PageRouteBuilder:
         # Make map with folium
         m = await FoliumWebAppBuilder(coordinates[0], msg, 14).webapp_bubble()
         await self._create_buses_markers(m, forward)
-        folium.plugins.AntPath(coordinates, color="#3d00f7", delay=2000, weight=2.5, opacity=1).add_to(m)
+        folium.plugins.AntPath(coordinates, color="#3246FF", delay=2000, weight=2.5, opacity=1).add_to(m)
 
         icon_path = os.path.join('data', 'static', 'media', 'bus_stop_icon.png')
         local_bus_stop_name = msg.get_message(format_dict={'bus_stop': 'none'})
