@@ -8,8 +8,15 @@ class EditLastMessage:
     def __init__(self, bot):
         self.bot = bot
 
-    async def edit_last_message(self, new_msg_text: str, aio_type, new_keyboard=None, parse_mode='HTML',
-                                return_msg_info=False):
+    async def edit_last_message(
+            self,
+            new_msg_text: str,
+            aio_type,
+            new_keyboard=None,
+            parse_mode='HTML',
+            return_msg_info=False,
+            disable_web_page_preview=False
+    ):
         # Получаем идентификатор чата в зависимости от типа входящего объекта
         message = await return_msg_aio_type(aio_type)
 
@@ -22,13 +29,15 @@ class EditLastMessage:
                 sent_message = await self.bot.edit_message_text(
                     chat_id=chat_id, message_id=message_id,
                     text=new_msg_text, reply_markup=new_keyboard,
-                    parse_mode=parse_mode)
+                    parse_mode=parse_mode,
+                    disable_web_page_preview=disable_web_page_preview)
             except (exceptions.MessageCantBeEdited, exceptions.MessageToEditNotFound):
                 # Если сообщение невозможно отредактировать, отправляем новое
                 sent_message = await self.bot.send_message(
                     chat_id=chat_id, text=new_msg_text,
                     reply_markup=new_keyboard,
-                    parse_mode=parse_mode)
+                    parse_mode=parse_mode,
+                    disable_web_page_preview=disable_web_page_preview)
             except exceptions.MessageNotModified:
                 sent_message = None
 

@@ -48,7 +48,7 @@ class GetTTC:
 
     async def _load_get_api_tasks(self, aio_type, url: str, json: bool = False):
         event = asyncio.Event()
-        tasks = [show_loading_message(aio_type, event),  self.get_api_response(url, event, json)]
+        tasks = [show_loading_message(aio_type, event), self.get_api_response(url, event, json)]
         return (await self._make_asyncio_tasks(tasks))[1]
 
     # Даныые о рсаписании автобусов
@@ -90,7 +90,12 @@ class GetTTC:
                 })]
 
         if 'message_data' in locals():
-            await edit_ls.edit_last_message(message_data[0], aio_type, message_data[1], types.ParseMode.MARKDOWN)
+            await edit_ls.edit_last_message(
+                new_msg_text=message_data[0],
+                aio_type=aio_type,
+                new_keyboard=message_data[1],
+                parse_mode=types.ParseMode.MARKDOWN,
+                disable_web_page_preview=True)
         # LOGS
         logger.log(25, f"The user {aio_type.from_user.id} receives the schedule from {code_bus_stop}.")
 
