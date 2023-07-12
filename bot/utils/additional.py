@@ -14,6 +14,36 @@ async def capitalize_words(sentence):
     return ' '.join(capitalized_words)
 
 
+class ConvertNumber:
+    def __init__(self, name_type: str):
+        self.name_type = name_type
+        self.type_dict = {
+            'emoji_numbers': {
+                '0': '0⃣',
+                '1': '1⃣',
+                '2': '2⃣',
+                '3': '3⃣',
+                '4': '4⃣',
+                '5': '5⃣',
+                '6': '6⃣',
+                '7': '7⃣',
+                '8': '8⃣',
+                '9': '9⃣',
+            },
+            'forward_numbers': {
+                '0': '🅰',
+                '1': '🅱',
+            }
+        }
+
+    def convert(self, number) -> str:
+        result = ''
+        for digit in str(number):
+            result += self.type_dict[self.name_type].get(digit, digit)
+
+        return result
+
+
 def number_to_emoji(number):
     emoji_numbers = {
         '0': '0⃣',
