@@ -6,7 +6,7 @@ import folium.plugins
 
 from bot.handlers.main.ttc.ttc_requests.get_ttc_api import GetTTC
 from bot.handlers.main.utils.folium_web_app_bld import FoliumWebAppBuilder
-from bot.utils.additional import number_to_emoji
+from bot.utils.additional import ConvertNumber
 from bot.utils.data_utils.json_data import load_json_data
 from bot.utils.localization.i18n import MessageFormatter
 
@@ -58,7 +58,8 @@ class PageRouteBuilder:
             # Получение имени первой и последней остановки
             first_stop_name = stops[0][name]
             last_stop_name = stops[-1][name]
-            route_directions.append(f"{number_to_emoji(forward)} {first_stop_name} \n👇\n {last_stop_name}")
+            route_directions.append(f"💢💢💢{ConvertNumber('forward_numbers').convert(forward)}💢💢💢\n"
+                                    f" {first_stop_name} \n                ⬇️\n {last_stop_name}")
         return route_directions
 
     async def __get_coord_info(self, forward: str):

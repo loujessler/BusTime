@@ -4,7 +4,7 @@ from aiogram import types
 
 from bot.keyboards.inline.inline_kb_default import ikb_default
 from bot.loader import dp, bot
-from bot.utils.additional import number_to_emoji, capitalize_words
+from bot.utils.additional import capitalize_words, ConvertNumber
 
 from bot.utils.data_utils.json_data import load_json_data
 from bot.utils.data_utils.kd_tree import array_cord
@@ -37,7 +37,7 @@ async def process_location(message: types.Message):
         distance = d * 111  # примерное преобразование для масштаба градусов в километры на широтах около 45 градусов
         msg += msg_class.get_message(
             {'found_stop': 'none'},
-            {'i': number_to_emoji(i), 'name': name, 'code': code, 'distance': "%.2f" % distance}
+            {'i': ConvertNumber('emoji_numbers').convert(i), 'name': name, 'code': code, 'distance': "%.2f" % distance}
         ) + '\n\n'
         button = types.InlineKeyboardButton(f'{i}', callback_data=f'found_{index}')
         buttons.append(button)

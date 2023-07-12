@@ -3,7 +3,7 @@ from transliterate import translit
 import aiogram.utils.markdown as fmt
 
 from bot.handlers.main.utils.get_url_bot import get_bot_link
-from bot.utils.additional import number_to_emoji, capitalize_words
+from bot.utils.additional import capitalize_words, ConvertNumber
 from bot.utils.localization.i18n import MessageFormatter
 
 
@@ -14,7 +14,8 @@ class ArrivalMessages:
         self.code_bus_stop = code_bus_stop
 
     async def bus_arrival_times(self):
-        message = f'🚏 → {number_to_emoji(self.code_bus_stop)}\n\n'
+        conv_numb = ConvertNumber('emoji_numbers')
+        message = f"🚏 → {conv_numb.convert(self.code_bus_stop)}\n\n"
         for arrival_time in self.arrival_times:
             route_number = int(arrival_time['RouteNumber'])
             minutes = arrival_time['ArrivalTime']
@@ -24,7 +25,7 @@ class ArrivalMessages:
             type_transport = '🚌' if route_number < 400 else '🚐'
             # Create arrival text with link
             bot_link = await get_bot_link()
-            route_number = f"[{number_to_emoji(route_number)}]({bot_link}?start=search_route_{route_number})"
+            route_number = f"[{conv_numb.convert(route_number)}]({bot_link}?start=search_route_{route_number})"
             line_msg = MessageFormatter(self.user.language).get_message(
                 {'arrival_bus_times': 'none'},
                 {'route_number': route_number,
