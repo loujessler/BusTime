@@ -26,7 +26,7 @@ async def search_route(aio_type, route_number: str = None):
     for forward in forwards:
         html_name = await page_bldr.create_page(forward, user.language)
         if config.TEST_WEB_APP:
-            route_url = f"https://bustime.ge/test/routes/{html_name}"
+            route_url = f"https://bustime.ge/dev/routes/{html_name}"
         else:
             route_url = f"https://bustime.ge/routes/{html_name}"
         web_app = WebAppInfo(url=route_url)
