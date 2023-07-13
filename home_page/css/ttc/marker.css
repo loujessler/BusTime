@@ -1,3 +1,6 @@
+body {
+    height: var(--tg-viewport-stable-height);
+}
 .display_text {
     width: 100.0%;
     height: 100.0%;

@@ -13,7 +13,7 @@ async def webapp_map_bus_stops(language) -> WebAppInfo:
     page_bld = PageBusStopsBuilder(language)
     html_name = await page_bld.create_page()
     if config.TEST_WEB_APP:
-        route_url = f"https://bustime.ge/test/bus_stops_info/{html_name}"
+        route_url = f"https://bustime.ge/dev/bus_stops_info/{html_name}"
     else:
         route_url = f"https://bustime.ge/bus_stops_info/{html_name}"
     web_app = WebAppInfo(url=route_url)
