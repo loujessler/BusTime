@@ -90,7 +90,7 @@ async def number_bus_stop(message: types.Message, state: FSMContext):
     await state.update_data(name=message.text)
 
     for msg_id in [message.message_id, Regist.name_bus_stops_state.message_id]:
-        await bot.delete_message(message.from_user.id, msg_id)
+        await bot.delete_message(message.chat.id, msg_id)
 
     sent_message = await edit_ls.edit_last_message(
         MessageFormatter(user.language).get_message(format_dict={'bus_stops_id_stop': 'none',
