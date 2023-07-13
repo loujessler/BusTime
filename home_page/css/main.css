@@ -19,10 +19,12 @@
 body {
     height: 100%;
     max-height: 100%;
+    background: linear-gradient(45deg, #3246FF, #01FEB2);
 	background-color: #000;
 	color: #fff;
 	font-family: kamerik-3d;
 }
+
 .logo {
 	--logo-size: calc(var(--index) * 7.8);
 	width: var(--logo-size);
@@ -89,6 +91,9 @@ body {
 	line-height: 1.35em;
 	margin-top: calc(var(--index) * 5.5);
 }
+.hero-content span, h1, .hero-content__p {
+    text-shadow: 3px 3px #3246FF;
+}
 .hero-content span {
     font-size: calc(var(--index) * 1);
     letter-spacing: calc(var(--index) * .005);
@@ -111,11 +116,26 @@ body {
 	background-color: transparent;
 	color: #fff;
 	border-radius: 10em;
-	border: rgb(255 255 255 / .4) 3px solid;
+	border: rgb(255 255 255 / .4) 4px solid;
 	outline: none;
 	cursor: pointer;
 	margin-top: calc(var(--index) * 2.5);
+	transition: var(--transition);
 }
+.button-start:hover {
+    animation: colorChange 2s infinite;
+}
+
+@keyframes colorChange {
+    0% { background-color: #3246FF; }
+    50% { background-color: #01FEB2; }
+    100% { background-color: #3246FF; }
+    0% { color: #01FEB2; }
+    50% { color: #3246FF; }
+    100% { color: #01FEB2; }
+}
+
 .layer-4, .layer-5, .layer-6 {
 	pointer-events: none;
 }
+
