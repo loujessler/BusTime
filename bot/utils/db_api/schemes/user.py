@@ -1,4 +1,4 @@
-from sqlalchemy import Column, BigInteger, String, Sequence, sql
+from sqlalchemy import Column, BigInteger, String, sql
 from sqlalchemy.orm import relationship
 
 from bot.utils.db_api.db_gino import TimedBaseModel
@@ -8,7 +8,7 @@ from bot.utils.db_api.schemes.user_stops_association import user_stops_associati
 class User(TimedBaseModel):
     __tablename__ = 'users'
 
-    user_id = Column(BigInteger, Sequence('user_id_seq'), primary_key=True, unique=True)
+    user_id = Column(BigInteger, primary_key=True, unique=True)
     first_name = Column(String(200))
     last_name = Column(String(200))
     username = Column(String(50))
