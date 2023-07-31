@@ -27,10 +27,13 @@ async def cancel_func(
     """
     current_state = await state.get_state()
     current_state_object = state_mapping.get(current_state)
-    if current_state_object is not None:
-        await bot.delete_message(message.from_user.id,
-                                 current_state_object.message_id)
-    await message.delete()
+    try:
+        if current_state_object is not None:
+            await bot.delete_message(message.from_user.id,
+                                     current_state_object.message_id)
+        await message.delete()
+    except:
+        pass
 
     await state.reset_state(with_data=False)
     await message.answer(
